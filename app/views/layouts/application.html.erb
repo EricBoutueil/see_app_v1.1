@@ -3,17 +3,35 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>TODO</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>See'App by See'Up - Port Traffic</title>
+    <%= favicon_link_tag "favicon.png" %>
     <%= csrf_meta_tags %>
     <%= action_cable_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
-    <%#= stylesheet_pack_tag 'application', media: 'all' %> <!-- Uncomment if you import CSS in app/javascript/packs/application.js -->
+    <%= stylesheet_pack_tag 'application', media: 'all' %>
   </head>
   <body>
     <%= render 'shared/navbar' %>
     <%= render 'shared/flashes' %>
-    <%= yield %>
+      <div class='container'>
+        <div class="col-xs-12">
+      <%= yield %>
+        </div>
+      </div>
+
+    <!-- js in app/assets -->
     <%= javascript_include_tag 'application' %>
+    <!-- js in js/packs == webpack -->
     <%= javascript_pack_tag 'application' %>
+
+    <!-- charging google js api library - needed before map-->
+    <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?libraries=places&key=#{ENV['GOOGLE_API_BROWSER_KEY']}" %>
+
+    <!-- note: "&callback=initMap" would have called initMap after library charged -->
+    <!-- execute map.js -->
+    <%= javascript_pack_tag 'map' %>
+
   </body>
 </html>
+

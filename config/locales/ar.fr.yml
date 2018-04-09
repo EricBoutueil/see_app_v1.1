@@ -1,0 +1,40 @@
+fr:
+  ar:
+    errors:
+      messages:
+        record_invalid: 'La validation a échoué : %{errors}'
+        restrict_dependent_destroy:
+          has_one: "Vous ne pouvez pas supprimer l'enregistrement car un(e) %{record} dépendant(e) existe"
+          has_many: "Vous ne pouvez pas supprimer l'enregistrement parce que les %{record} dépendants existent"
+    model:
+      movement: Trafic
+      harbour: Port
+      type: Famille
+    attributes:
+      user:
+        email: E-mail
+        password: Mot de passe
+        first_name: Prénom
+        last_name: Nom
+        company_name: Entité
+      movement:
+        year: Année
+        terminal: Terminal
+        pol_pod: POL / POD
+        volume: Volume
+      harbour:
+        country: Pays
+        name: Port
+        address: Adresse
+      type:
+        code: Famille
+        name: Libellé
+        description: Description
+        flow: Flux
+        flow:
+          tot: Total
+          imp: Importation
+          exp: Exportation
+
+
+

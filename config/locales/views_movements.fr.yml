@@ -1,0 +1,13 @@
+fr:
+  movements:
+    index:
+      movement: Trafic
+
+      harbour: Port
+      code: Famille
+      flow: Flux
+      label: Libellé
+      terminal: Terminal
+      pol_pod: POL / POD
+      year: Année
+      volume: Volume
