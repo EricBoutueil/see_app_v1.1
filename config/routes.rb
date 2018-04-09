@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: 'pages#home'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  scope '(:locale)', locale: /en|es/ do
+
+    root to: 'harbours#index'
+    resources :harbours, only:[:index]
+    resources :movements, only:[:index]
+
+  end
 end
