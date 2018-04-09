@@ -1,0 +1,37 @@
+.text-size-bigtitle {
+  font-size: 48px;
+}
+
+.text-size-title {
+  font-size: 24px;
+}
+
+.text-size-body {
+  font-size: 18px;
+}
+
+.text-size-body-small {
+  font-size: 14px;
+}
+
+.text-blue {
+  color: $blue;
+}
+
+.text-dark-blue{
+  color: $dark-blue;
+}
+
+h1 {
+  @extend .text-size-title;
+  @extend .text-blue;
+}
+
+body {
+  @extend .text-size-body;
+  @extend .text-dark-blue;
+}
+
+.content {
+  display: flex;
+}

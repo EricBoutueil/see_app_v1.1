@@ -1,0 +1,38 @@
+<% if current_user.admin? %>
+  <div class="row">
+      <table class="table table-hover table-responsive">
+        <thead>
+          <tr>
+            <td><%= t('.harbour') %></td>
+            <td><%= t('.code') %></td>
+            <td><%= t('.flow') %></td>
+            <td><%= t('.label') %></td>
+            <td><%= t('.terminal') %></td>
+            <td><%= t('.pol_pod') %></td>
+            <td><%= t('.year') %></td>
+            <td><%= t('.volume') %></td>
+          </tr>
+        </thead>
+        <tbody>
+          <% @movements.each do |movement| %>
+          <tr>
+            <td><%= movement.harbour.name.capitalize %></td>
+            <td><%= movement.type.code.upcase %></td>
+            <!-- <td><%= movement.type.flow %></td> -->
+            <td>
+              <%= t("ar.attributes.type.flow.#{movement.type.flow}") %>
+            </td>
+            <!--<td><%= movement.type.label %></td> -->
+            <td>
+              <%= t("types.label.#{movement.type.label}") %>
+            </td>
+            <td><%= movement.terminal.capitalize %></td>
+            <td><%= movement.pol_pod.capitalize %></td>
+            <td><%= movement.year %></td>
+            <td><%= movement.volume %></td>
+          </tr>
+        </tbody>
+        <% end %>
+      </table>
+  </div>
+<% end %>

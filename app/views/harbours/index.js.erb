@@ -1,0 +1,58 @@
+// import { initMap } from '../../javascript/packs/map';
+
+// console.log("js.erb");
+
+var totalVolumeMax = 0;
+
+var mapElement = document.getElementById('map');
+
+// update value of geojson through dataset.geojson == data-geojson
+mapElement.dataset.geojson = JSON.stringify(<%= @geojson.to_json.html_safe %>);
+
+// trigger new event mapDatasetUpdated
+
+// initMap();
+
+  var map;
+
+  // look for the correct element 'map' in the DOM, so need DOM charged
+  if (mapElement) {
+    // STEP 1: init map
+    map = new google.maps.Map(mapElement, {
+          zoom: 6,
+          center: {lat: 43.3, lng: 5.4}
+        });
+
+    // STEP 2: load GeoJson
+    var jsonparsed = JSON.parse(mapElement.dataset.geojson);
+    map.data.addGeoJson(jsonparsed);
+
+    // check max totvol
+    map.data.forEach(function(feature) {
+        if (feature.getProperty('totvol') > totalVolumeMax) {
+          totalVolumeMax = feature.getProperty('totvol');
+        };
+    });
+    console.log('total volume max = ' + totalVolumeMax);
+
+    // STEP 3: set style
+    map.data.setStyle(function(feature) {
+      var totalVolume = feature.getProperty('totvol');
+      console.log('total volume = ' + totalVolume);
+      return {
+        icon: getCircle(totalVolume)
+      };
+    });
+  }
+
+
+function getCircle(totalVolume) {
+  return {
+    path: google.maps.SymbolPath.CIRCLE,
+    fillColor: 'blue',
+    fillOpacity: .8,
+    scale: (totalVolume * 20 / totalVolumeMax),
+    strokeColor: 'blue',
+    strokeWeight: 1
+  };
+}
