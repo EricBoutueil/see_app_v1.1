@@ -1,58 +1,107 @@
-<div class="navbar-wagon">
+<!-- Desktop only -->
+<div class="navbar-wagon hidden-xs hidden-sm">
+
   <!-- Logo -->
   <%= link_to root_path, class: "navbar-wagon-brand" do %>
-    <%= image_tag "logo.png", height: 50 %>
+    <%= image_tag "logo.png" %>
   <% end %>
 
-  <!-- Right Navigation -->
-  <div class="navbar-wagon-right hidden-xs hidden-sm">
+  <!-- Right Navigation desktop -->
+  <div class="navbar-wagon-child">
+
+    <!-- Links always available -->
+    <%= link_to "ACCUEIL", "http://www.see-up.fr/", class: "navbar-wagon-item navbar-wagon-link" %>
+    <%= link_to "NOTRE OFFRE", "http://www.see-up.fr/#offre", class: "navbar-wagon-item navbar-wagon-link" %>
+    <%= link_to "L’ÉQUIPE", "http://www.see-up.fr/#equipe", class: "navbar-wagon-item navbar-wagon-link" %>
+    <%= link_to "CONTACTEZ-NOUS", "http://www.see-up.fr/contactez-see-up/", class: "navbar-wagon-item navbar-wagon-link" %>
 
     <% if user_signed_in? %>
 
-      <!-- Links when logged in -->
-      <%= link_to "Host", "#", class: "navbar-wagon-item navbar-wagon-link" %>
-      <%= link_to "Trips", "#", class: "navbar-wagon-item navbar-wagon-link" %>
-      <%= link_to "Messages", "#", class: "navbar-wagon-item navbar-wagon-link" %>
-
-      <!-- Avatar with dropdown menu -->
-      <div class="navbar-wagon-item">
+      <!-- Dropdown menu -->
+      <div class="navbar-wagon-item pr0">
         <div class="dropdown">
-          <%= image_tag "http://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar dropdown-toggle", id: "navbar-wagon-menu", "data-toggle" => "dropdown" %>
+          <i class="fa fa-bars dropdown-toggle" data-toggle="dropdown"></i>
           <ul class="dropdown-menu dropdown-menu-right navbar-wagon-dropdown-menu">
             <li>
               <%= link_to "#" do %>
-                <i class="fa fa-user"></i> <%= t(".profile", default: "Profile") %>
-              <% end %>
-            </li>
-            <li>
-              <%= link_to "#" do %>
-                <i class="fa fa-cog"></i>  <%= t(".settings", default: "Settings") %>
+                <i class="fa fa-user"></i> <%= t(".profile", default: "Profil") %>
               <% end %>
             </li>
             <li>
               <%= link_to destroy_user_session_path, method: :delete do %>
-                <i class="fa fa-sign-out"></i>  <%= t(".sign_out", default: "Log out") %>
+                <i class="fa fa-sign-out"></i>  <%= t(".sign_out", default: "Se déconnecter") %>
               <% end %>
             </li>
           </ul>
         </div>
       </div>
+
     <% else %>
+
       <!-- Login link (when logged out) -->
-      <%= link_to t(".sign_in", default: "Login"), new_user_session_path, class: "navbar-wagon-item navbar-wagon-link" %>
+      <%= link_to t(".sign_in", default: "Se connecter"), new_user_session_path, class: "navbar-wagon-item navbar-wagon-link" %>
+
     <% end %>
   </div>
+</div>
 
-  <!-- Dropdown list appearing on mobile only -->
-  <div class="navbar-wagon-item hidden-md hidden-lg">
+
+<!-- Mobile only -->
+<div class="navbar-wagon pl pr hidden-md hidden-lg">
+  <div class="navbar-wagon-child">
+
+  <!-- Dropdown menu logged in -->
+    <% if user_signed_in? %>
+
     <div class="dropdown">
-      <i class="fa fa-bars dropdown-toggle" data-toggle="dropdown"></i>
-      <ul class="dropdown-menu dropdown-menu-right navbar-wagon-dropdown-menu">
-        <li><a href="#">Some mobile link</a></li>
-        <li><a href="#">Other one</a></li>
-        <li><a href="#">Other one</a></li>
+      <i class="fa fa-bars dropdown-toggle text-size-body-small" data-toggle="dropdown"></i>
+      <ul class="dropdown-menu dropdown-menu-left navbar-wagon-dropdown-menu navbar-wagon-dropdown-menu-left">
+        <li>
+          <%= link_to "ACCUEIL", "http://www.see-up.fr/" %>
+        </li>
+        <li>
+        <%= link_to "CONTACTEZ-NOUS", "http://www.see-up.fr/contactez-see-up/" %>
+        </li>
+        <li>
+            <%= link_to "#" do %>
+              <i class="fa fa-user"></i> <%= t(".profile", default: "Profil") %>
+            <% end %>
+        </li>
+        <li>
+          <%= link_to destroy_user_session_path, method: :delete do %>
+            <i class="fa fa-sign-out"></i>  <%= t(".sign_out", default: "Se déconnecter") %>
+          <% end %>
+        </li>
       </ul>
     </div>
+
+  <!-- Dropdown menu logged out -->
+    <% else %>
+
+    <div class="dropdown">
+      <i class="fa fa-bars dropdown-toggle text-small" data-toggle="dropdown"></i>
+      <ul class="dropdown-menu dropdown-menu-left navbar-wagon-dropdown-menu navbar-wagon-dropdown-menu-left">
+        <li>
+          <%= link_to "ACCUEIL", "http://www.see-up.fr/" %>
+        </li>
+        <li>
+        <%= link_to "CONTACTEZ-NOUS", "http://www.see-up.fr/contactez-see-up/" %>
+        </li>
+        <li>
+            <%= link_to t(".sign_in", default: "Se connecter"), new_user_session_path %>
+        </li>
+      </ul>
+    </div>
+
+    <% end %>
+  </div>
+    <!-- Logo -->
+  <div class="navbar-wagon-child">
+      <%= link_to root_path, class: "navbar-wagon-brand" do %>
+        <%= image_tag "logo.png" %>
+      <% end %>
+  </div>
+  <div class="navbar-wagon-child pr-">
   </div>
 </div>
 
