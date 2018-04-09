@@ -12,13 +12,13 @@ Movement.destroy_all
 Harbour.destroy_all # commented until google api access denied solved
 Type.destroy_all
 # User.destroy_all
-puts "DB cleaned"
+puts "DB cleaned excluding users"
 
-example = User.create!(
-    email: "user@example.com",
-    password: "password"
-    )
-puts "Added user@example.com"
+# example = User.create!(
+#     email: "user@example.com",
+#     password: "password"
+#     )
+# puts "Added user@example.com"
 
 # Harbour
 
