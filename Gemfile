@@ -20,6 +20,9 @@ gem 'webpacker'
 # added to project
 gem 'devise-i18n', '~> 1.2'
 
+gem 'activeadmin'
+gem 'inherited_resources'
+
 group :development do
   gem 'web-console', '>= 3.3.0'
 end
