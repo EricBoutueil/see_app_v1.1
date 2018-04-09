@@ -7,8 +7,8 @@ class Harbour < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :address, presence: true, uniqueness: true
 
-  geocoded_by :full_address
-  after_validation :geocode #:address_changed?
+  # geocoded_by :full_address
+  # after_validation :geocode #:address_changed?
 
 
   # @years = Movement.all_years
