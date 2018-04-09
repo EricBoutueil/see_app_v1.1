@@ -1,6 +1,6 @@
 class MovementsController < ApplicationController
 
   def index
-    @movements = Movement.all
+    @movements = policy_scope(Movement)
   end
 end

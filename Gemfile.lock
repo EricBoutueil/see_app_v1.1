@@ -57,6 +57,8 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
+    devise-i18n (1.6.1)
+      devise (>= 4.4)
     erubi (1.7.1)
     execjs (2.7.0)
     ffi (1.9.23)
@@ -189,6 +191,7 @@ DEPENDENCIES
   autoprefixer-rails
   bootstrap-sass (~> 3.3)
   devise
+  devise-i18n (~> 1.2)
   figaro
   font-awesome-sass (~> 4.7)
   jbuilder (~> 2.0)

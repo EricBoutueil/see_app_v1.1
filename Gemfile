@@ -18,7 +18,7 @@ gem 'uglifier'
 gem 'webpacker'
 
 # added to project
-
+gem 'devise-i18n', '~> 1.2'
 
 group :development do
   gem 'web-console', '>= 3.3.0'
