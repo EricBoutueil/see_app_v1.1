@@ -72,8 +72,8 @@ function zoom() {
         map.fitBounds(bounds);
         // map.fitBounds(this.map.bounds);
 
-        var z = map.getZoom();
-        console.log(z);
+        // var z = map.getZoom();
+        // console.log(z);
 
         zoomChangeBoundsListener =
             google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
@@ -85,8 +85,8 @@ function zoom() {
         setTimeout(function(){google.maps.event.removeListener(zoomChangeBoundsListener)}, 2000);
       });
 
-        var z = map.getZoom();
-        console.log(z);
+        // var z = map.getZoom();
+        // console.log(z);
 }
 
 // STEP 3: set data style
@@ -96,6 +96,7 @@ function setFeaturesStyle() {
 
     map.data.setStyle(function(feature) {
       var totalVolume = feature.getProperty('totvol');
+      console.log('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
       return {
         icon: getCircle(totalVolume)
       };
@@ -106,12 +107,12 @@ function setFeaturesStyle() {
 // calculate total volume max of filtered features
 var totalVolumeMax = 0;
 function maxTotvol() {
-    map.data.forEach(function(feature) {
-        if (feature.getProperty('totvol') > totalVolumeMax) {
-          totalVolumeMax = feature.getProperty('totvol');
-        };
-    });
-    // console.log(totalVolumeMax)
+  map.data.forEach(function(feature) {
+    if (feature.getProperty('totvol') > totalVolumeMax) {
+      totalVolumeMax = feature.getProperty('totvol');
+    };
+  });
+  console.log('total vol max = '+ totalVolumeMax);
 }
 
 // show proportional markers (note: markers ares symbols == circles)

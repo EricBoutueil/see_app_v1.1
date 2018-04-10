@@ -13,12 +13,17 @@
 
   <p class="mb0 mt-">Filtre par année:</p> <!-- years -->
   <select id="select2_years", multiple=true, style="width: 500px">
-    <!-- TO DO: variable to move into harbour controller -->
     <% @years.map do |y| %>
       <option value="<%= y %>"><%= y %></option>
     <% end %>
   </select>
 
+  <p class="mb0 mt-">Filtre par famille:</p> <!-- families -->
+  <select id="select2_families", style="width: 500px">
+    <% @families.map do |f| %>
+      <option value="<%= f %>"><%= f.upcase %></option>
+    <% end %>
+  </select>
 
 <!--   <%# @harbours.map do |h| %>
     <li><%#= h.totvol_filter(params) %></li>

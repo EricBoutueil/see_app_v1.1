@@ -3,13 +3,16 @@ import 'select2';
 
 // (1a) selections for select2 fields
 $('#select2_harbours').select2({ // harbours
-    placeholder: "Ecrivez ou sélectionnez pour filtrer",
-    allowClear: true
+  placeholder: "Ecrivez ou sélectionnez pour filtrer",
+  allowClear: true
 });
 
 $('#select2_years').select2({ // years
-    placeholder: "Ecrivez ou sélectionnez pour filtrer",
-    allowClear: true
+  placeholder: "Ecrivez ou sélectionnez pour filtrer",
+  allowClear: true
+});
+
+$('#select2_families').select2({ // families
 });
 
 // (1b) requiring CSS
@@ -22,9 +25,13 @@ $('#select2_harbours').on("change", (event) => { // habours
 $('#select2_years').on("change", (event) => { // years
   buildData();
 });
+$('#select2_families').on("change", (event) => { // families
+  buildData();
+});
 
 // (3) built data in hash
 function buildData() {
+  console.log('***********************')
   var harbours = []; // harbours
   $('#select2_harbours').find("option:selected").each(function(i, selected){
     harbours[i] = $(selected).text();
@@ -37,7 +44,11 @@ function buildData() {
   });
   console.log("years selection(s) = " + years);
 
-  var values = {harbours, years}; // all
+  var codes = []; // codes = families + subfamilies
+  codes = $('#select2_families').select2('data').map(c => c.id);
+  console.log("codes selection(s) = " + codes);
+
+  var values = {harbours, years, codes}; // all
   // console.log(values);
 
   // calling ajax -> (4)
@@ -49,7 +60,7 @@ function callAjax(values) {
   $.get({
     url: '/harbours',
     dataType: "script",
-    data: {name: values.harbours, year: values.years} // all
+    data: {name: values.harbours, year: values.years, code: values.codes} // all
   });
   // console.log({name: values.harbours, year: values.years});
 }

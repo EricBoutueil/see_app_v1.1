@@ -60,10 +60,17 @@ class Harbour < ApplicationRecord
   def vol_filter_by_family(params)
     # (3) without (4)
     # == a or b, c, d, e => code.length == 1
-    if (params[:code]) # note: can only have 1 familly code
-      @types_criterias[:type][:code] = params[:code] # can include tot, imp, exp mvts
+  #   if (params[:code]) # note: can only have 1 family code
+  #     @types_criterias[:type][:code] = params[:code] # can include tot, imp, exp mvts
+  #   else
+  #     @types_criterias[:type] = {code: "a"}
+  #   end
+  # end
+
+    @types_criterias[:code] = if (params[:code]) # can include tot, imp, exp mvts
+      params[:code]
     else
-      @types_criterias[:type] = {code: "a"}
+      "a"
     end
   end
 

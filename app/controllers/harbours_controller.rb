@@ -32,7 +32,9 @@ class HarboursController < ApplicationController
       }
 
     # other instance variables
-    @years = Movement::ALL_YEARS
+    @years = Movement::all_years
+
+    @families = Type::all_families
 
     # respond_to
     respond_to do |format|
