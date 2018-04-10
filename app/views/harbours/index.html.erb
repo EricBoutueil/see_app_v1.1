@@ -1,20 +1,9 @@
 <!-- steps: if no filter -> (1) selected harbours, (2) harbours max year,
-(3) A (and/or 4) all sub fam, (5) tot flux (or exp + imp) [, (6) term, (7) pol_pod] -->
+(3) A (and/or 4) all sub fam, (5) tot flux (or exp + imp) [, (6) pol_pod, (7) term] -->
 
 <div class="row">
 
-<!--   <form action="/" method="get">
-    <label for="name"> Port: </label>
-    <select name="name" id="name">
-      <#% Harbour.all.each do |f| %>
-        <option value="" selected disabled hidden>Choisir le port</option>
-        <option value="<%#=f.name%>"> <%#=f.name.capitalize%>
-        </option>
-      <%# end %>
-    </select>
-    <input type="submit">
-  </form> -->
-
+<!-- Select2 fields -->
   <p class="mb0 mt-">Filtre par port:</p>
   <select id="select2_harbours", multiple=true, style="width: 500px">
     <% @harbours.map do |h| %>
@@ -34,6 +23,7 @@
     <li><%#= h.totvol_filter(params) %></li>
   <%# end %> -->
 
+<!-- Map -->
   <div
     id="map"
     style="width: 100%;
