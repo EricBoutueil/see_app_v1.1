@@ -110,4 +110,4 @@ setFeaturesStyle();
 // google.maps.event.addDomListener(window, "load", initMap);
 // eventListener dataset
 
-// export { loadGeoJson, getCircle };
+export { loadGeoJson };
