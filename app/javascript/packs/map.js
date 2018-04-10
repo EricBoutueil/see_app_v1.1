@@ -45,23 +45,23 @@ function loadGeoJson() {
   if (mapElement) {
     var jsonparsed = JSON.parse(mapElement.dataset.geojson);
 
-    zoom();
+    // zoom();
 
     map.data.addGeoJson(jsonparsed);
 
   };
 }
 
-// auto center map on data layer
-function zoom() {
-    var bounds = new google.maps.LatLngBounds();
-    google.maps.event.addListener(map.data, 'addfeature', function(e) {
-        if (e.feature.getGeometry().getType() === 'Point') {
-          bounds.extend(e.feature.getGeometry().get());
-        }
-        map.fitBounds(bounds);
-      });
-}
+// // auto center map on data layer
+// function zoom() {
+//     var bounds = new google.maps.LatLngBounds();
+//     google.maps.event.addListener(map.data, 'addfeature', function(e) {
+//         if (e.feature.getGeometry().getType() === 'Point') {
+//           bounds.extend(e.feature.getGeometry().get());
+//         }
+//         map.fitBounds(bounds);
+//       });
+// }
 
 // STEP 3: set data style
 function setFeaturesStyle() {
@@ -110,4 +110,4 @@ setFeaturesStyle();
 // google.maps.event.addDomListener(window, "load", initMap);
 // eventListener dataset
 
-// export { loadGeoJson, getCircle };
+// export { loadGeoJson };

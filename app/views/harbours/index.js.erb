@@ -1,51 +1,120 @@
-// import { initMap } from '../../javascript/packs/map';
+// import { loadGeoJson } from '../../javascript/packs/map';
 
-// console.log("js.erb");
-
-var totalVolumeMax = 0;
-
+// STEP 1: init map
 var mapElement = document.getElementById('map');
+var map;
+var mapStyle = [
+  {
+    "featureType": "poi",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels.icon",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  }
+];
+function initMap() {
+  if (mapElement) {
+    map = new google.maps.Map(mapElement, {
+          zoom: 6,
+          center: {lat:46.52863469527167, lng:2.43896484375},
+          // FR: {lat:46.52863469527167, lng:2.43896484375} // MRS: {lat: 43.3, lng: 5.4}
+          styles: mapStyle
+        });
 
+  };
+}
+
+// STEP 2: load GeoJson
 // update value of geojson through dataset.geojson == data-geojson
 mapElement.dataset.geojson = JSON.stringify(<%= @geojson.to_json.html_safe %>);
 
-// trigger new event mapDatasetUpdated
-
-// initMap();
-
-  var map;
-
-  // look for the correct element 'map' in the DOM, so need DOM charged
+function loadGeoJson() {
   if (mapElement) {
-    // STEP 1: init map
-    map = new google.maps.Map(mapElement, {
-          zoom: 6,
-          center: {lat: 43.3, lng: 5.4}
-        });
-
-    // STEP 2: load GeoJson
     var jsonparsed = JSON.parse(mapElement.dataset.geojson);
+
+    zoom();
+
     map.data.addGeoJson(jsonparsed);
 
-    // check max totvol
+  };
+}
+
+// auto center map on data layer
+function zoom() {
+    // initialize the bounds
+    var bounds = new google.maps.LatLngBounds();
+    // loadGeoJson  runs asnchronously, listen to the addfeature-event
+    google.maps.event.addListener(map.data, 'addfeature', function(e) {
+        // check for points
+        if (e.feature.getGeometry().getType() === 'Point') {
+          // extend the bounds
+          bounds.extend(e.feature.getGeometry().get());
+        }
+        // use the bounds
+        map.fitBounds(bounds);
+        // map.fitBounds(this.map.bounds);
+
+        var z = map.getZoom();
+        console.log(z);
+
+        zoomChangeBoundsListener =
+            google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
+                if ( this.getZoom() > 10 ){   // or set a minimum
+                    this.setZoom(10);  // set zoom here
+                }
+        });
+
+        setTimeout(function(){google.maps.event.removeListener(zoomChangeBoundsListener)}, 2000);
+      });
+
+        var z = map.getZoom();
+        console.log(z);
+}
+
+// STEP 3: set data style
+function setFeaturesStyle() {
+  if (mapElement) {
+    maxTotvol();
+
+    map.data.setStyle(function(feature) {
+      var totalVolume = feature.getProperty('totvol');
+      return {
+        icon: getCircle(totalVolume)
+      };
+    });
+  };
+}
+
+// calculate total volume max of filtered features
+var totalVolumeMax = 0;
+function maxTotvol() {
     map.data.forEach(function(feature) {
         if (feature.getProperty('totvol') > totalVolumeMax) {
           totalVolumeMax = feature.getProperty('totvol');
         };
     });
-    console.log('total volume max = ' + totalVolumeMax);
+    // console.log(totalVolumeMax)
+}
 
-    // STEP 3: set style
-    map.data.setStyle(function(feature) {
-      var totalVolume = feature.getProperty('totvol');
-      console.log('total volume = ' + totalVolume);
-      return {
-        icon: getCircle(totalVolume)
-      };
-    });
-  }
-
-
+// show proportional markers (note: markers ares symbols == circles)
 function getCircle(totalVolume) {
   return {
     path: google.maps.SymbolPath.CIRCLE,
@@ -56,3 +125,10 @@ function getCircle(totalVolume) {
     strokeWeight: 1
   };
 }
+
+
+
+// execution
+initMap();
+loadGeoJson();
+setFeaturesStyle();

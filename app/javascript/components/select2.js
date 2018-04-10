@@ -41,6 +41,7 @@ function buildData() {
   console.log("years selection(s) = " + years);
 
   var values = {harbours, years};
+  // console.log(values);
 
   // calling ajax -> (4)
   callAjax(values);
@@ -53,6 +54,7 @@ function callAjax(values) {
     dataType: "script",
     data: {name: values.harbours, year: values.years}
   });
+  // console.log({name: values.harbours, year: values.years});
 }
 
 
