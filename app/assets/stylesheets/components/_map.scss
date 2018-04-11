@@ -1,0 +1,13 @@
+.map-container{
+  width: 1px;
+  height: 1px;
+}
+
+#map {
+  @extend .mt;
+  @extend .mr;
+  flex: 0 0 450px;
+  height: calc(100vh - 107px);
+  width: calc(100vw - 465px);
+  position: sticky !important; /* !important to override Gmaps inline CSS */
+}
