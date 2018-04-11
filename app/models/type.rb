@@ -7,9 +7,9 @@ class Type < ApplicationRecord
     message: "already exists for this flow" }
   validates :flow, presence: true
 
-  # def type_identification
-  #   "#{code} #{flow}"
-  # end
+  def title
+    "#{code} #{flow}"
+  end
 
   # for Select2 families
   def self.all_families
