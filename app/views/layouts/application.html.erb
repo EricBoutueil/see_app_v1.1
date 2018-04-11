@@ -15,9 +15,7 @@
     <%= render 'shared/navbar' %>
     <%= render 'shared/flashes' %>
       <div class='main-container'>
-        <!-- <div class="col-xs-12"> -->
-      <%= yield %>
-        <!-- </div> -->
+        <%= yield %>
       </div>
 
     <!-- js in app/assets -->
@@ -27,8 +25,8 @@
 
     <!-- charging google js api library - needed before map-->
     <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?libraries=places&key=#{ENV['GOOGLE_API_BROWSER_KEY']}" %>
-
     <!-- note: "&callback=initMap" would have called initMap after library charged -->
+
     <!-- execute map.js -->
     <%= javascript_pack_tag 'map' %>
 
