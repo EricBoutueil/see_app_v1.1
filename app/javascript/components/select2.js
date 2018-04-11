@@ -3,14 +3,23 @@ import 'select2';
 
 // (1a) selections for select2 fields
 $('#select2_harbours').select2({ // harbours
-  placeholder: "Ecrivez ou sélectionnez pour filtrer",
+  placeholder: "Ecrivez ou sélectionnez",
   allowClear: true
 });
 
 $('#select2_years').select2({ // years
-  placeholder: "Ecrivez ou sélectionnez pour filtrer",
+  placeholder: "Valeur par défaut: dernière année disponible",
   allowClear: true
 });
+
+// // manually pre-select year
+// }).select2('val', ['2014']);
+// // attempt to automatically select max year - FAILED
+// }).select2('val', ['getMaxTableau(dropDownList)']);
+// // find max for years
+// var dropDownList = $('#select2_years').on('select2-loaded', function(e) {
+//     return e.items.results;
+// });
 
 $('#select2_families').select2({ // families
 });
