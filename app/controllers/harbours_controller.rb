@@ -40,6 +40,8 @@ class HarboursController < ApplicationController
 
     @families = Type::all_families
 
+    @flows = Type::all_flows
+
     # rendering
     respond_to do |format|
       format.html

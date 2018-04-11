@@ -24,4 +24,9 @@ class Type < ApplicationRecord
     return @families
   end
 
+  # for Select2 flows
+  def self.all_flows
+    @flows = ["tot","imp", "exp"]
+  end
+
 end

@@ -24,6 +24,13 @@
     <% end %>
   </select>
 
+  <p class="mb0 mt-">Filtre par flux:</p> <!-- flows -->
+  <select id="select2_flows", style="width: 500px">
+    <% @flows.map do |fl| %>
+      <option value="<%= fl %>"><%= fl %></option>
+    <% end %>
+  </select>
+
 <!--   <%# @harbours.map do |h| %>
     <li><%#= h.totvol_filter(params) %></li>
   <%# end %> -->

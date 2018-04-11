@@ -31,7 +31,7 @@ class Harbour < ApplicationRecord
     return @selected_harbours
   end
 
-  # filtering to calculate @totvol
+  # filtering on each selected harbour DB lines to calculate @totvol
   # filters: (1)harb, (2)year, (3)fam, (4)subfam, (5)flow [+ (6)term, (7)pol_pod]
   def totvol_filter(params)
     # building 1 criterias hash by model, filter by filter
@@ -55,7 +55,7 @@ end
   end
 
   def vol_filter_by_family(params) # (3)
-    @types_criterias[:code] = if (params[:code]) # can include tot, imp, exp mvts
+    @types_criterias[:code] = if (params[:code])
       params[:code]
     else
       "a"
@@ -63,10 +63,11 @@ end
   end
 
   def vol_filter_by_flow(params) #(5)
-    @types_criterias[:flow] = if (params[:flow] == ( "imp" || "exp" )) # can be either tot, imp or exp mvt
-      params[:flow] # can include only 1 flow
-    elsif (params[:flow] == ( "tot"))
-      "tot"
+    # TBU if tot lines exist
+    @types_criterias[:flow] = if (params[:flow] == ["imp"] || params[:flow] == ["exp"])
+      params[:flow]
+    else
+      ["imp", "exp"]
     end
   end
 
