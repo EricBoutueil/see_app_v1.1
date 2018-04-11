@@ -8,6 +8,6 @@ fr:
       flow: Flux
       label: Libellé
       terminal: Terminal
-      pol_pod: POL / POD
+      pol_pod: Origine / Dest.
       year: Année
       volume: Volume

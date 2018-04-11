@@ -22,7 +22,7 @@ $('#select2_flows').select2({ // flows
 import 'select2/dist/css/select2.css';
 
 // (2) "submit" event listeners
-$('#select2_harbours').on("change", (event) => { // habours
+$('#select2_harbours').on("change", (event) => { // harbours
   buildData();
 });
 $('#select2_years').on("change", (event) => { // years

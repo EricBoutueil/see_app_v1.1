@@ -26,7 +26,7 @@ class Type < ApplicationRecord
 
   # for Select2 flows
   def self.all_flows
-    @flows = ["tot","imp", "exp"]
+    @flows = Type.flows.keys
   end
 
 end

@@ -3,31 +3,31 @@
 <div class="row">
 
 <!-- Select2 fields -->
-  <p class="mb0 mt-">Filtre par port:</p> <!-- harbours -->
+  <p class="mb0 mt-"><%= t('.harbour_filter')%></p> <!-- harbours -->
   <select id="select2_harbours", multiple=true, style="width: 500px">
     <% @harbours.map do |h| %>
       <option value="<%= h.name %>"><%= h.name %></option>
     <% end %>
   </select>
 
-  <p class="mb0 mt-">Filtre par année:</p> <!-- years -->
+  <p class="mb0 mt-"><%= t('.year_filter')%></p> <!-- years -->
   <select id="select2_years", multiple=true, style="width: 500px">
     <% @years.map do |y| %>
       <option value="<%= y %>"><%= y %></option>
     <% end %>
   </select>
 
-  <p class="mb0 mt-">Filtre par famille:</p> <!-- families -->
+  <p class="mb0 mt-"><%= t('.family_filter')%></p> <!-- families -->
   <select id="select2_families", style="width: 500px">
     <% @families.map do |f| %>
       <option value="<%= f %>"><%= f.upcase %></option>
     <% end %>
   </select>
 
-  <p class="mb0 mt-">Filtre par flux:</p> <!-- flows -->
+  <p class="mb0 mt-"><%= t('.flow_filter')%></p> <!-- flows -->
   <select id="select2_flows", style="width: 500px">
     <% @flows.map do |fl| %>
-      <option value="<%= fl %>"><%= fl %></option>
+      <option value="<%= fl %>"><%= t("ar.attributes.type.flow.#{fl}") %></option>
     <% end %>
   </select>
 
