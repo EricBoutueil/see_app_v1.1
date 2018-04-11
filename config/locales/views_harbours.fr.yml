@@ -5,11 +5,6 @@ fr:
       year_filter: 'Filtre par année:'
       family_filter: 'Filtre par famille:'
       flow_filter: 'Filtre par flux:'
-      # harbour: Port
-      # code: Famille
-      # flow: Flux
-      # label: Libellé
-      # terminal: Terminal
-      # pol_pod: Origine / Dest.
-      # year: Année
-      # volume: Volume
+    #select2.js:
+      # harbour_placehoder: "Ecrivez ou sélectionnez pour filtrer"
+      # year_placehoder: "Ecrivez ou sélectionnez pour filtrer"
