@@ -1,0 +1,21 @@
+.select2-menu-container{
+  @extend .ml;
+  @extend .mr\+;
+  width: 400px;
+}
+
+.fitler-title{
+  @extend .mb0;
+  @extend .mt;
+}
+
+.multiple-filter,
+.single-filter{
+  width: 100%;
+}
+
+.select2-container .select2-selection--multiple{
+  // min-height: 110px;
+  padding-bottom: 10px;
+}
+
