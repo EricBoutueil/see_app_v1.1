@@ -8,20 +8,24 @@ class HarboursController < ApplicationController
 
     @selected_harbours = Harbour.filter_by_harbour(params, @harbours)
 
-    @features = @selected_harbours.map do |selharbour|
+    @sel_harb_with_vol = @selected_harbours.select do |harb|
+      harb.totvol_filter(params) > 0
+    end
+
+    @features = @sel_harb_with_vol.map do |harb|
       {
         "type": "Feature", #1 feature ~ 1 harbour where (movements.filter).sum
         "properties": {
-          "country": selharbour.country,
-          "name": selharbour.name,
-          "address": selharbour.address,
-          "totvol": selharbour.totvol_filter(params) # harbour.totvol_filter == harbour.movements.types.where(flow: flow, code: code) # total sum to calculate
+          "country": harb.country,
+          "name": harb.name,
+          "address": harb.address,
+          "totvol": harb.totvol_filter(params) # harbour.totvol_filter == harbour.movements.types.where(flow: flow, code: code) # total sum to calculate
         },
         "geometry": {
           "type": "Point",
-          "coordinates": [selharbour.longitude, selharbour.latitude]
+          "coordinates": [harb.longitude, harb.latitude]
         },
-        "id": selharbour.id
+        "id": harb.id
       }
     end
 
