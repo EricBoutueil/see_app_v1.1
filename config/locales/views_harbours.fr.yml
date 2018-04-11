@@ -6,5 +6,5 @@ fr:
       family_filter: 'Filtre par famille:'
       flow_filter: 'Filtre par flux:'
     #select2.js:
-      # harbour_placehoder: "Ecrivez ou sélectionnez pour filtrer"
-      # year_placehoder: "Ecrivez ou sélectionnez pour filtrer"
+      # harbour_placehoder: "Ecrivez ou sélectionnez"
+      # year_placehoder: "Valeur par défaut: dernière année disponible"
