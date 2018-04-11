@@ -1,5 +1,4 @@
-<!-- steps: if no filter -> (1) selected harbours, (2) harbours max year,
-(3) A (and/or 4) all sub fam, (5) tot flux (or exp + imp) [, (6) pol_pod, (7) term] -->
+<!-- filters: (1)harb, (2)year, (3)fam, (4)subfam, (5)flow [+ (6)term, (7)pol_pod] -->
 
 <div class="row">
 
@@ -22,6 +21,13 @@
   <select id="select2_families", style="width: 500px">
     <% @families.map do |f| %>
       <option value="<%= f %>"><%= f.upcase %></option>
+    <% end %>
+  </select>
+
+  <p class="mb0 mt-">Filtre par flux:</p> <!-- flows -->
+  <select id="select2_flows", style="width: 500px">
+    <% @flows.map do |fl| %>
+      <option value="<%= fl %>"><%= fl %></option>
     <% end %>
   </select>
 

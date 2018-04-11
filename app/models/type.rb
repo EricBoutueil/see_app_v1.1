@@ -7,21 +7,26 @@ class Type < ApplicationRecord
     message: "already exists for this flow" }
   validates :flow, presence: true
 
-  def type_identification
-    "#{code} #{flow}"
-  end
+  # def type_identification
+  #   "#{code} #{flow}"
+  # end
 
+  # for Select2 families
   def self.all_families
     @families = []
       Type.all.each do |t|
         unless @families.include?(t.code)
-        # binding.pry
           if t.code.to_s.length == 1
             @families << t.code
           end
         end
       end
     return @families
+  end
+
+  # for Select2 flows
+  def self.all_flows
+    @flows = ["tot","imp", "exp"]
   end
 
 end

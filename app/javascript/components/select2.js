@@ -15,6 +15,9 @@ $('#select2_years').select2({ // years
 $('#select2_families').select2({ // families
 });
 
+$('#select2_flows').select2({ // flows
+});
+
 // (1b) requiring CSS
 import 'select2/dist/css/select2.css';
 
@@ -26,6 +29,9 @@ $('#select2_years').on("change", (event) => { // years
   buildData();
 });
 $('#select2_families').on("change", (event) => { // families
+  buildData();
+});
+$('#select2_flows').on("change", (event) => { // flows
   buildData();
 });
 
@@ -48,7 +54,11 @@ function buildData() {
   codes = $('#select2_families').select2('data').map(c => c.id);
   console.log("codes selection(s) = " + codes);
 
-  var values = {harbours, years, codes}; // all
+  var flows = []; // flows
+  flows = $('#select2_flows').select2('data').map(fl => fl.id);
+  console.log("flows selection(s) = " + flows);
+
+  var values = {harbours, years, codes, flows}; // all
   // console.log(values);
 
   // calling ajax -> (4)
@@ -60,7 +70,7 @@ function callAjax(values) {
   $.get({
     url: '/harbours',
     dataType: "script",
-    data: {name: values.harbours, year: values.years, code: values.codes} // all
+    data: {name: values.harbours, year: values.years, code: values.codes, flow: values.flows} // all
   });
   // console.log({name: values.harbours, year: values.years});
 }

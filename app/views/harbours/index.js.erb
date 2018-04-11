@@ -42,7 +42,7 @@ function initMap() {
   };
 }
 
-// STEP 2: load GeoJson
+// STEP 2: load GeoJson UPDATED
 // update value of geojson through dataset.geojson == data-geojson
 mapElement.dataset.geojson = JSON.stringify(<%= @geojson.to_json.html_safe %>);
 console.log(mapElement.dataset.geojson);
@@ -73,21 +73,19 @@ function zoom() {
         map.fitBounds(bounds);
         // map.fitBounds(this.map.bounds);
 
+        // adapt zoom to bounds
         // var z = map.getZoom();
         // console.log(z);
-
         zoomChangeBoundsListener =
             google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
                 if ( this.getZoom() > 10 ){   // or set a minimum
                     this.setZoom(10);  // set zoom here
                 }
         });
-
         setTimeout(function(){google.maps.event.removeListener(zoomChangeBoundsListener)}, 2000);
-      });
-
         // var z = map.getZoom();
         // console.log(z);
+      });
 }
 
 // STEP 3: set data style
@@ -127,7 +125,6 @@ function getCircle(totalVolume) {
     strokeWeight: 1
   };
 }
-
 
 
 // execution
