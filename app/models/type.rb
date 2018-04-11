@@ -15,9 +15,9 @@ class Type < ApplicationRecord
   def self.all_families
     @families = []
       Type.all.each do |t|
-        unless @families.include?(t.code)
+        unless @families.include?({code: t.code, label: t.label})
           if t.code.to_s.length == 1
-            @families << t.code
+            @families << {code: t.code, label: t.label}
           end
         end
       end

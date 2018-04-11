@@ -21,7 +21,7 @@
       <p class="fitler-title"><%= t('.family_filter')%></p> <!-- families -->
       <select id="select2_families", class="single-filter">
         <% @families.map do |f| %>
-          <option value="<%= f %>"><%= f.upcase %></option>
+          <option value="<%= f[:code] %>"><%= "#{f[:code].upcase} - #{f[:label].capitalize}" %></option>
         <% end %>
       </select>
 
