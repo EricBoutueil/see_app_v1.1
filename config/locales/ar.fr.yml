@@ -20,7 +20,7 @@ fr:
       movement:
         year: Année
         terminal: Terminal
-        pol_pod: POL / POD
+        pol_pod: Origine / Dest.
         volume: Volume
       harbour:
         country: Pays
@@ -33,8 +33,8 @@ fr:
         flow: Flux
         flow:
           tot: Total
-          imp: Importation
-          exp: Exportation
+          imp: Import
+          exp: Export
 
 
 

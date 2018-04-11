@@ -1,0 +1,15 @@
+fr:
+  harbours:
+    index:
+      harbour_filter: 'Filtre par port:'
+      year_filter: 'Filtre par année:'
+      family_filter: 'Filtre par famille:'
+      flow_filter: 'Filtre par flux:'
+      # harbour: Port
+      # code: Famille
+      # flow: Flux
+      # label: Libellé
+      # terminal: Terminal
+      # pol_pod: Origine / Dest.
+      # year: Année
+      # volume: Volume
