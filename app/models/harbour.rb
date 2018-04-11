@@ -45,8 +45,10 @@ class Harbour < ApplicationRecord
     self.vol_filter_by_year(params) # -> (2)
     self.vol_filter_by_family(params) # -> (3) without (4)
     self.vol_filter_by_flow(params) # -> (5)
-    @totvol = self.movements.includes(:type).where(@mvts_criterias, types: @types_criterias).pluck(:volume).sum
-  end
+    # binding.pry
+    @totvol = self.movements.joins(:type).where(@mvts_criterias).where(types: @types_criterias).pluck(:volume).sum
+    # .joins(:type).where({year: ["2014", "2013"]}).where(types: {code: ["e"]})
+end
 
   def vol_filter_by_year(params)
     # binding.pry
