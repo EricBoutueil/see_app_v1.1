@@ -6,10 +6,10 @@ class Movement < ApplicationRecord
     message: "already exists for harbour and flow" }
   validates :volume, presence: true, numericality: true
 
-  # for ActiveAdmin dashboards
-  def type_identification
-    "#{self.type.code} #{self.type.flow}"
-  end
+  # # previoulsy for ActiveAdmin dashboards
+  # def type_title
+  #   "#{self.type.code} #{self.type.flow}"
+  # end
 
   # for Select2 years
   def self.all_years
