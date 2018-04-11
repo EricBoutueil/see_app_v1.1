@@ -32,6 +32,45 @@ body {
   @extend .text-dark-blue;
 }
 
-.content {
+// .content {
+//   display: flex;
+// }
+
+.main-container {
   display: flex;
+}
+
+.left-menu-container{
+  @extend .ml;
+  @extend .mr\+;
+  width: 400px;
+}
+
+.map-container{
+  width: 1px;
+  height: 1px;
+}
+
+.fitler-title{
+  @extend .mb0;
+  @extend .mt;
+}
+
+.multiple-filter{
+  width: 100%;
+  height: 50px;
+}
+
+.single-filter{
+  width: 100%;
+  height: 50px;
+}
+
+#map {
+  @extend .mt;
+  @extend .mr;
+  flex: 0 0 450px;
+  height: calc(100vh - 107px);
+  width: calc(100vw - 465px);
+  position: sticky !important; /* !important to override Gmaps inline CSS */
 }

@@ -1,47 +1,50 @@
 <!-- filters: (1)harb, (2)year, (3)fam, (4)subfam, (5)flow [+ (6)term, (7)pol_pod] -->
 
-<div class="row">
+<div class="left-menu-container">
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- Select2 fields -->
+      <p class="fitler-title"><%= t('.harbour_filter')%></p> <!-- harbours -->
+      <select id="select2_harbours", multiple=true, class="multiple-filter">
+        <% @harbours.map do |h| %>
+          <option value="<%= h.name %>"><%= h.name %></option>
+        <% end %>
+      </select>
 
-<!-- Select2 fields -->
-  <p class="mb0 mt-"><%= t('.harbour_filter')%></p> <!-- harbours -->
-  <select id="select2_harbours", multiple=true, style="width: 500px">
-    <% @harbours.map do |h| %>
-      <option value="<%= h.name %>"><%= h.name %></option>
-    <% end %>
-  </select>
+      <p class="fitler-title"><%= t('.year_filter')%></p> <!-- years -->
+      <select id="select2_years", multiple=true, class="multiple-filter">
+        <% @years.map do |y| %>
+          <option value="<%= y %>"><%= y %></option>
+        <% end %>
+      </select>
 
-  <p class="mb0 mt-"><%= t('.year_filter')%></p> <!-- years -->
-  <select id="select2_years", multiple=true, style="width: 500px">
-    <% @years.map do |y| %>
-      <option value="<%= y %>"><%= y %></option>
-    <% end %>
-  </select>
+      <p class="fitler-title"><%= t('.family_filter')%></p> <!-- families -->
+      <select id="select2_families", class="single-filter">
+        <% @families.map do |f| %>
+          <option value="<%= f %>"><%= f.upcase %></option>
+        <% end %>
+      </select>
 
-  <p class="mb0 mt-"><%= t('.family_filter')%></p> <!-- families -->
-  <select id="select2_families", style="width: 500px">
-    <% @families.map do |f| %>
-      <option value="<%= f %>"><%= f.upcase %></option>
-    <% end %>
-  </select>
-
-  <p class="mb0 mt-"><%= t('.flow_filter')%></p> <!-- flows -->
-  <select id="select2_flows", style="width: 500px">
-    <% @flows.map do |fl| %>
-      <option value="<%= fl %>"><%= t("ar.attributes.type.flow.#{fl}") %></option>
-    <% end %>
-  </select>
+      <p class="fitler-title"><%= t('.flow_filter')%></p> <!-- flows -->
+      <select id="select2_flows", class="single-filter">
+        <% @flows.map do |fl| %>
+          <option value="<%= fl %>"><%= t("ar.attributes.type.flow.#{fl}") %></option>
+        <% end %>
+      </select>
+    </div>
+  </div>
+</div>
 
 <!--   <%# @harbours.map do |h| %>
     <li><%#= h.totvol_filter(params) %></li>
   <%# end %> -->
 
 <!-- Map -->
+<div class="map-container">
+    <div class="row">
   <div
     id="map"
-    style="width: 100%;
-    height: 600px;"
     data-geojson="<%= @geojson.to_json %>"
-    class="mt-"
   ></div>
-
+</div>
 </div>
