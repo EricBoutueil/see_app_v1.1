@@ -11,11 +11,6 @@ class Harbour < ApplicationRecord
   after_validation :geocode #:address_changed?
 
 
-  # @years = Movement.all_years
-
-  # ALL_YEARS = self.all_years
-
-
   YEAR_MAX = Movement.maximum("year") # to be updated with selharbours?
 
 
@@ -50,8 +45,10 @@ class Harbour < ApplicationRecord
     self.vol_filter_by_year(params) # -> (2)
     self.vol_filter_by_family(params) # -> (3) without (4)
     self.vol_filter_by_flow(params) # -> (5)
-    @totvol = self.movements.includes(:type).where(@mvts_criterias, types: @types_criterias).pluck(:volume).sum
-  end
+    # binding.pry
+    @totvol = self.movements.joins(:type).where(@mvts_criterias).where(types: @types_criterias).pluck(:volume).sum
+    # .joins(:type).where({year: ["2014", "2013"]}).where(types: {code: ["e"]})
+end
 
   def vol_filter_by_year(params)
     # binding.pry
@@ -65,10 +62,17 @@ class Harbour < ApplicationRecord
   def vol_filter_by_family(params)
     # (3) without (4)
     # == a or b, c, d, e => code.length == 1
-    if (params[:code]) # note: can only have 1 familly code
-      @types_criterias[:type][:code] = params[:code] # can include tot, imp, exp mvts
+  #   if (params[:code]) # note: can only have 1 family code
+  #     @types_criterias[:type][:code] = params[:code] # can include tot, imp, exp mvts
+  #   else
+  #     @types_criterias[:type] = {code: "a"}
+  #   end
+  # end
+
+    @types_criterias[:code] = if (params[:code]) # can include tot, imp, exp mvts
+      params[:code]
     else
-      @types_criterias[:type] = {code: "a"}
+      "a"
     end
   end
 

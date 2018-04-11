@@ -4,18 +4,24 @@
 <div class="row">
 
 <!-- Select2 fields -->
-  <p class="mb0 mt-">Filtre par port:</p>
+  <p class="mb0 mt-">Filtre par port:</p> <!-- harbours -->
   <select id="select2_harbours", multiple=true, style="width: 500px">
     <% @harbours.map do |h| %>
       <option value="<%= h.name %>"><%= h.name %></option>
     <% end %>
   </select>
 
-  <p class="mb0 mt-">Filtre par year:</p>
+  <p class="mb0 mt-">Filtre par année:</p> <!-- years -->
   <select id="select2_years", multiple=true, style="width: 500px">
-    <!-- TO DO: variable to move into harbour controller -->
-    <% Movement::ALL_YEARS.map do |y| %>
+    <% @years.map do |y| %>
       <option value="<%= y %>"><%= y %></option>
+    <% end %>
+  </select>
+
+  <p class="mb0 mt-">Filtre par famille:</p> <!-- families -->
+  <select id="select2_families", style="width: 500px">
+    <% @families.map do |f| %>
+      <option value="<%= f %>"><%= f.upcase %></option>
     <% end %>
   </select>
 

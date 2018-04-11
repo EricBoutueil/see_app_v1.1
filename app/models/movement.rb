@@ -23,6 +23,5 @@ class Movement < ApplicationRecord
     return @years
   end
 
-  ALL_YEARS = self.all_years
 
 end

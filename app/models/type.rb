@@ -10,4 +10,18 @@ class Type < ApplicationRecord
   def type_identification
     "#{code} #{flow}"
   end
+
+  def self.all_families
+    @families = []
+      Type.all.each do |t|
+        unless @families.include?(t.code)
+        # binding.pry
+          if t.code.to_s.length == 1
+            @families << t.code
+          end
+        end
+      end
+    return @families
+  end
+
 end

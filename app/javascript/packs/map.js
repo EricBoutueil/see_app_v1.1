@@ -70,6 +70,7 @@ function setFeaturesStyle() {
 
     map.data.setStyle(function(feature) {
       var totalVolume = feature.getProperty('totvol');
+      console.log('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
       return {
         icon: getCircle(totalVolume)
       };
@@ -80,12 +81,12 @@ function setFeaturesStyle() {
 // calculate total volume max of filtered features
 var totalVolumeMax = 0;
 function maxTotvol() {
-    map.data.forEach(function(feature) {
-        if (feature.getProperty('totvol') > totalVolumeMax) {
-          totalVolumeMax = feature.getProperty('totvol');
-        };
-    });
-    // console.log(totalVolumeMax)
+  map.data.forEach(function(feature) {
+    if (feature.getProperty('totvol') > totalVolumeMax) {
+      totalVolumeMax = feature.getProperty('totvol');
+    };
+  });
+  console.log('total vol max = '+ totalVolumeMax);
 }
 
 // show proportional markers (note: markers ares symbols == circles)

@@ -31,6 +31,11 @@ class HarboursController < ApplicationController
         "features": @features
       }
 
+    # other instance variables
+    @years = Movement::all_years
+
+    @families = Type::all_families
+
     # respond_to
     respond_to do |format|
       format.html
