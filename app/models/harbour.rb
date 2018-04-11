@@ -1,5 +1,5 @@
 class Harbour < ApplicationRecord
-  has_many :movements, dependent: :nullify # custom TBD for archive
+  has_many :movements, dependent: :nullify # custom TBD for archive -> history
 
   has_many :types, through: :movements
 
@@ -13,11 +13,11 @@ class Harbour < ApplicationRecord
 
   YEAR_MAX = Movement.maximum("year") # to be updated with selharbours?
 
-
   def full_address
     "#{address}, #{country}"
   end
 
+  # filter for harbours in geojson
   def self.filter_by_harbour(params, harbours)
     # binding.pry
     @selected_harbours = []
@@ -31,27 +31,22 @@ class Harbour < ApplicationRecord
     return @selected_harbours
   end
 
-  # above == functional
-
+  # filtering to calculate @totvol
+  # filters: (1)harb, (2)year, (3)fam, (4)subfam, (5)flow [+ (6)term, (7)pol_pod]
   def totvol_filter(params)
-    # no sum, just filter selected lines
-    # steps: if no filter -> (1) selected harbours, (2) harbours max year,
-    # (3) A (and/or 4) all sub fam, (5) tot flux (or exp + imp) [, (6) term, (7) pol_pod]
-
-    # -> (1) from feature
-    # building a criterias hash step by step
+    # building 1 criterias hash by model, filter by filter
     @mvts_criterias = {}
     @types_criterias = {}
+    # each feature == (1)
     self.vol_filter_by_year(params) # -> (2)
     self.vol_filter_by_family(params) # -> (3) without (4)
     self.vol_filter_by_flow(params) # -> (5)
     # binding.pry
     @totvol = self.movements.joins(:type).where(@mvts_criterias).where(types: @types_criterias).pluck(:volume).sum
-    # .joins(:type).where({year: ["2014", "2013"]}).where(types: {code: ["e"]})
+    # ex. -> where({year: ["2014", "2013"]}).where(types: {code: ["e"]})
 end
 
-  def vol_filter_by_year(params)
-    # binding.pry
+  def vol_filter_by_year(params) # (2)
     @mvts_criterias[:year] = if (params[:year])
       params[:year]
     else
@@ -59,16 +54,7 @@ end
     end
   end
 
-  def vol_filter_by_family(params)
-    # (3) without (4)
-    # == a or b, c, d, e => code.length == 1
-  #   if (params[:code]) # note: can only have 1 family code
-  #     @types_criterias[:type][:code] = params[:code] # can include tot, imp, exp mvts
-  #   else
-  #     @types_criterias[:type] = {code: "a"}
-  #   end
-  # end
-
+  def vol_filter_by_family(params) # (3)
     @types_criterias[:code] = if (params[:code]) # can include tot, imp, exp mvts
       params[:code]
     else
@@ -76,14 +62,11 @@ end
     end
   end
 
-  def vol_filter_by_flow(params)
-    # (5)
-    if (params[:flow])
-      @types_criterias[:type][:flow] = if (params[:flow] == ( "imp" || "exp" )) # can be either tot, imp or exp mvt
-        params[:flow] # can include only 1 flow
-      else (params[:flow] == ( "tot"))
-        "tot"
-      end
+  def vol_filter_by_flow(params) #(5)
+    @types_criterias[:flow] = if (params[:flow] == ( "imp" || "exp" )) # can be either tot, imp or exp mvt
+      params[:flow] # can include only 1 flow
+    elsif (params[:flow] == ( "tot"))
+      "tot"
     end
   end
 
@@ -93,13 +76,6 @@ end
     #     @mvts_subfam = @fams_mvt
     #   end
 
-  # def self.tot_vol_max
-  #   tot_vol_all = []
-  #   @selected_harbours.each do |h|
-  #     tot_vol_all << h.total_filter(params)
-  #   end
-  #   @tot_vol_max = tot_vol_all.max
-  # end
 
 end
 

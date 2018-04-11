@@ -45,7 +45,7 @@ function loadGeoJson() {
   if (mapElement) {
     var jsonparsed = JSON.parse(mapElement.dataset.geojson);
 
-    // zoom();
+    // zoom(); -> not needed when loading first html
 
     map.data.addGeoJson(jsonparsed);
 
@@ -53,15 +53,7 @@ function loadGeoJson() {
 }
 
 // // auto center map on data layer
-// function zoom() {
-//     var bounds = new google.maps.LatLngBounds();
-//     google.maps.event.addListener(map.data, 'addfeature', function(e) {
-//         if (e.feature.getGeometry().getType() === 'Point') {
-//           bounds.extend(e.feature.getGeometry().get());
-//         }
-//         map.fitBounds(bounds);
-//       });
-// }
+// function zoom() {...}
 
 // STEP 3: set data style
 function setFeaturesStyle() {

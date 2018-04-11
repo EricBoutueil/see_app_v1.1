@@ -14,12 +14,12 @@ class HarboursController < ApplicationController
 
     @features = @sel_harb_with_vol.map do |harb|
       {
-        "type": "Feature", #1 feature ~ 1 harbour where (movements.filter).sum
+        "type": "Feature", # 1 feature ~ 1 harbour where "movements.filtered.sum"
         "properties": {
           "country": harb.country,
           "name": harb.name,
           "address": harb.address,
-          "totvol": harb.totvol_filter(params) # harbour.totvol_filter == harbour.movements.types.where(flow: flow, code: code) # total sum to calculate
+          "totvol": harb.totvol_filter(params)
         },
         "geometry": {
           "type": "Point",
@@ -40,7 +40,7 @@ class HarboursController < ApplicationController
 
     @families = Type::all_families
 
-    # respond_to
+    # rendering
     respond_to do |format|
       format.html
       format.js  # <-- will render `app/views/harbours/index.js.erb`
