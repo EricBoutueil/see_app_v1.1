@@ -6,6 +6,7 @@ class HarboursController < ApplicationController
     # harbours
     @harbours = policy_scope(Harbour)
 
+    # TO DO: refacto into model harb
     @selected_harbours = Harbour.filter_by_harbour(params, @harbours)
 
     @sel_harb_with_vol = @selected_harbours.select do |harb|

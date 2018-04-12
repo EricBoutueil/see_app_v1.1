@@ -67,6 +67,7 @@ end
   end
 
   def vol_filter_by_family(params) # (4)
+    # binding.pry
     @types_criterias[:code] = if (params[:code])
       if (params[:code].length == 1)
         params[:code]
@@ -78,20 +79,47 @@ end
     end
   end
 
-  def vol_filter_by_subfamily1(params) # (5a)
+  def vol_filter_by_subfamily1(params) # (5a) -> criterias replace 4
+    # binding.pry
     @types_criterias[:code] = if (params[:code])
       if (params[:code].length == 2)
         params[:code]
+      else
+        @types_criterias[:code]
       end
     else
+      @types_criterias[:code]
       # binding.pry
-      # @types_criterias[:code] = "a"
-      @fam = @types_criterias[:code]
-      Type::all_subfamilies1.map do |t|
-        if t[:code][0] == @fam
-          @types_criterias[:code] << ",#{t[:code]}"
-        end
+      # # @types_criterias[:code] = "a"
+      # @fam = @types_criterias[:code]
+      # Type::all_subfamilies1.map do |t|
+      #   if t[:code][0] == @fam
+      #     @types_criterias[:code].to_a << ",#{t[:code]}"
+      #   end
+      # end
+      # binding.pry
+    end
+  end
+
+  def vol_filter_by_subfamily2(params) # (5b) -> criterias add to 5a
+    # binding.pry
+    @types_criterias[:code] = if (params[:code])
+      if (params[:code].length == 2)
+        params[:code]
+      else
+        @types_criterias[:code]
       end
+    else
+      @types_criterias[:code]
+      # binding.pry
+      # # @types_criterias[:code] = "a"
+      # @fam = @types_criterias[:code]
+      # Type::all_subfamilies1.map do |t|
+      #   if t[:code][0] == @fam
+      #     @types_criterias[:code].to_a << ",#{t[:code]}"
+      #   end
+      # end
+      # binding.pry
     end
   end
 
