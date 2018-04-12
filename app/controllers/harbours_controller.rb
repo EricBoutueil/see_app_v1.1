@@ -6,6 +6,7 @@ class HarboursController < ApplicationController
     # harbours
     @harbours = policy_scope(Harbour)
 
+    # TO DO: refacto into model harb
     @selected_harbours = Harbour.filter_by_harbour(params, @harbours)
 
     @sel_harb_with_vol = @selected_harbours.select do |harb|
@@ -38,9 +39,11 @@ class HarboursController < ApplicationController
     # other instance variables
     @years = Movement::all_years
 
+    @flows = Type::all_flows
+
     @families = Type::all_families
 
-    @flows = Type::all_flows
+    @subfamilies1 = Type::all_subfamilies1
 
     # rendering
     respond_to do |format|

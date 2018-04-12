@@ -3,7 +3,7 @@ import 'select2';
 
 // (1a) selections for select2 fields
 $('#select2_harbours').select2({ // harbours
-  placeholder: "Ecrivez ou sélectionnez",
+  placeholder: "Sélectionner ou écrire pour filtrer",
   allowClear: true
 });
 
@@ -21,15 +21,20 @@ $('#select2_years').select2({ // years
 //     return e.items.results;
 // });
 
+$('#select2_flows').select2(); // flows
+
 $('#select2_families').select2(); // families
 
-$('#select2_flows').select2(); // flows
+$('#select2_subfamilies1').select2({ // subfamilies1
+  placeholder: "Optionnel",
+  allowClear: true
+});
 
 // (1b) requiring CSS
 import 'select2/dist/css/select2.css';
 
 
-// (2a) initial build
+// (2a) initial build => AUTOMATIC FIRST AJAX CALL
 buildData();
 
 // (2b) "submit" event listeners
@@ -39,10 +44,13 @@ $('#select2_harbours').on("change", (event) => { // harbours
 $('#select2_years').on("change", (event) => { // years
   buildData();
 });
+$('#select2_flows').on("change", (event) => { // flows
+  buildData();
+});
 $('#select2_families').on("change", (event) => { // families
   buildData();
 });
-$('#select2_flows').on("change", (event) => { // flows
+$('#select2_subfamilies1').on("change", (event) => { // subfamilies1
   buildData();
 });
 
@@ -61,15 +69,25 @@ function buildData() {
   });
   console.log("years selection(s) = " + years);
 
-  var codes = []; // codes = families + subfamilies
-  codes = $('#select2_families').select2('data').map(c => c.id);
-  console.log("codes selection(s) = " + codes);
-
   var flows = []; // flows
   flows = $('#select2_flows').select2('data').map(fl => fl.id);
   console.log("flows selection(s) = " + flows);
 
-  var values = {harbours, years, codes, flows}; // all
+  var codes = []; // codes = families + subfamilies1
+  codes = $('#select2_families').select2('data').map(c => c.id);
+  $('#select2_subfamilies1').find("option:selected").each(function(i, selected){
+    codes[i] = $(selected).attr("value"); // overwrite families
+  });
+  console.log("codes selection(s) = " + codes);
+
+  // var codes = []; // codes = families + subfamilies2
+  // codes = $('#select2_families').select2('data').map(c => c.id);
+  // $('#select2_subfamilies2').find("option:selected").each(function(i, selected){
+  //   codes[i+1] = $(selected).attr("value"); // add to subfamilies1 (+overwrite families)
+  // });
+  // console.log("codes selection(s) = " + codes);
+
+  var values = {harbours, years, flows, codes}; // all
   // console.log(values);
 
   // calling ajax -> (4)
@@ -81,7 +99,7 @@ function callAjax(values) {
   $.get({
     url: '/harbours',
     dataType: "script",
-    data: {name: values.harbours, year: values.years, code: values.codes, flow: values.flows} // all
+    data: {name: values.harbours, year: values.years, flow: values.flows, code: values.codes} // all
   });
   // console.log({name: values.harbours, year: values.years});
 }

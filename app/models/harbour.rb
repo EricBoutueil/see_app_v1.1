@@ -32,15 +32,16 @@ class Harbour < ApplicationRecord
   end
 
   # filtering on each selected harbour DB lines to calculate @totvol
-  # filters: (1)harb, (2)year, (3)fam, (4)subfam, (5)flow [+ (6)term, (7)pol_pod]
+  # filters: (1)harb, (2)year, (3)flow, (4)fam, (5)subfam [+ (6)term, (7)pol_pod]
   def totvol_filter(params)
     # building 1 criterias hash by model, filter by filter
     @mvts_criterias = {}
     @types_criterias = {}
     # each feature == (1)
     self.vol_filter_by_year(params) # -> (2)
-    self.vol_filter_by_family(params) # -> (3) without (4)
-    self.vol_filter_by_flow(params) # -> (5)
+    self.vol_filter_by_flow(params) # -> (3)
+    self.vol_filter_by_family(params) # -> (4)
+    self.vol_filter_by_subfamily1(params) # -> (5a)
     # binding.pry
     @totvol = self.movements.joins(:type).where(@mvts_criterias).where(types: @types_criterias).pluck(:volume).sum
     # ex. -> where({year: ["2014", "2013"]}).where(types: {code: ["e"]})
@@ -54,15 +55,7 @@ end
     end
   end
 
-  def vol_filter_by_family(params) # (3)
-    @types_criterias[:code] = if (params[:code])
-      params[:code]
-    else
-      "a"
-    end
-  end
-
-  def vol_filter_by_flow(params) #(5)
+  def vol_filter_by_flow(params) #(3)
     # TBU if tot lines exist
     @types_criterias[:flow] = if (params[:flow] == ["imp"] || params[:flow] == ["exp"])
       params[:flow]
@@ -73,12 +66,62 @@ end
     end
   end
 
-    # # (4)
-    # params[:code].each do |code|
-    #   unless code.length == 1 #except a, b, c, d, e
-    #     @mvts_subfam = @fams_mvt
-    #   end
+  def vol_filter_by_family(params) # (4)
+    # binding.pry
+    @types_criterias[:code] = if (params[:code])
+      if (params[:code].length == 1)
+        params[:code]
+      else
+        "a"
+      end
+    else
+      "a"
+    end
+  end
 
+  def vol_filter_by_subfamily1(params) # (5a) -> criterias replace 4
+    # binding.pry
+    @types_criterias[:code] = if (params[:code])
+      if (params[:code].length == 2)
+        params[:code]
+      else
+        @types_criterias[:code]
+      end
+    else
+      @types_criterias[:code]
+      # binding.pry
+      # # @types_criterias[:code] = "a"
+      # @fam = @types_criterias[:code]
+      # Type::all_subfamilies1.map do |t|
+      #   if t[:code][0] == @fam
+      #     @types_criterias[:code].to_a << ",#{t[:code]}"
+      #   end
+      # end
+      # binding.pry
+    end
+  end
+
+  def vol_filter_by_subfamily2(params) # (5b) -> criterias add to 5a
+    # binding.pry
+    @types_criterias[:code] = if (params[:code])
+      if (params[:code].length == 2)
+        params[:code]
+      else
+        @types_criterias[:code]
+      end
+    else
+      @types_criterias[:code]
+      # binding.pry
+      # # @types_criterias[:code] = "a"
+      # @fam = @types_criterias[:code]
+      # Type::all_subfamilies1.map do |t|
+      #   if t[:code][0] == @fam
+      #     @types_criterias[:code].to_a << ",#{t[:code]}"
+      #   end
+      # end
+      # binding.pry
+    end
+  end
 
 end
 

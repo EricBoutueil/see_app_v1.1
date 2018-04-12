@@ -7,8 +7,14 @@ class Type < ApplicationRecord
     message: "already exists for this flow" }
   validates :flow, presence: true
 
+  # for ActiveAdmin dashboards
   def title
     "#{code} #{flow}"
+  end
+
+  # for Select2 flows
+  def self.all_flows
+    @flows = Type.flows.keys
   end
 
   # for Select2 families
@@ -24,9 +30,18 @@ class Type < ApplicationRecord
     return @families
   end
 
-  # for Select2 flows
-  def self.all_flows
-    @flows = Type.flows.keys
+  # for Select2 subfamilies1
+  def self.all_subfamilies1
+    # binding.pry
+    @subfamilies1 = []
+      Type.all.each do |t|
+        unless @subfamilies1.include?({code: t.code, label: t.label})
+          if t.code.to_s.length == 2
+            @subfamilies1 << {code: t.code, label: t.label}
+          end
+        end
+      end
+    return @subfamilies1
   end
 
 end
