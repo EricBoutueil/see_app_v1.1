@@ -31,14 +31,17 @@ class Type < ApplicationRecord
   end
 
   # for Select2 subfamilies1
-  def self.all_subfamilies1
+  def self.all_subfamilies1 #(params)
     # binding.pry
+
+    # (params[:flow] == ["imp"] || params[:flow] == ["exp"])
+
     @subfamilies1 = []
       Type.all.each do |t|
         unless @subfamilies1.include?({code: t.code, label: t.label})
-          if t.code.to_s.length == 2
+          # if t.code.to_s.length == 2
             @subfamilies1 << {code: t.code, label: t.label}
-          end
+          # end
         end
       end
     return @subfamilies1
