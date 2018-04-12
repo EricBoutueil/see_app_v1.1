@@ -48,16 +48,29 @@ $('#select2_flows').on("change", (event) => { // flows
   buildData();
 });
 $('#select2_families').on("change", (event) => { // families
-  buildData();
-// });
-// $('#select2_families').on("change", function() { // families
-  resetSubfamilies(); // (5)
+  // buildData();
+  // });
+  // $('#select2_families').on("change", function() { // families
+  resetSubfamilies(); // (pre-3) + (3)
 });
 $('#select2_subfamilies1').on("change", (event) => { // subfamilies1
   buildData();
 });
 
-// (3) built data in hash
+// (pre-3) when selecting families reset all subfamilies + buildData + callAjaxTypes
+function resetSubfamilies() {
+  console.log("reseting subfamilies")
+  $('#select2_subfamilies1').val(null).trigger('change');
+  // $('select2_subfamilies1').each(function () {
+  //     $(this).select2('val', '')
+  // });
+
+  buildData(); // (3)
+  // buildDataTypes(); // (3bis)
+
+}
+
+// (3) build harbours data in hash + callAjax
 function buildData() {
   console.log('***********************')
   var harbours = []; // harbours
@@ -76,7 +89,7 @@ function buildData() {
   flows = $('#select2_flows').select2('data').map(fl => fl.id);
   console.log("flows selection(s) = " + flows);
 
-  var codes = []; // codes = families + subfamilies1
+  var codes = []; // codes = families + all subfamilies
   var count = 0
   // level0: families
   codes = $('#select2_families').select2('data').map(c => c.id);
@@ -86,24 +99,20 @@ function buildData() {
     count = i
   });
   // level2: subfamilies2
-  // need reset add bellow families when selecting a subfamily? OR @filtered_options?
-  console.log("codes selection(s) = " + codes);
-
-  // var codes = []; // codes = families + subfamilies2
-  // codes = $('#select2_families').select2('data').map(c => c.id);
-  // $('#select2_subfamilies2').find("option:selected").each(function(i, selected){
-  //   codes[i+1] = $(selected).attr("value"); // add to subfamilies1 (+overwrite families)
+  // $('#select2_subfamilies2').find("option:selected").each(function(j, selected){
+  //  codes[count + j] = $(selected).attr("value"); // add to subfamilies1 (+overwrite families)
+  //  count = count + j
   // });
-  // console.log("codes selection(s) = " + codes);
+  console.log("codes selection(s) = " + codes);
 
   var values = {harbours, years, flows, codes}; // all
   // console.log(values);
 
-  // calling ajax -> (4)
+  // ajax get to harbours -> (4)
   callAjax(values);
 }
 
-// (4) call ajax get
+// (4) ajax get to harbours
 function callAjax(values) {
   $.get({
     url: '/harbours',
@@ -114,15 +123,21 @@ function callAjax(values) {
 }
 
 
-// (5) reset all subfamilies when selecting families
-function resetSubfamilies() {
-  console.log("reseting subfamilies")
-  $('#select2_subfamilies1').val(null).trigger('change');
-  // $('select2_subfamilies1').each(function () {
-  //     $(this).select2('val', '')
-  // });
-}
+// // (3bis) build types data in hash + callAjaxTypes
+// function buildDataTypes() {
+//   // ajax get to types -> (4bis)
+//   // callAjaxTypes(options);
+// }
 
+// // (4bis) ajax get to types
+// function callAjaxTypes(values) {
+//   $.get({
+//     url: '/types',
+//     dataType: "script",
+//     data: {name: values.harbours, year: values.years, flow: values.flows, code: values.codes} // all
+//   });
+//   console.log({name: values.harbours, year: values.years, flow: values.flows, code: values.codes});
+// }
 
 // console.log(event);
 // console.log(event.params);
