@@ -3,7 +3,7 @@ import 'select2';
 
 // (1a) selections for select2 fields
 $('#select2_harbours').select2({ // harbours
-  placeholder: "Ecrire ou sélectionner pour filtrer",
+  placeholder: "Sélectionner ou écrire pour filtrer",
   allowClear: true
 });
 
@@ -76,14 +76,14 @@ function buildData() {
   var codes = []; // codes = families + subfamilies1
   codes = $('#select2_families').select2('data').map(c => c.id);
   $('#select2_subfamilies1').find("option:selected").each(function(i, selected){
-    codes[i] = $(selected).attr("value");
+    codes[i] = $(selected).attr("value"); // overwrite families
   });
   console.log("codes selection(s) = " + codes);
 
   // var codes = []; // codes = families + subfamilies2
   // codes = $('#select2_families').select2('data').map(c => c.id);
   // $('#select2_subfamilies2').find("option:selected").each(function(i, selected){
-  //   codes[i+1] = $(selected).attr("value");
+  //   codes[i+1] = $(selected).attr("value"); // add to subfamilies1 (+overwrite families)
   // });
   // console.log("codes selection(s) = " + codes);
 

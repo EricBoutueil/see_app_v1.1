@@ -3,8 +3,12 @@ fr:
     index:
       harbour_filter: 'Filtre par port:'
       year_filter: 'Filtre par année:'
-      family_filter: 'Filtre par famille:'
       flow_filter: 'Filtre par flux:'
+      family_filter: 'Filtre par famille:'
+      subfamily1_filter: 'Sous-filtre par niveau 1:'
+      subfamily2_filter: 'Sous-filtre par niveau 2:'
+      subfamily3_filter: 'Sous-filtre par niveau 3:'
     #select2.js:
-      # harbour_placehoder: "Ecrivez ou sélectionnez"
+      # harbour_placehoder: "Sélectionner ou écrire pour filtrer"
       # year_placehoder: "Valeur par défaut: dernière année disponible"
+      # subfamily_placehoder: "Optionnel"
