@@ -66,6 +66,8 @@ end
     # TBU if tot lines exist
     @types_criterias[:flow] = if (params[:flow] == ["imp"] || params[:flow] == ["exp"])
       params[:flow]
+    elsif self.movements.joins(:type).where(types: {flow: ["tot"]}).exists?
+          ["tot"]
     else
       ["imp", "exp"]
     end

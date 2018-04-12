@@ -21,16 +21,18 @@ $('#select2_years').select2({ // years
 //     return e.items.results;
 // });
 
-$('#select2_families').select2({ // families
-});
+$('#select2_families').select2(); // families
 
-$('#select2_flows').select2({ // flows
-});
+$('#select2_flows').select2(); // flows
 
 // (1b) requiring CSS
 import 'select2/dist/css/select2.css';
 
-// (2) "submit" event listeners
+
+// (2a) initial build
+buildData();
+
+// (2b) "submit" event listeners
 $('#select2_harbours').on("change", (event) => { // harbours
   buildData();
 });
