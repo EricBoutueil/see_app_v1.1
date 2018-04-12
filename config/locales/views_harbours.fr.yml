@@ -5,9 +5,9 @@ fr:
       year_filter: 'Filtre par année:'
       flow_filter: 'Filtre par flux:'
       family_filter: 'Filtre par famille:'
-      subfamily1_filter: 'Sous-filtre par niveau 1:'
-      subfamily2_filter: 'Sous-filtre par niveau 2:'
-      subfamily3_filter: 'Sous-filtre par niveau 3:'
+      subfamily1_filter: 'Sous-filtre (niveau 1):'
+      subfamily2_filter: 'Sous-filtre (niveau 2):'
+      subfamily3_filter: 'Sous-filtre (niveau 3):'
     #select2.js:
       # harbour_placehoder: "Sélectionner ou écrire pour filtrer"
       # year_placehoder: "Valeur par défaut: dernière année disponible"

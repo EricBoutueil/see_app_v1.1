@@ -17,7 +17,7 @@ class Harbour < ApplicationRecord
     "#{address}, #{country}"
   end
 
-  # filter for harbours in geojson
+  # A) filtering harbours in geojson
   def self.filter_by_harbour(params, harbours)
     # binding.pry
     @selected_harbours = []
@@ -31,7 +31,7 @@ class Harbour < ApplicationRecord
     return @selected_harbours
   end
 
-  # filtering on each selected harbour DB lines to calculate @totvol
+  # B) filtering each selected harbour DB lines to calculate @totvol
   # filters: (1)harb, (2)year, (3)flow, (4)fam, (5)subfam [+ (6)term, (7)pol_pod]
   def totvol_filter(params)
     # building 1 criterias hash by model, filter by filter
@@ -42,6 +42,7 @@ class Harbour < ApplicationRecord
     self.vol_filter_by_flow(params) # -> (3)
     self.vol_filter_by_family(params) # -> (4)
     self.vol_filter_by_subfamily1(params) # -> (5a)
+    # self.vol_filter_by_subfamily2(params) # -> (5b)
     # binding.pry
     @totvol = self.movements.joins(:type).where(@mvts_criterias).where(types: @types_criterias).pluck(:volume).sum
     # ex. -> where({year: ["2014", "2013"]}).where(types: {code: ["e"]})
@@ -66,7 +67,7 @@ end
     end
   end
 
-  def vol_filter_by_family(params) # (4)
+  def vol_filter_by_family(params) # (4) OK
     # binding.pry
     @types_criterias[:code] = if (params[:code])
       if (params[:code].length == 1)
@@ -79,7 +80,7 @@ end
     end
   end
 
-  def vol_filter_by_subfamily1(params) # (5a) -> criterias replace 4
+  def vol_filter_by_subfamily1(params) # (5a) -> criterias replace 4 in select2.js OK
     # binding.pry
     @types_criterias[:code] = if (params[:code])
       if (params[:code].length == 2)
@@ -89,38 +90,30 @@ end
       end
     else
       @types_criterias[:code]
-      # binding.pry
-      # # @types_criterias[:code] = "a"
-      # @fam = @types_criterias[:code]
-      # Type::all_subfamilies1.map do |t|
-      #   if t[:code][0] == @fam
-      #     @types_criterias[:code].to_a << ",#{t[:code]}"
-      #   end
-      # end
-      # binding.pry
     end
   end
 
-  def vol_filter_by_subfamily2(params) # (5b) -> criterias add to 5a
-    # binding.pry
-    @types_criterias[:code] = if (params[:code])
-      if (params[:code].length == 2)
-        params[:code]
-      else
-        @types_criterias[:code]
+#   def vol_filter_by_subfamily2(params) # (5b) -> criterias add to 5a in select2.js TBF
+#     # binding.pry
+#     # # @types_criterias[:code] = "a1"
+#     # @fam = @types_criterias[:code]
+#     # Type::all_subfamilies1.map do |t|
+#     #   if t[:code][0] == @fam
+#     #     @types_criterias[:code].to_a << ",#{t[:code]}"
+#     #   end
+#     # end
+#     # binding.pry
+#   end
+
+  # C) filtering options for select2 thanks to params
+  def options_filter(params)
+    @fam = @types_criterias[:code]
+    Type::all_subfamilies1.map do |t|
+      if t[:code][0] == @fam
+        @types_criterias[:code].to_a << ",#{t[:code]}"
       end
-    else
-      @types_criterias[:code]
-      # binding.pry
-      # # @types_criterias[:code] = "a"
-      # @fam = @types_criterias[:code]
-      # Type::all_subfamilies1.map do |t|
-      #   if t[:code][0] == @fam
-      #     @types_criterias[:code].to_a << ",#{t[:code]}"
-      #   end
-      # end
-      # binding.pry
     end
+    binding.pry
   end
 
 end

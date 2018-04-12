@@ -37,7 +37,7 @@ import 'select2/dist/css/select2.css';
 // (2a) initial build => AUTOMATIC FIRST AJAX CALL
 buildData();
 
-// (2b) "submit" event listeners
+// (2b) event listeners for buildData and resets
 $('#select2_harbours').on("change", (event) => { // harbours
   buildData();
 });
@@ -49,6 +49,9 @@ $('#select2_flows').on("change", (event) => { // flows
 });
 $('#select2_families').on("change", (event) => { // families
   buildData();
+// });
+// $('#select2_families').on("change", function() { // families
+  resetSubfamilies(); // (5)
 });
 $('#select2_subfamilies1').on("change", (event) => { // subfamilies1
   buildData();
@@ -74,10 +77,16 @@ function buildData() {
   console.log("flows selection(s) = " + flows);
 
   var codes = []; // codes = families + subfamilies1
+  var count = 0
+  // level0: families
   codes = $('#select2_families').select2('data').map(c => c.id);
+  // level1: subfamilies1
   $('#select2_subfamilies1').find("option:selected").each(function(i, selected){
     codes[i] = $(selected).attr("value"); // overwrite families
+    count = i
   });
+  // level2: subfamilies2
+  // need reset add bellow families when selecting a subfamily? OR @filtered_options?
   console.log("codes selection(s) = " + codes);
 
   // var codes = []; // codes = families + subfamilies2
@@ -101,7 +110,17 @@ function callAjax(values) {
     dataType: "script",
     data: {name: values.harbours, year: values.years, flow: values.flows, code: values.codes} // all
   });
-  // console.log({name: values.harbours, year: values.years});
+  console.log({name: values.harbours, year: values.years, flow: values.flows, code: values.codes});
+}
+
+
+// (5) reset all subfamilies when selecting families
+function resetSubfamilies() {
+  console.log("reseting subfamilies")
+  $('#select2_subfamilies1').val(null).trigger('change');
+  // $('select2_subfamilies1').each(function () {
+  //     $(this).select2('val', '')
+  // });
 }
 
 
