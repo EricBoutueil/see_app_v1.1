@@ -1,106 +1,113 @@
-// STEP 1: init map
-var mapElement = document.getElementById('map');
-var map;
-var mapStyle = [
-  {
-    "featureType": "poi",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "road",
-    "elementType": "labels.icon",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "transit",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  }
-];
-function initMap() {
-  if (mapElement) {
-    map = new google.maps.Map(mapElement, {
-          zoom: 6,
-          center: {lat:46.52863469527167, lng:2.43896484375},
-          // FR: {lat:46.52863469527167, lng:2.43896484375} // MRS: {lat: 43.3, lng: 5.4}
-          styles: mapStyle
-        });
 
-  };
-}
+// // WARNING: CHANGING MAP.JS -> CHANGING INDEX.JS.ERB
 
-// STEP 2: load GeoJson
-function loadGeoJson() {
-  if (mapElement) {
-    var jsonparsed = JSON.parse(mapElement.dataset.geojson);
+// // STEP 1: init map
+// var mapElement = document.getElementById('map');
+// var map;
+// var mapStyle = [
+//   {
+//     "featureType": "poi",
+//     "stylers": [
+//       {
+//         "visibility": "off"
+//       }
+//     ]
+//   },
+//   {
+//     "featureType": "road",
+//     "elementType": "labels.icon",
+//     "stylers": [
+//       {
+//         "visibility": "off"
+//       }
+//     ]
+//   },
+//   {
+//     "featureType": "transit",
+//     "stylers": [
+//       {
+//         "visibility": "off"
+//       }
+//     ]
+//   }
+// ];
+// function initMap() {
+//   if (mapElement) {
+//     map = new google.maps.Map(mapElement, {
+//           zoom: 6,
+//           center: {lat:46.52863469527167, lng:2.43896484375},
+//           // FR: {lat:46.52863469527167, lng:2.43896484375} // MRS: {lat: 43.3, lng: 5.4}
+//           styles: mapStyle
+//         });
 
-    // zoom(); -> not needed when loading first html
+//   };
+// }
 
-    map.data.addGeoJson(jsonparsed);
+// // STEP 2: load GeoJson
+// function loadGeoJson() {
+//   if (mapElement) {
+//     var jsonparsed = JSON.parse(mapElement.dataset.geojson);
 
-  };
-}
+//     // zoom(); -> not needed when loading first html
 
-// // auto center map on data layer
-// function zoom() {...}
+//     map.data.addGeoJson(jsonparsed);
 
-// STEP 3: set data style
-function setFeaturesStyle() {
-  if (mapElement) {
-    maxTotvol();
+//   };
+// }
 
-    map.data.setStyle(function(feature) {
-      var totalVolume = feature.getProperty('totvol');
-      console.log('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
-      return {
-        icon: getCircle(totalVolume)
-      };
-    });
-  };
-}
+// // // auto center map on data layer
+// // function zoom() {...}
 
-// calculate total volume max of filtered features
-var totalVolumeMax = 0;
-function maxTotvol() {
-  map.data.forEach(function(feature) {
-    if (feature.getProperty('totvol') > totalVolumeMax) {
-      totalVolumeMax = feature.getProperty('totvol');
-    };
-  });
-  console.log('total vol max = '+ totalVolumeMax);
-}
+// // STEP 3: set data style
+// function setFeaturesStyle() {
+//   if (mapElement) {
+//     maxTotvol();
 
-// show proportional markers (note: markers ares symbols == circles)
-function getCircle(totalVolume) {
-  return {
-    path: google.maps.SymbolPath.CIRCLE,
-    fillColor: 'blue',
-    fillOpacity: .8,
-    scale: (totalVolume * 20 / totalVolumeMax),
-    strokeColor: 'blue',
-    strokeWeight: 1
-  };
-}
+//     map.data.setStyle(function(feature) {
+//       var totalVolume = feature.getProperty('totvol');
+//       console.log('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
+//       return {
+//         icon: getCircle(totalVolume)
+//       };
+//     });
+//   };
+// }
 
+// // calculate total volume max of filtered features
+// var totalVolumeMax = 0;
+// function maxTotvol() {
+//   map.data.forEach(function(feature) {
+//     if (feature.getProperty('totvol') > totalVolumeMax) {
+//       totalVolumeMax = feature.getProperty('totvol');
+//     };
+//   });
+//   console.log('total vol max = '+ totalVolumeMax);
+// }
 
+// // show proportional markers (note: markers ares symbols == circles)
+// function getCircle(totalVolume) {
+//   return {
+//     path: google.maps.SymbolPath.CIRCLE,
+//     fillColor: 'blue',
+//     fillOpacity: .8,
+//     scale: calcScale(totalVolume),
+//     strokeColor: 'blue',
+//     strokeWeight: 1
+//   };
+// }
 
-// execution
-initMap();
-loadGeoJson();
-setFeaturesStyle();
+// function calcScale(totalVolume) {
+//   var scale = (Math.sqrt(totalVolume * Math.pow(20, 2) / totalVolumeMax));
+//   console.log('scale = '+ scale);
+//   return scale;
+// }
 
-// google.maps.event.addDomListener(window, "load", initMap);
-// eventListener dataset
+// // execution
+// initMap();
+// loadGeoJson();
+// setFeaturesStyle();
 
-// export { loadGeoJson };
+// // google.maps.event.addDomListener(window, "load", initMap);
+// // eventListener dataset
+
+// // export { loadGeoJson };

@@ -120,12 +120,17 @@ function getCircle(totalVolume) {
     path: google.maps.SymbolPath.CIRCLE,
     fillColor: 'blue',
     fillOpacity: .8,
-    scale: (totalVolume * 20 / totalVolumeMax),
+    scale: calcScale(totalVolume),
     strokeColor: 'blue',
     strokeWeight: 1
   };
 }
 
+function calcScale(totalVolume) {
+  var scale = (Math.sqrt(totalVolume * Math.pow(20, 2) / totalVolumeMax));
+  console.log('scale = '+ scale);
+  return scale;
+}
 
 // execution
 initMap();
