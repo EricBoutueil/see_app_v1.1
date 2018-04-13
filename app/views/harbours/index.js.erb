@@ -45,7 +45,6 @@ function initMap() {
 // STEP 2: load GeoJson UPDATED
 // update value of geojson through dataset.geojson == data-geojson
 mapElement.dataset.geojson = JSON.stringify(<%= @geojson.to_json.html_safe %>);
-console.log(mapElement.dataset.geojson);
 
 function loadGeoJson() {
   if (mapElement) {
@@ -55,6 +54,8 @@ function loadGeoJson() {
 
     map.data.addGeoJson(jsonparsed);
 
+    console.log("loaded GeoJson:");
+    console.log(mapElement.dataset.geojson);
   };
 }
 

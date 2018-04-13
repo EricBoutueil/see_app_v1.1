@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     root to: 'harbours#index'
     resources :harbours, only:[:index]
     resources :movements, only:[:index]
-    # resources :types, only:[:index]
+    resources :types, only:[:index]
 
   end
 end
