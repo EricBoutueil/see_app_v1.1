@@ -64,7 +64,10 @@ function resetSubfamilies() {
 
   // buildDataTypes(callAjaxTypes); // -> (3bis)
   // -> CANCELLED: buildData already from trigger
-  callAjaxTypes(values); // -> (4bis)
+  // callAjaxTypes(values); // -> (4bis)
+  // -> CANCELLED: trying to render types/index
+  // -> callAjax for harb already in buildData
+
 }
 
 // (3) build harbours data in hash + execution
@@ -135,16 +138,16 @@ function callAjax(values) {
   console.log({name: values.harbours, year: values.years, flow: values.flows, code: values.codes});
 }
 
-// (4bis) ajax get to types
-function callAjaxTypes(values) {
-  $.get({
-    url: '/types',
-    dataType: "script",
-    data: {code: values.codes} // codes only
-  });
-  console.log("ajax types data:");
-  console.log({code: values.codes});
-}
+// // (4bis) ajax get to types
+// function callAjaxTypes(values) {
+//   $.get({
+//     url: '/types',
+//     dataType: "script",
+//     data: {code: values.codes} // codes only
+//   });
+//   console.log("ajax types data:");
+//   console.log({code: values.codes});
+// }
 
 // console.log(event);
 // console.log(event.params);
