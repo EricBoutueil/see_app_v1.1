@@ -31,20 +31,64 @@ class Type < ApplicationRecord
   end
 
   # for Select2 subfamilies1
-  def self.all_subfamilies1 #(params)
+  def self.filtered_subfamilies1(params) # before was: all_subfamilies1
     # binding.pry
 
-    # (params[:flow] == ["imp"] || params[:flow] == ["exp"])
-
     @subfamilies1 = []
+    if (params[:code])
+      x = params[:code].first[0]
       Type.all.each do |t|
         unless @subfamilies1.include?({code: t.code, label: t.label})
-          # if t.code.to_s.length == 2
-            @subfamilies1 << {code: t.code, label: t.label}
-          # end
+        binding.pry
+          if t.code.to_s[0] == x
+            if t.code.to_s.length == 2
+              @subfamilies1 << {code: t.code, label: t.label}
+            end
+          end
         end
       end
-    return @subfamilies1
+      return @subfamilies1
+    else
+      Type.all.each do |t|
+        unless @subfamilies1.include?({code: t.code, label: t.label})
+          if t.code.to_s[0] == "a"
+            if t.code.to_s.length == 2
+              @subfamilies1 << {code: t.code, label: t.label}
+            end
+          end
+        end
+      end
+      # binding.pry
+      return @subfamilies1
+    end
   end
+
+
+  # def vol_filter_by_subfamily1(params) # (5a) -> criterias replace 4 in select2.js OK
+  #   # binding.pry
+  #   @types_criterias[:code] = if (params[:code])
+  #     if (params[:code].length == 2)
+  #       params[:code]
+  #     else
+  #       @types_criterias[:code]
+  #     end
+  #   else
+  #     @types_criterias[:code]
+  #   end
+  # end
+
+
+  # # filtering options for select2 thanks to params
+  # def options_filter(params)
+  #   @fam = @types_criterias[:code]
+  #   Type::all_subfamilies1.map do |t|
+  #     if t[:code][0] == @fam
+  #       @types_criterias[:code].to_a << ",#{t[:code]}"
+  #     end
+  #   end
+  #   binding.pry
+  # end
+
+# note ruby doc: a[2, 3] #=> "llo"
 
 end

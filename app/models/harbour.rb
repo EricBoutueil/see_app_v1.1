@@ -97,24 +97,13 @@ end
 #     # binding.pry
 #     # # @types_criterias[:code] = "a1"
 #     # @fam = @types_criterias[:code]
-#     # Type::all_subfamilies1.map do |t|
+#     # Type::filtered_subfamilies1.map do |t|
 #     #   if t[:code][0] == @fam
 #     #     @types_criterias[:code].to_a << ",#{t[:code]}"
 #     #   end
 #     # end
 #     # binding.pry
 #   end
-
-  # C) filtering options for select2 thanks to params
-  def options_filter(params)
-    @fam = @types_criterias[:code]
-    Type::all_subfamilies1.map do |t|
-      if t[:code][0] == @fam
-        @types_criterias[:code].to_a << ",#{t[:code]}"
-      end
-    end
-    binding.pry
-  end
 
 end
 
