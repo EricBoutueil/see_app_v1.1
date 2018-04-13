@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import 'select2';
 
-// (1a) selections for select2 fields
+// (1a) select2 fields and selections management
 $('#select2_harbours').select2({ // harbours
   placeholder: "Sélectionner ou écrire pour filtrer",
   allowClear: true
@@ -33,64 +33,70 @@ $('#select2_subfamilies1').select2({ // subfamilies1
 // (1b) requiring CSS
 import 'select2/dist/css/select2.css';
 
+// *********************************************************************
 
-// (2a) initial build => AUTOMATIC FIRST AJAX CALL
+// (2a) initial build => AUTOMATIC FIRST AJAX CALL to ensure default data in params
 buildData();
 
-// (2b) event listeners for buildData and resets
+// (2b) event listeners for buildData and resetSubfamilies
 $('#select2_harbours').on("change", (event) => { // harbours
-  buildData();
+  buildData(); // -> (3)
 });
 $('#select2_years').on("change", (event) => { // years
-  buildData();
+  buildData(); // -> (3)
 });
 $('#select2_flows').on("change", (event) => { // flows
-  buildData();
+  buildData(); // -> (3)
 });
 $('#select2_families').on("change", (event) => { // families
-  // buildData();
-  // });
-  // $('#select2_families').on("change", function() { // families
-  resetSubfamilies(); // (pre-3) + (3)
+  resetSubfamilies(); // -> (pre-3)
 });
 $('#select2_subfamilies1').on("change", (event) => { // subfamilies1
-  buildData();
+  buildData(); // -> (3)
 });
 
-// (pre-3) when selecting families reset all subfamilies + buildData + callAjaxTypes
-function resetSubfamilies() {
-  console.log("reseting subfamilies")
-  $('#select2_subfamilies1').val(null).trigger('change');
-  // $('select2_subfamilies1').each(function () {
-  //     $(this).select2('val', '')
-  // });
+// *********************************************************************
 
-  buildData(); // (3)
-  // buildDataTypes(); // (3bis)
+// (pre-3) when selecting families reset all subfamilies + executions
+function resetSubfamilies() {
+  console.log("***** reseting subfamilies *****");
+  $('#select2_subfamilies1').val(null).trigger('change');
+
+  // buildDataTypes(callAjaxTypes); // -> (3bis)
+  // -> CANCELLED: buildData already from trigger
+  // callAjaxTypes(values); // -> (4bis)
+  // -> CANCELLED: trying to render types/index
+  // -> callAjax for harb already in buildData
 
 }
 
-// (3) build harbours data in hash + callAjax
+// (3) build harbours data in hash + execution
+var harbours = [];
+var years = [];
+var flows = [];
+var codes = [];
+var count = 0;
+var values = {};
+
 function buildData() {
-  console.log('***********************')
-  var harbours = []; // harbours
+  console.log('***** building data *****');
+  // harbours
   $('#select2_harbours').find("option:selected").each(function(i, selected){
     harbours[i] = $(selected).text();
   });
   console.log("harbours selection(s) = " + harbours);
 
-  var years = []; // years
+  // years
   $('#select2_years').find("option:selected").each(function(i, selected){
     years[i] = $(selected).text();
   });
   console.log("years selection(s) = " + years);
 
-  var flows = []; // flows
+  // flows
   flows = $('#select2_flows').select2('data').map(fl => fl.id);
   console.log("flows selection(s) = " + flows);
 
-  var codes = []; // codes = families + all subfamilies
-  var count = 0
+  // codes = families + all subfamilies
   // level0: families
   codes = $('#select2_families').select2('data').map(c => c.id);
   // level1: subfamilies1
@@ -98,19 +104,28 @@ function buildData() {
     codes[i] = $(selected).attr("value"); // overwrite families
     count = i
   });
-  // level2: subfamilies2
+  // // level2: subfamilies2
   // $('#select2_subfamilies2').find("option:selected").each(function(j, selected){
   //  codes[count + j] = $(selected).attr("value"); // add to subfamilies1 (+overwrite families)
   //  count = count + j
   // });
   console.log("codes selection(s) = " + codes);
 
-  var values = {harbours, years, flows, codes}; // all
-  // console.log(values);
+  // data in values:
+  values = {harbours, years, flows, codes}; // all
+  // console.log("values = " + values);
 
-  // ajax get to harbours -> (4)
-  callAjax(values);
+  callAjax(values); // -> (4)
 }
+
+// // (3bis) build types data in hash + execution
+// // -> CANCELLED: caused double buildData due to trigger from reset
+// function buildDataTypes(callback) {
+//   buildData(); // -> (3)
+//   callback(values); // -> (4bis)
+// }
+
+// *********************************************************************
 
 // (4) ajax get to harbours
 function callAjax(values) {
@@ -119,24 +134,19 @@ function callAjax(values) {
     dataType: "script",
     data: {name: values.harbours, year: values.years, flow: values.flows, code: values.codes} // all
   });
+  console.log("ajax harbours data:");
   console.log({name: values.harbours, year: values.years, flow: values.flows, code: values.codes});
 }
-
-
-// // (3bis) build types data in hash + callAjaxTypes
-// function buildDataTypes() {
-//   // ajax get to types -> (4bis)
-//   // callAjaxTypes(options);
-// }
 
 // // (4bis) ajax get to types
 // function callAjaxTypes(values) {
 //   $.get({
 //     url: '/types',
 //     dataType: "script",
-//     data: {name: values.harbours, year: values.years, flow: values.flows, code: values.codes} // all
+//     data: {code: values.codes} // codes only
 //   });
-//   console.log({name: values.harbours, year: values.years, flow: values.flows, code: values.codes});
+//   console.log("ajax types data:");
+//   console.log({code: values.codes});
 // }
 
 // console.log(event);
