@@ -133,39 +133,18 @@ function calcScale(totalVolume) {
   return scale;
 }
 
-
-// *************************
 function loadSubfamilies1 () {
+
   var select2Subfamilies1 = '<%= @subfamilies1.to_json.html_safe %>'; // ok
-  // console.log("new select2Subfamilies1:");
-  // console.log(select2Subfamilies1);
-
   var subfamilies1Parsed = JSON.parse(select2Subfamilies1); // ok
-  // console.log(subfamilies1Parsed);
 
-  // console.log(typeof select2Subfamilies1);
-  // console.log(typeof subfamilies1Parsed);
-
-  // console.log("temp select2Subfamilies1:");
-  // console.log(document.getElementById('temp_subfamilies1').dataset.temp);
-
-  document.getElementById('temp_subfamilies1').dataset.temp = select2Subfamilies1 //ok
-
-  // console.log("updated temp select2Subfamilies1:");
-  // console.log(document.getElementById('temp_subfamilies1').dataset.temp); // ok
-  // [{"code":"a1","label":"vrac liquide"},{"code":"a2","label":"vrac solide"},{"code":"a3","label":"non vrac"}]
+  var select = document.querySelectorAll('#select2_subfamilies1'); // ok
+  var options = document.querySelectorAll('#select2_subfamilies1 option'); // ok
+  var selectId = document.getElementById('select2_subfamilies1'); // ok
+  // notes for console.log(1)
 
 
-  // // ***************
-
-
-  var select = document.querySelectorAll('#select2_subfamilies1'); // okkkkkk
-  var options = document.querySelectorAll('#select2_subfamilies1 option'); // okkkkkk
-  var selectId = document.getElementById('select2_subfamilies1'); // okkkkkk
-
-  // console.log(options) // ok
-
-  // delete all items of the native options // ok
+  // delete all items of the native options // ok alone, not with appendChild
   // options.forEach(function(option) {
   //   option.value = "",
   //   option.innerText = ""
@@ -184,7 +163,7 @@ function loadSubfamilies1 () {
       }
     }
     opt.value = code;
-    opt.innerHTML = code.toUpperCase() + ' - ' + label.replace(/\b\w/g, l => l.toUpperCase());
+    opt.innerText = code.toUpperCase() + ' - ' + label.replace(/\b\w/g, l => l.toUpperCase());
     selectId.appendChild(opt);
   });
 }
@@ -194,3 +173,20 @@ function loadSubfamilies1 () {
 initMap();
 loadGeoJson();
 setFeaturesStyle();
+loadSubfamilies1();
+
+
+// notes for console.log(1)
+  // console.log("new select2Subfamilies1:");
+  // console.log(subfamilies1Parsed);
+  // console.log(typeof subfamilies1Parsed);
+
+  // console.log("temp select2Subfamilies1:"); // used for testing
+  // console.log(document.getElementById('temp_subfamilies1').dataset.temp);
+  // document.getElementById('temp_subfamilies1').dataset.temp = select2Subfamilies1 //ok
+
+  // console.log("updated temp select2Subfamilies1:");
+  // console.log(document.getElementById('temp_subfamilies1').dataset.temp); // ok
+  // [{"code":"a1","label":"vrac liquide"},{"code":"a2","label":"vrac solide"},{"code":"a3","label":"non vrac"}]
+
+  // console.log(options) // ok
