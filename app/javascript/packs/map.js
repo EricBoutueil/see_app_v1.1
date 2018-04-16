@@ -47,11 +47,11 @@
 // // STEP 2: load GeoJson
 // function loadGeoJson() {
 //   if (mapElement) {
-//     var jsonparsed = JSON.parse(mapElement.dataset.geojson);
+//     var jsonParsed = JSON.parse(mapElement.dataset.geojson);
 
 //     // zoom(); -> not needed when loading first html
 
-//     map.data.addGeoJson(jsonparsed);
+//     map.data.addGeoJson(jsonParsed);
 
 //   };
 // }

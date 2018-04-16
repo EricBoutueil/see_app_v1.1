@@ -41,25 +41,26 @@ class Type < ApplicationRecord
         unless @subfamilies1.include?({code: t.code, label: t.label})
         # binding.pry
           if t.code.to_s[0] == x
+            # binding.pry
             if t.code.to_s.length == 2
-              @subfamilies1 << {code: t.code, label: t.label}
+              @subfamilies1 << {code: t.code, label: t.label} # building OK
             end
           end
         end
       end
       return @subfamilies1
     else
-      # Type.all.each do |t| # -> filter not needed for user because automatic ajax call
-      #   unless @subfamilies1.include?({code: t.code, label: t.label})
-      #     if t.code.to_s[0] == "a"
-      #       if t.code.to_s.length == 2
-      #         @subfamilies1 << {code: t.code, label: t.label}
-      #       end
-      #     end
-      #   end
-      # end
+      Type.all.each do |t| # -> filter not needed for user because automatic ajax call
+        unless @subfamilies1.include?({code: t.code, label: t.label})
+          if t.code.to_s[0] == "a"
+            if t.code.to_s.length == 2
+              @subfamilies1 << {code: t.code, label: t.label}
+            end
+          end
+        end
+      end
       # binding.pry
-      @subfamilies1 = [{code: "see type.rb", label: "html view only"}]
+      # @subfamilies1 = [{code: "see type.rb", label: "html view only"}]
       return @subfamilies1
     end
   end

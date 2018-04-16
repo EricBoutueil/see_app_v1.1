@@ -25,10 +25,21 @@ $('#select2_flows').select2(); // flows
 
 $('#select2_families').select2(); // families
 
+
+
+
+// console.log("subfamilies1: ")
+// console.log($('#temp_subfamilies1').data('temp'));
+// var subfamilies1Array = $('.temp_subfamilies1').data('temp');
+
 $('#select2_subfamilies1').select2({ // subfamilies1
   placeholder: "Optionnel",
-  allowClear: true
+  allowClear: true //,
+  // data: function() { return {results: subfamilies1Array}; }
 });
+
+
+
 
 // (1b) requiring CSS
 import 'select2/dist/css/select2.css';
@@ -61,7 +72,6 @@ $('#select2_subfamilies1').on("change", (event) => { // subfamilies1
 function resetSubfamilies() {
   console.log("***** reseting subfamilies *****");
   $('#select2_subfamilies1').val(null).trigger('change');
-
   // buildDataTypes(callAjaxTypes); // -> (3bis)
   // -> CANCELLED: buildData already from trigger
   // callAjaxTypes(values); // -> (4bis)
@@ -136,6 +146,17 @@ function callAjax(values) {
   });
   console.log("ajax harbours data:");
   console.log({name: values.harbours, year: values.years, flow: values.flows, code: values.codes});
+
+  // console.log("*********** subfamilies1 BIS: ")
+  // console.log($('#temp_subfamilies1').data('temp'));
+  // var subfamilies1Array = $('.temp_subfamilies1').data('temp');
+
+  // $('#select2_subfamilies1').select2({ // subfamilies1
+  // placeholder: "Optionnel",
+  // allowClear: true,
+  // data: function() { return {results: subfamilies1Array}; }
+  // });
+
 }
 
 // // (4bis) ajax get to types

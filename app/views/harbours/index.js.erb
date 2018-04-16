@@ -48,11 +48,11 @@ mapElement.dataset.geojson = JSON.stringify(<%= @geojson.to_json.html_safe %>);
 
 function loadGeoJson() {
   if (mapElement) {
-    var jsonparsed = JSON.parse(mapElement.dataset.geojson);
+    var jsonParsed = JSON.parse(mapElement.dataset.geojson);
 
     zoom();
 
-    map.data.addGeoJson(jsonparsed);
+    map.data.addGeoJson(jsonParsed);
 
     console.log("loaded GeoJson:");
     console.log(mapElement.dataset.geojson);
@@ -132,6 +132,63 @@ function calcScale(totalVolume) {
   // console.log('scale = '+ scale);
   return scale;
 }
+
+
+// *************************
+function loadSubfamilies1 () {
+  var select2Subfamilies1 = '<%= @subfamilies1.to_json.html_safe %>'; // ok
+  // console.log("new select2Subfamilies1:");
+  // console.log(select2Subfamilies1);
+
+  var subfamilies1Parsed = JSON.parse(select2Subfamilies1); // ok
+  // console.log(subfamilies1Parsed);
+
+  // console.log(typeof select2Subfamilies1);
+  // console.log(typeof subfamilies1Parsed);
+
+  // console.log("temp select2Subfamilies1:");
+  // console.log(document.getElementById('temp_subfamilies1').dataset.temp);
+
+  document.getElementById('temp_subfamilies1').dataset.temp = select2Subfamilies1 //ok
+
+  // console.log("updated temp select2Subfamilies1:");
+  // console.log(document.getElementById('temp_subfamilies1').dataset.temp); // ok
+  // [{"code":"a1","label":"vrac liquide"},{"code":"a2","label":"vrac solide"},{"code":"a3","label":"non vrac"}]
+
+
+  // // ***************
+
+
+  var select = document.querySelectorAll('#select2_subfamilies1'); // okkkkkk
+  var options = document.querySelectorAll('#select2_subfamilies1 option'); // okkkkkk
+  var selectId = document.getElementById('select2_subfamilies1'); // okkkkkk
+
+  // console.log(options) // ok
+
+  // delete all items of the native options // ok
+  // options.forEach(function(option) {
+  //   option.value = "",
+  //   option.innerText = ""
+  //   });
+
+  subfamilies1Parsed.forEach(function(sf) {
+    var opt = document.createElement('option');
+    var code;
+    var label;
+    for (var k in sf) {
+      // console.log('key is: ' + k + ', value is: ' + sf[k]);
+      if (k === "code") {
+        code = sf[k];
+      } else {
+        label = sf[k];
+      }
+    }
+    opt.value = code;
+    opt.innerHTML = code.toUpperCase() + ' - ' + label.replace(/\b\w/g, l => l.toUpperCase());
+    selectId.appendChild(opt);
+  });
+}
+
 
 // execution
 initMap();
