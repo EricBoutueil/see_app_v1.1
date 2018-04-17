@@ -50,11 +50,10 @@ $('#select2_flows').on("change", (event) => { // flows
 });
 $('#select2_families').on("change", (event) => { // families
   resetSubfamilies(); // -> (pre-3)
-  emptySubfamilies();
+  emptySubfamilies(); // -> (pre-3)
 });
 $('#select2_subfamilies1').on("change", (event) => { // subfamilies1
   buildData(); // -> (3)
-  // emptySubfamilies(); // -> (pre-3 bis)
 });
 
 // *********************************************************************
@@ -62,18 +61,11 @@ $('#select2_subfamilies1').on("change", (event) => { // subfamilies1
 // (pre-3) when selecting families reset all subfamilies + trigger change
 function resetSubfamilies() {
   console.log("***** reseting subfamilies *****");
-  $('#select2_subfamilies1').val(null).trigger('change'); // or .empty() == ok
-  // buildDataTypes(callAjaxTypes); // -> (3bis)
-  // -> CANCELLED: buildData already from trigger
-  // callAjaxTypes(values); // -> (4bis)
-  // -> CANCELLED: trying to render types/index
-  // -> callAjax for harb already in buildData
+  $('#select2_subfamilies1').val(null).trigger('change');
 }
 
 // (pre-3) empty subfamilies options
 function emptySubfamilies() {
-  // $('#select2_subfamilies1').select2('data', null)
-  // $('#select2_subfamilies1').data(null);
   $('#select2_subfamilies1').empty();
 }
 
@@ -125,13 +117,6 @@ function buildData() {
   callAjax(values); // -> (4)
 }
 
-// // (3bis) build types data in hash + execution
-// // -> CANCELLED: caused double buildData due to trigger from reset
-// function buildDataTypes(callback) {
-//   buildData(); // -> (3)
-//   callback(values); // -> (4bis)
-// }
-
 // *********************************************************************
 
 // (4) ajax get to harbours
@@ -145,24 +130,14 @@ function callAjax(values) {
   console.log({name: values.harbours, year: values.years, flow: values.flows, code: values.codes});
 }
 
-// // (4bis) ajax get to types
-// function callAjaxTypes(values) {
-//   $.get({
-//     url: '/types',
-//     dataType: "script",
-//     data: {code: values.codes} // codes only
-//   });
-//   console.log("ajax types data:");
-//   console.log({code: values.codes});
-// }
+// *********************************************************************
 
+// Notes:
 // console.log(event);
 // console.log(event.params);
 // console.log(event.params.data);
 // var harbourSelected = event.params.data.text;
 // console.log(harbourSelected); // -> bayonne  -> OK
-
-// Notes:
 // (1a): $ = document.querySelectorAll(...) for jquery plugin, and call select2 on it
 // (1b): == importing CSS! Path is relative to ./node_modules
 //       CSS included in JS (not in asset pipeline) and available in / compiled by Webpack

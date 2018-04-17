@@ -60,36 +60,10 @@ class Type < ApplicationRecord
         end
       end
       # binding.pry
-      # @subfamilies1 = [{code: "see type.rb", label: "html view only"}]
+      # @subfamilies1 = [{code: "see type.rb", label: "html view only"}] # for test only
       return @subfamilies1
     end
   end
-
-
-  # def vol_filter_by_subfamily1(params) # (5a) -> criterias replace 4 in select2.js OK
-  #   # binding.pry
-  #   @types_criterias[:code] = if (params[:code])
-  #     if (params[:code].length == 2)
-  #       params[:code]
-  #     else
-  #       @types_criterias[:code]
-  #     end
-  #   else
-  #     @types_criterias[:code]
-  #   end
-  # end
-
-
-  # # filtering options for select2 thanks to params
-  # def options_filter(params)
-  #   @fam = @types_criterias[:code]
-  #   Type::all_subfamilies1.map do |t|
-  #     if t[:code][0] == @fam
-  #       @types_criterias[:code].to_a << ",#{t[:code]}"
-  #     end
-  #   end
-  #   binding.pry
-  # end
 
 # note ruby doc: a[2, 3] #=> "llo"
 
