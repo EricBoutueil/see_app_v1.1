@@ -36,6 +36,7 @@
       <p class="fitler-title"><%= t('.subfamily1_filter')%></p> <!-- subfamilies1 -->
       <select id="select2_subfamilies1", multiple=true, class="multiple-filter">
         <% @subfamilies1.map %>
+        <!-- iteration not needed anymore due to loadSubfamilies1 function -->
         <!-- <%# @subfamilies1.map do |sf| %> -->
           <!-- <option value="<%#= sf[:code] %>"><%#= "#{sf[:code].upcase} - #{sf[:label].capitalize}" %></option> -->
         <%# end %>

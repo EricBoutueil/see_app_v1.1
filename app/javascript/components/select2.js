@@ -50,25 +50,31 @@ $('#select2_flows').on("change", (event) => { // flows
 });
 $('#select2_families').on("change", (event) => { // families
   resetSubfamilies(); // -> (pre-3)
+  emptySubfamilies();
 });
 $('#select2_subfamilies1').on("change", (event) => { // subfamilies1
   buildData(); // -> (3)
+  // emptySubfamilies(); // -> (pre-3 bis)
 });
 
 // *********************************************************************
 
-// (pre-3) when selecting families reset all subfamilies + executions
+// (pre-3) when selecting families reset all subfamilies + trigger change
 function resetSubfamilies() {
   console.log("***** reseting subfamilies *****");
-  $('#select2_subfamilies1').val(null).trigger('change');
-  // $('#select2_subfamilies1').select2('data', null)
-  $('#select2_subfamilies1').empty();
+  $('#select2_subfamilies1').val(null).trigger('change'); // or .empty() == ok
   // buildDataTypes(callAjaxTypes); // -> (3bis)
   // -> CANCELLED: buildData already from trigger
   // callAjaxTypes(values); // -> (4bis)
   // -> CANCELLED: trying to render types/index
   // -> callAjax for harb already in buildData
+}
 
+// (pre-3) empty subfamilies options
+function emptySubfamilies() {
+  // $('#select2_subfamilies1').select2('data', null)
+  // $('#select2_subfamilies1').data(null);
+  $('#select2_subfamilies1').empty();
 }
 
 // (3) build harbours data in hash + execution

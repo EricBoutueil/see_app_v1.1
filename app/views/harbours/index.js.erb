@@ -133,41 +133,38 @@ function calcScale(totalVolume) {
   return scale;
 }
 
-function loadSubfamilies1 () {
+// reload of subfamilies1 (for each change in family of subfamilies1)
+function loadSubfamilies1() {
 
   var select2Subfamilies1 = '<%= @subfamilies1.to_json.html_safe %>'; // ok
   var subfamilies1Parsed = JSON.parse(select2Subfamilies1); // ok
 
-  var select = document.querySelectorAll('#select2_subfamilies1'); // ok
-  var options = document.querySelectorAll('#select2_subfamilies1 option'); // ok
+  var prevOptions = document.querySelectorAll('#select2_subfamilies1 option'); // ok
   var selectId = document.getElementById('select2_subfamilies1'); // ok
-  // notes for console.log(1)
+  // var select = document.querySelectorAll('#select2_subfamilies1'); // ok
+  // notes for console.log below(1)
 
-
-  // delete all items of the native options // ok alone, not with appendChild
-  // options.forEach(function(option) {
-  //   option.value = "",
-  //   option.innerText = ""
-  //   });
-
-  subfamilies1Parsed.forEach(function(sf) {
-    var opt = document.createElement('option');
-    var code;
-    var label;
-    for (var k in sf) {
-      // console.log('key is: ' + k + ', value is: ' + sf[k]);
-      if (k === "code") {
-        code = sf[k];
-      } else {
-        label = sf[k];
+  // creating new dropdown options only when selecting a new family (not when selecting subfamilies1)
+  if (prevOptions.length == 0) {
+    // iteration on @subfamilies1 parsed to create new dropdow options
+    subfamilies1Parsed.forEach(function(sf) {
+      var newOpt = document.createElement('option');
+      var code;
+      var label;
+      for (var k in sf) {
+        // console.log('key is: ' + k + ', value is: ' + sf[k]);
+        if (k === "code") {
+          code = sf[k];
+        } else {
+          label = sf[k];
+        }
       }
-    }
-    opt.value = code;
-    opt.innerText = code.toUpperCase() + ' - ' + label.replace(/\b\w/g, l => l.toUpperCase());
-    selectId.appendChild(opt);
-  });
+      newOpt.value = code;
+      newOpt.innerText = code.toUpperCase() + ' - ' + label.replace(/\b\w/g, l => l.toUpperCase());
+      selectId.appendChild(newOpt);
+    });
+  }
 }
-
 
 // execution
 initMap();
@@ -189,4 +186,7 @@ loadSubfamilies1();
   // console.log(document.getElementById('temp_subfamilies1').dataset.temp); // ok
   // [{"code":"a1","label":"vrac liquide"},{"code":"a2","label":"vrac solide"},{"code":"a3","label":"non vrac"}]
 
-  // console.log(options) // ok
+  // console.log("prevOptions: ");
+  // console.log(prevOptions); // ok
+  // console.log(typeof prevOptions);
+  // console.log(prevOptions.length); // ok
