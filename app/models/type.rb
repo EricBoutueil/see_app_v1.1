@@ -65,6 +65,41 @@ class Type < ApplicationRecord
     end
   end
 
+  # for Select2 subfamilies2
+  def self.filtered_subfamilies2(params)
+    # binding.pry
+
+    @subfamilies2 = []
+    if (params[:code])
+      x = params[:code].first[0]
+      Type.all.each do |t|
+        unless @subfamilies2.include?({code: t.code, label: t.label})
+        # binding.pry
+          if t.code.to_s[0] == x
+            # binding.pry
+            if t.code.to_s.length == 3
+              @subfamilies2 << {code: t.code, label: t.label} # building OK
+            end
+          end
+        end
+      end
+      return @subfamilies2
+    else
+      Type.all.each do |t| # -> filter not needed for user because automatic ajax call
+        unless @subfamilies2.include?({code: t.code, label: t.label})
+          if t.code.to_s[0] == "a"
+            if t.code.to_s.length == 3
+              @subfamilies2 << {code: t.code, label: t.label}
+            end
+          end
+        end
+      end
+      # binding.pry
+      # @subfamilies2 = [{code: "see type.rb", label: "html view only"}] # for test only
+      return @subfamilies2
+    end
+  end
+
 # note ruby doc: a[2, 3] #=> "llo"
 
 end

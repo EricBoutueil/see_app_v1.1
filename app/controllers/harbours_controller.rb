@@ -45,6 +45,8 @@ class HarboursController < ApplicationController
 
     @subfamilies1 = Type::filtered_subfamilies1(params) # before was all_subfamilies1
 
+    @subfamilies2 = Type::filtered_subfamilies2(params)
+
     # rendering
     respond_to do |format|
       format.html

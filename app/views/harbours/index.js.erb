@@ -132,7 +132,7 @@ function calcScale(totalVolume) {
   return scale;
 }
 
-// reload of subfamilies1 (for each change in family of subfamilies1)
+// reload of subfamilies1 (for each change in family or subfamilies1)
 function loadSubfamilies1() {
 
   var select2Subfamilies1 = '<%= @subfamilies1.to_json.html_safe %>'; // ok
@@ -164,11 +164,45 @@ function loadSubfamilies1() {
   }
 }
 
+// reload of subfamilies2 (for each change in family or subfamilies2)
+function loadSubfamilies2() {
+
+  var select2Subfamilies2 = '<%= @subfamilies2.to_json.html_safe %>'; // ok
+  var subfamilies2Parsed = JSON.parse(select2Subfamilies2); // ok
+
+  var prevOptions = document.querySelectorAll('#select2_subfamilies2 option'); // ok
+  var selectId = document.getElementById('select2_subfamilies2'); // ok
+  // notes for console.log below(1)
+
+  // creating new dropdown options only when selecting a new family (not when selecting subfamilies2)
+  if (prevOptions.length == 0) {
+    // iteration on @subfamilies2 parsed to create new dropdow options
+    subfamilies2Parsed.forEach(function(sf) {
+      var newOpt = document.createElement('option');
+      var code;
+      var label;
+      for (var k in sf) {
+        // console.log('key is: ' + k + ', value is: ' + sf[k]);
+        if (k === "code") {
+          code = sf[k];
+        } else {
+          label = sf[k];
+        }
+      }
+      newOpt.value = code;
+      newOpt.innerText = code.toUpperCase() + ' - ' + label.replace(/\b\w/g, l => l.toUpperCase());
+      selectId.appendChild(newOpt);
+    });
+  }
+}
+
+
 // execution
 initMap();
 loadGeoJson();
 setFeaturesStyle();
 loadSubfamilies1();
+loadSubfamilies2();
 
 
 // notes for console.log(1)
