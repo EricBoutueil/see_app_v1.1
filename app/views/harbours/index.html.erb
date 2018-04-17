@@ -35,10 +35,15 @@
 
       <p class="fitler-title"><%= t('.subfamily1_filter')%></p> <!-- subfamilies1 -->
       <select id="select2_subfamilies1", multiple=true, class="multiple-filter">
-        <% @subfamilies1.map do |f| %>
-          <option value="<%= f[:code] %>"><%= "#{f[:code].upcase} - #{f[:label].capitalize}" %></option>
-        <% end %>
+        <% @subfamilies1.map %>
+        <!-- iteration not needed anymore due to loadSubfamilies1 function -->
+        <!-- <%# @subfamilies1.map do |sf| %> -->
+          <!-- <option value="<%#= sf[:code] %>"><%#= "#{sf[:code].upcase} - #{sf[:label].capitalize}" %></option> -->
+        <%# end %>
       </select>
+      <!-- used for testing in index.js.erb -->
+      <%#= content_tag :div, id: "temp_subfamilies1", data: {temp: @subfamilies1} do %>
+      <%# end %>
 
     </div>
   </div>

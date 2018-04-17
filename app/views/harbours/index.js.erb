@@ -48,11 +48,11 @@ mapElement.dataset.geojson = JSON.stringify(<%= @geojson.to_json.html_safe %>);
 
 function loadGeoJson() {
   if (mapElement) {
-    var jsonparsed = JSON.parse(mapElement.dataset.geojson);
+    var jsonParsed = JSON.parse(mapElement.dataset.geojson);
 
     zoom();
 
-    map.data.addGeoJson(jsonparsed);
+    map.data.addGeoJson(jsonParsed);
 
     console.log("loaded GeoJson:");
     console.log(mapElement.dataset.geojson);
@@ -72,7 +72,6 @@ function zoom() {
         }
         // use the bounds
         map.fitBounds(bounds);
-        // map.fitBounds(this.map.bounds);
 
         // adapt zoom to bounds
         // var z = map.getZoom();
@@ -133,7 +132,59 @@ function calcScale(totalVolume) {
   return scale;
 }
 
+// reload of subfamilies1 (for each change in family of subfamilies1)
+function loadSubfamilies1() {
+
+  var select2Subfamilies1 = '<%= @subfamilies1.to_json.html_safe %>'; // ok
+  var subfamilies1Parsed = JSON.parse(select2Subfamilies1); // ok
+
+  var prevOptions = document.querySelectorAll('#select2_subfamilies1 option'); // ok
+  var selectId = document.getElementById('select2_subfamilies1'); // ok
+  // notes for console.log below(1)
+
+  // creating new dropdown options only when selecting a new family (not when selecting subfamilies1)
+  if (prevOptions.length == 0) {
+    // iteration on @subfamilies1 parsed to create new dropdow options
+    subfamilies1Parsed.forEach(function(sf) {
+      var newOpt = document.createElement('option');
+      var code;
+      var label;
+      for (var k in sf) {
+        // console.log('key is: ' + k + ', value is: ' + sf[k]);
+        if (k === "code") {
+          code = sf[k];
+        } else {
+          label = sf[k];
+        }
+      }
+      newOpt.value = code;
+      newOpt.innerText = code.toUpperCase() + ' - ' + label.replace(/\b\w/g, l => l.toUpperCase());
+      selectId.appendChild(newOpt);
+    });
+  }
+}
+
 // execution
 initMap();
 loadGeoJson();
 setFeaturesStyle();
+loadSubfamilies1();
+
+
+// notes for console.log(1)
+  // console.log("new select2Subfamilies1:");
+  // console.log(subfamilies1Parsed);
+  // console.log(typeof subfamilies1Parsed);
+
+  // console.log("temp select2Subfamilies1:"); // used for testing
+  // console.log(document.getElementById('temp_subfamilies1').dataset.temp);
+  // document.getElementById('temp_subfamilies1').dataset.temp = select2Subfamilies1 //ok
+
+  // console.log("updated temp select2Subfamilies1:");
+  // console.log(document.getElementById('temp_subfamilies1').dataset.temp); // ok
+  // [{"code":"a1","label":"vrac liquide"},{"code":"a2","label":"vrac solide"},{"code":"a3","label":"non vrac"}]
+
+  // console.log("prevOptions: ");
+  // console.log(prevOptions); // ok
+  // console.log(typeof prevOptions);
+  // console.log(prevOptions.length); // ok

@@ -43,7 +43,7 @@ class HarboursController < ApplicationController
 
     @families = Type::all_families
 
-    @subfamilies1 = Type::filtered_subfamilies1(params) # all_subfamilies1
+    @subfamilies1 = Type::filtered_subfamilies1(params) # before was all_subfamilies1
 
     # rendering
     respond_to do |format|
