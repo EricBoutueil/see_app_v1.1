@@ -35,8 +35,8 @@ class Type < ApplicationRecord
     # binding.pry
 
     @subfamilies1 = []
-    if (params[:code])
-      x = params[:code].first[0]
+    if (params[:fam])
+      x = params[:fam].first[0]
       Type.all.each do |t|
         unless @subfamilies1.include?({code: t.code, label: t.label})
         # binding.pry
@@ -60,7 +60,7 @@ class Type < ApplicationRecord
         end
       end
       # binding.pry
-      # @subfamilies1 = [{code: "see type.rb", label: "html view only"}] # for test only
+      # @subfamilies1 = [{code: "subfam1 see type.rb", label: "html view only"}] # for test only
       return @subfamilies1
     end
   end
@@ -70,32 +70,34 @@ class Type < ApplicationRecord
     # binding.pry
 
     @subfamilies2 = []
-    if (params[:code])
-      x = params[:code].first[0]
+    if (params[:sub_one])
+      x = params[:sub_one].first[0, 2]
       Type.all.each do |t|
         unless @subfamilies2.include?({code: t.code, label: t.label})
         # binding.pry
-          if t.code.to_s[0] == x
+          if t.code.to_s[0, 2] == x
             # binding.pry
             if t.code.to_s.length == 3
               @subfamilies2 << {code: t.code, label: t.label} # building OK
+              # binding.pry
             end
           end
         end
       end
       return @subfamilies2
-    else
-      Type.all.each do |t| # -> filter not needed for user because automatic ajax call
-        unless @subfamilies2.include?({code: t.code, label: t.label})
-          if t.code.to_s[0] == "a"
-            if t.code.to_s.length == 3
-              @subfamilies2 << {code: t.code, label: t.label}
-            end
-          end
-        end
-      end
       # binding.pry
-      # @subfamilies2 = [{code: "see type.rb", label: "html view only"}] # for test only
+    else
+      # Type.all.each do |t| # -> filter not needed for user because automatic ajax call
+      #   unless @subfamilies2.include?({code: t.code, label: t.label})
+      #     if t.code.to_s[0, 2] == "a1"
+      #       if t.code.to_s.length == 3
+      #         @subfamilies2 << {code: t.code, label: t.label}
+      #       end
+      #     end
+      #   end
+      # end
+      # binding.pry
+      @subfamilies2 = []
       return @subfamilies2
     end
   end
