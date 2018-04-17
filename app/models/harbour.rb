@@ -93,17 +93,28 @@ end
     end
   end
 
-#   def vol_filter_by_subfamily2(params) # (5b) -> criterias add to 5a in select2.js TBF
-#     # binding.pry
-#     # # @types_criterias[:code] = "a1"
-#     # @fam = @types_criterias[:code]
-#     # Type::filtered_subfamilies1.map do |t|
-#     #   if t[:code][0] == @fam
-#     #     @types_criterias[:code].to_a << ",#{t[:code]}"
-#     #   end
-#     # end
-#     # binding.pry
-#   end
+  def vol_filter_by_subfamily2(params) # (5b) -> criterias add to 5a in select2.js TBF
+    # binding.pry
+
+    @types_criterias[:code] = if (params[:code])
+      if (params[:code].length == 3)
+        params[:code]
+      else
+        @types_criterias[:code]
+      end
+    else
+      @types_criterias[:code]
+    end
+
+    # # @types_criterias[:code] = "a1"
+    # @fam = @types_criterias[:code]
+    # Type::filtered_subfamilies1.map do |t|
+    #   if t[:code][0] == @fam
+    #     @types_criterias[:code].to_a << ",#{t[:code]}"
+    #   end
+    # end
+    # # binding.pry
+  end
 
 
 

@@ -9,7 +9,7 @@
 puts "Starting seed for DEV ENV"
 
 Movement.destroy_all
-Harbour.destroy_all # commented until google api access denied solved
+# Harbour.destroy_all # commented until google api access denied solved
 Type.destroy_all
 # User.destroy_all
 puts "DB cleaned excluding users"
@@ -20,27 +20,32 @@ puts "DB cleaned excluding users"
 #     )
 # puts "Added user@example.com"
 
-# Harbour
+# # Harbour creation
 
-puts "Creating harbours seeds"
-ajaccio = Harbour.create!(
-  country: "France",
-  name: "ajaccio",
-  address: "ajaccio"
-  )
-sleep(0.5)
-bastia = Harbour.create!(
-  country: "France",
-  name: "bastia",
-  address: "bastia"
-  )
-sleep(0.5)
-bayonne = Harbour.create!(
-  country: "France",
-  name: "bayonne",
-  address: "bayonne"
-  )
-puts "done harbours seeds"
+# puts "Creating harbours seeds"
+# ajaccio = Harbour.create!(
+#   country: "France",
+#   name: "ajaccio",
+#   address: "ajaccio"
+#   )
+# sleep(1)
+# bastia = Harbour.create!(
+#   country: "France",
+#   name: "bastia",
+#   address: "bastia"
+#   )
+# sleep(1)
+# bayonne = Harbour.create!(
+#   country: "France",
+#   name: "bayonne",
+#   address: "bayonne"
+#   )
+# puts "done harbours seeds"
+
+# # Harbour find
+ajaccio = Harbour.find_by(name: "ajaccio")
+bastia = Harbour.find_by(name: "bastia")
+bayonne = Harbour.find_by(name: "bayonne")
 
 # Type
 
@@ -92,24 +97,24 @@ a3exp = Type.create!( code: "a3", flow: "exp", label: "non vrac" )
 a3imp = Type.create!( code: "a3", flow: "imp", label: "non vrac" )
 aexp = Type.create!( code: "a", flow: "exp", label: "tonnage brut total" )
 aimp = Type.create!( code: "a", flow: "imp", label: "tonnage brut total" )
-b11exp = Type.create!( code: "b11", flow: "exp", label: "cntr vide 20' (nb)" )
-b11imp = Type.create!( code: "b11", flow: "imp", label: "cntr vide 20' (nb)" )
-b12exp = Type.create!( code: "b12", flow: "exp", label: "cntr vide 40' (nb)" )
-b12imp = Type.create!( code: "b12", flow: "imp", label: "cntr vide 40' (nb)" )
-b13exp = Type.create!( code: "b13", flow: "exp", label: "cntr vide entre 20' et 40' (nb)" )
-b13imp = Type.create!( code: "b13", flow: "imp", label: "cntr vide entre 20' et 40' (nb)" )
-b14exp = Type.create!( code: "b14", flow: "exp", label: "cntr vide > 40' (nb)" )
-b14imp = Type.create!( code: "b14", flow: "imp", label: "cntr vide > 40' (nb)" )
+b11exp = Type.create!( code: "b11", flow: "exp", label: "cntr vide 20ft (nb)" )
+b11imp = Type.create!( code: "b11", flow: "imp", label: "cntr vide 20ft (nb)" )
+b12exp = Type.create!( code: "b12", flow: "exp", label: "cntr vide 40ft (nb)" )
+b12imp = Type.create!( code: "b12", flow: "imp", label: "cntr vide 40ft (nb)" )
+b13exp = Type.create!( code: "b13", flow: "exp", label: "cntr vide entre 20ft et 40ft (nb)" )
+b13imp = Type.create!( code: "b13", flow: "imp", label: "cntr vide entre 20ft et 40ft (nb)" )
+b14exp = Type.create!( code: "b14", flow: "exp", label: "cntr vide > 40ft (nb)" )
+b14imp = Type.create!( code: "b14", flow: "imp", label: "cntr vide > 40ft (nb)" )
 b1exp = Type.create!( code: "b1", flow: "exp", label: "cntr vide (nb)" )
 b1imp = Type.create!( code: "b1", flow: "imp", label: "cntr vide (nb)" )
-b21exp = Type.create!( code: "b21", flow: "exp", label: "cntr plein 20' (nb)" )
-b21imp = Type.create!( code: "b21", flow: "imp", label: "cntr plein 20' (nb)" )
-b22exp = Type.create!( code: "b22", flow: "exp", label: "cntr plein 40' (nb)" )
-b22imp = Type.create!( code: "b22", flow: "imp", label: "cntr plein 40' (nb)" )
-b23exp = Type.create!( code: "b23", flow: "exp", label: "cntr plein entre 20' et 40' (nb)" )
-b23imp = Type.create!( code: "b23", flow: "imp", label: "cntr plein entre 20' et 40' (nb)" )
-b24exp = Type.create!( code: "b24", flow: "exp", label: "cntr plein > 40' (nb)" )
-b24imp = Type.create!( code: "b24", flow: "imp", label: "cntr plein > 40' (nb)" )
+b21exp = Type.create!( code: "b21", flow: "exp", label: "cntr plein 20ft (nb)" )
+b21imp = Type.create!( code: "b21", flow: "imp", label: "cntr plein 20ft (nb)" )
+b22exp = Type.create!( code: "b22", flow: "exp", label: "cntr plein 40ft (nb)" )
+b22imp = Type.create!( code: "b22", flow: "imp", label: "cntr plein 40ft (nb)" )
+b23exp = Type.create!( code: "b23", flow: "exp", label: "cntr plein entre 20ft et 40ft (nb)" )
+b23imp = Type.create!( code: "b23", flow: "imp", label: "cntr plein entre 20ft et 40ft (nb)" )
+b24exp = Type.create!( code: "b24", flow: "exp", label: "cntr plein > 40ft (nb)" )
+b24imp = Type.create!( code: "b24", flow: "imp", label: "cntr plein > 40ft (nb)" )
 b2exp = Type.create!( code: "b2", flow: "exp", label: "cntr plein (nb)" )
 b2imp = Type.create!( code: "b2", flow: "imp", label: "cntr plein (nb)" )
 bexp = Type.create!( code: "b", flow: "exp", label: "conteneur (nb)" )
@@ -402,11 +407,11 @@ Movement.create!( harbour: bastia, type: aimp, year: 2014, terminal: "", pol_pod
 Movement.create!( harbour: bayonne, type: aexp, year: 2014, terminal: "", pol_pod: "", volume: 116673)
 Movement.create!( harbour: bayonne, type: aimp, year: 2014, terminal: "", pol_pod: "", volume: 90117)
 
-# Movement.create!( harbour: bayonne, type: a1exp, year: 2014, terminal: "terminal 4", pol_pod: "marseille", volume: 24535)
-# Movement.create!( harbour: bayonne, type: a11exp, year: 2014, terminal: "terminal 2", pol_pod: "marseille", volume: 16963)
-# Movement.create!( harbour: bayonne, type: a111exp, year: 2014, terminal: "terminal 4", pol_pod: "marseille", volume: 0)
-# Movement.create!( harbour: bayonne, type: a2exp, year: 2014, terminal: "terminal 2", pol_pod: "marseille", volume: 53801)
-# Movement.create!( harbour: bayonne, type: a3exp, year: 2014, terminal: "terminal 4", pol_pod: "marseille", volume: 38337)
+Movement.create!( harbour: bayonne, type: a1exp, year: 2014, terminal: "terminal 4", pol_pod: "marseille", volume: 24535)
+Movement.create!( harbour: bayonne, type: a11exp, year: 2014, terminal: "terminal 2", pol_pod: "marseille", volume: 16963)
+Movement.create!( harbour: bayonne, type: a111exp, year: 2014, terminal: "terminal 4", pol_pod: "marseille", volume: 0)
+Movement.create!( harbour: bayonne, type: a2exp, year: 2014, terminal: "terminal 2", pol_pod: "marseille", volume: 53801)
+Movement.create!( harbour: bayonne, type: a3exp, year: 2014, terminal: "terminal 4", pol_pod: "marseille", volume: 38337)
 
 Movement.create!( harbour: bayonne, type: eexp, year: 2014, terminal: "terminal 3", pol_pod: "marseille", volume: 40)
 Movement.create!( harbour: bayonne, type: eexp, year: 2013, terminal: "terminal 3", pol_pod: "marseille", volume: 13)

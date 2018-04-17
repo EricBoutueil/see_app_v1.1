@@ -116,8 +116,8 @@ function buildData() {
   });
   // level2: subfamilies2
   $('#select2_subfamilies2').find("option:selected").each(function(j, selected){
-   codes[count_i + j] = $(selected).attr("value"); // add to subfamilies1 (+overwrite families)
-   count_j = count_i + j
+   codes[count_i + 1 + j] = $(selected).attr("value"); // add to subfamilies1 (+overwrite families)
+   count_j = j
   });
   console.log("codes selection(s) = " + codes);
 
