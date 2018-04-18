@@ -35,6 +35,11 @@ $('#select2_subfamilies2').select2({ // subfamilies2
   allowClear: true
 });
 
+$('#select2_subfamilies3').select2({ // subfamilies2
+  placeholder: "Optionnel",
+  allowClear: true
+});
+
 // (1b) requiring CSS
 import 'select2/dist/css/select2.css';
 
@@ -56,11 +61,16 @@ $('#select2_flows').on("change", (event) => { // flows
 $('#select2_families').on("change", (event) => { // families
   resetSubfamilies1(); // -> (pre-3.1)
   resetSubfamilies2(); // -> (pre-3.2)
+  resetSubfamilies3(); // -> (pre-3.3)
 });
 $('#select2_subfamilies1').on("change", (event) => { // subfamilies1
   resetSubfamilies2(); // -> (pre-3.2)
+  resetSubfamilies3(); // -> (pre-3.3)
 });
 $('#select2_subfamilies2').on("change", (event) => { // subfamilies2
+  resetSubfamilies3(); // -> (pre-3.3)
+});
+$('#select2_subfamilies3').on("change", (event) => { // subfamilies2
   buildData(); // -> (3)
 });
 
@@ -75,10 +85,16 @@ function resetSubfamilies1() {
   $('#select2_subfamilies1').empty();
 }
 
-// (pre-3.2) same for subfam2 with families or subfam1 + trigger change (-> build data)
+// (pre-3.2) same for subfam2 with families or subfam1
 function resetSubfamilies2() {
-  $('#select2_subfamilies2').val(null).trigger('change');
+  $('#select2_subfamilies2').val(null);
   $('#select2_subfamilies2').empty();
+}
+
+// (pre-3.3) same for subfam3 + trigger change (-> build data)
+function resetSubfamilies3() {
+  $('#select2_subfamilies3').val(null).trigger('change');
+  $('#select2_subfamilies3').empty();
 }
 
 // (3) build harbours data in hash + execution
@@ -116,12 +132,16 @@ function buildData() {
   // level2: subfamilies2
   var sub_two = []
   $('#select2_subfamilies2').find("option:selected").each(function(j, selected){
-   sub_two[j] = $(selected).attr("value"); // add to subfamilies1 (+overwrite families) / [count_i + 1 + j]
+   sub_two[j] = $(selected).attr("value"); // add to subfamilies1 (+overwrite families & parent sub1)
   });
-  console.log("codes selection(s) = " + fam + ";" + sub_one + ";" + sub_two);
+  var sub_three = []
+  $('#select2_subfamilies3').find("option:selected").each(function(k, selected){
+   sub_three[k] = $(selected).attr("value"); // add to subfamilies1&2 (+overwrite families & parent sub1&2)
+  });
+  console.log("codes selection(s) = " + fam + ";" + sub_one + ";" + sub_two + ";" + sub_three);
 
   // data in values:
-  var values = {harbours, years, flows, fam, sub_one, sub_two}; // all
+  var values = {harbours, years, flows, fam, sub_one, sub_two, sub_three}; // all
   // console.log("values = " + values);
 
   callAjax(values); // -> (4)
@@ -131,7 +151,15 @@ function buildData() {
 
 // (4) ajax get to harbours
 function callAjax(values) {
-  var dataAjax = {name: values.harbours, year: values.years, flow: values.flows, fam: values.fam, sub_one: values.sub_one, sub_two: values.sub_two}
+  var dataAjax = {
+    name: values.harbours,
+    year: values.years,
+    flow: values.flows,
+    fam: values.fam,
+    sub_one: values.sub_one,
+    sub_two: values.sub_two,
+    sub_three: values.sub_three
+  }
   $.get({
     url: '/harbours',
     dataType: "script",
