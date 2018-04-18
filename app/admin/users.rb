@@ -22,6 +22,7 @@ ActiveAdmin.register User do
     column :id
     column :email
     column :name
+    column :company_name
     column :created_at
     column :last_sign_in_at
     column :sign_in_count
