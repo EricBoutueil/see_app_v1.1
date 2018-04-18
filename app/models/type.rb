@@ -71,13 +71,13 @@ class Type < ApplicationRecord
 
     @subfamilies2 = []
     if (params[:sub_one])
-      x = params[:sub_one].first[0, 2]
+      x = params[:sub_one]
       Type.all.each do |t|
         unless @subfamilies2.include?({code: t.code, label: t.label})
         # binding.pry
-          if t.code.to_s[0, 2] == x
+          if t.code.to_s.length == 3
             # binding.pry
-            if t.code.to_s.length == 3
+            if x.include?(t.code.to_s[0, 2])
               @subfamilies2 << {code: t.code, label: t.label} # building OK
               # binding.pry
             end
