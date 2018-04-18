@@ -7,6 +7,9 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :set_locale
 
+  # For devise - serve as controller
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
   # Pundit: white-list approach.
   after_action :verify_authorized, except: :index, unless: :skip_pundit?
   after_action :verify_policy_scoped, only: :index, unless: :skip_pundit?
@@ -19,6 +22,14 @@ class ApplicationController < ActionController::Base
 
   def default_url_options
     { locale: I18n.locale == I18n.default_locale ? nil : I18n.locale }
+  end
+
+  def configure_permitted_parameters
+    # For additional fields in app/views/devise/registrations/new.html.erb
+    devise_parameter_sanitizer.permit(:sign_up, keys: [])
+
+    # For additional in app/views/devise/registrations/edit.html.erb
+    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :company_name])
   end
 
   private
