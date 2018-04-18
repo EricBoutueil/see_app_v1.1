@@ -22,4 +22,8 @@ class Movement < ApplicationRecord
     return @years
   end
 
+  def self.max_year
+    @max_year = Movement.all_years.max
+  end
+
 end
