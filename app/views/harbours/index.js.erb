@@ -196,13 +196,44 @@ function loadSubfamilies2() {
   }
 }
 
+// reload of subfamilies3 (for each change in family or subfamilies3)
+function loadSubfamilies3() {
 
+  var select2Subfamilies3 = '<%= @subfamilies3.to_json.html_safe %>'; // ok
+  var subfamilies3Parsed = JSON.parse(select2Subfamilies3); // ok
+
+  var prevOptions = document.querySelectorAll('#select2_subfamilies3 option'); // ok
+  var selectId = document.getElementById('select2_subfamilies3'); // ok
+  // notes for console.log below(1)
+
+  // creating new dropdown options only when selecting a new family (not when selecting subfamilies3)
+  if (prevOptions.length == 0) {
+    // iteration on @subfamilies3 parsed to create new dropdow options
+    subfamilies3Parsed.forEach(function(sf) {
+      var newOpt = document.createElement('option');
+      var code;
+      var label;
+      for (var k in sf) {
+        // console.log('key is: ' + k + ', value is: ' + sf[k]);
+        if (k === "code") {
+          code = sf[k];
+        } else {
+          label = sf[k];
+        }
+      }
+      newOpt.value = code;
+      newOpt.innerText = code.toUpperCase() + ' - ' + label.replace(/\b\w/g, l => l.toUpperCase());
+      selectId.appendChild(newOpt);
+    });
+  }
+}
 // execution
 initMap();
 loadGeoJson();
 setFeaturesStyle();
 loadSubfamilies1();
 loadSubfamilies2();
+loadSubfamilies3();
 
 
 // notes for console.log(1)

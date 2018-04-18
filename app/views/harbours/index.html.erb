@@ -45,9 +45,14 @@
       <%#= content_tag :div, id: "temp_subfamilies1", data: {temp: @subfamilies1} do %>
       <%# end %>
 
-      <p class="fitler-title"><%= t('.subfamily2_filter')%></p> <!-- subfamilies1 -->
+      <p class="fitler-title"><%= t('.subfamily2_filter')%></p> <!-- subfamilies2 -->
       <select id="select2_subfamilies2", multiple=true, class="multiple-filter">
         <% @subfamilies2.map %>
+      </select>
+
+      <p class="fitler-title"><%= t('.subfamily3_filter')%></p> <!-- subfamilies3 -->
+      <select id="select2_subfamilies3", multiple=true, class="multiple-filter">
+        <% @subfamilies3.map %>
       </select>
 
     </div>

@@ -37,12 +37,13 @@ class Harbour < ApplicationRecord
     # building 1 criterias hash by model, filter by filter
     @mvts_criterias = {}
     @types_criterias = {}
-    # each feature == (1)
+    # each feature == filter (1)
     self.vol_filter_by_year(params) # -> (2)
     self.vol_filter_by_flow(params) # -> (3)
     self.vol_filter_by_family(params) # -> (4)
     self.vol_filter_by_subfamily1(params) # -> (5a)
     self.vol_filter_by_subfamily2(params) # -> (5b)
+    self.vol_filter_by_subfamily3(params) # -> (5c)
     # binding.pry
     @totvol = self.movements.joins(:type).where(@mvts_criterias).where(types: @types_criterias).pluck(:volume).sum
     # ex. -> where({year: ["2014", "2013"]}).where(types: {code: ["e"]})
@@ -67,7 +68,6 @@ end
   end
 
   def vol_filter_by_family(params) # (4) OK
-    # binding.pry
     @types_criterias[:code] = if (params[:fam])
       if (params[:fam].length == 1)
         params[:fam]
@@ -80,14 +80,12 @@ end
   end
 
   def vol_filter_by_subfamily1(params) # (5a) -> criterias replace 4 in select2.js OK
-    # binding.pry
     if (params[:sub_one])
       @types_criterias[:code] = params[:sub_one]
     end
   end
 
   def vol_filter_by_subfamily2(params) # (5b) -> criterias add to 5a in select2.js TBF
-    # binding.pry
     if (params[:sub_two])
       sub_two_array = params[:sub_two]
       params[:sub_one].each do |pso|
@@ -99,7 +97,17 @@ end
     end
   end
 
-
+  def vol_filter_by_subfamily3(params) # (5c) -> criterias add to 5b in select2.js TBF
+    if (params[:sub_three])
+      sub_three_array = params[:sub_three]
+      params[:sub_two].each do |pstw|
+        unless params[:sub_three].any? {|pstr| pstr.to_s[0, 3] == pstw}
+          sub_three_array << pstw
+        end
+      end
+      @types_criterias[:code] = sub_three_array
+    end
+  end
 
 end
 
