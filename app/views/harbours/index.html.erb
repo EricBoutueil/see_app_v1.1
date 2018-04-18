@@ -1,77 +1,80 @@
 <!-- filters: (1)harb, (2)year, (3)flow, (4)fam, (5)subfam [+ (6)term, (7)pol_pod] -->
 
-<div class="select2-menu-container">
-  <div class="row">
-    <div class="col-xs-12">
+<div class='main-container'>
 
-      <!-- Select2 options -->
-      <p class="fitler-title"><%= t('.harbour_filter')%></p> <!-- harbours -->
-      <select id="select2_harbours", multiple=true, class="multiple-filter">
-        <% @harbours.map do |h| %>
-          <option value="<%= h.name %>"><%= h.name %></option>
+  <div class="select2-menu-container">
+    <div class="row">
+      <div class="col-xs-12">
+
+        <!-- Select2 options -->
+        <p class="fitler-title"><%= t('.harbour_filter')%></p> <!-- harbours -->
+        <select id="select2_harbours", multiple=true, class="multiple-filter">
+          <% @harbours.map do |h| %>
+            <option value="<%= h.name %>"><%= h.name %></option>
+          <% end %>
+        </select>
+
+        <p class="fitler-title"><%= t('.year_filter')%></p> <!-- years -->
+        <select id="select2_years", multiple=true, class="multiple-filter">
+          <% @years.map do |y| %>
+            <option value="<%= y %>"><%= y %></option>
+          <% end %>
+        </select>
+        <!-- used for testing in select2.js -->
+        <%= content_tag :div, id: "temp_years", data: {temp: @years.max} do %>
         <% end %>
-      </select>
 
-      <p class="fitler-title"><%= t('.year_filter')%></p> <!-- years -->
-      <select id="select2_years", multiple=true, class="multiple-filter">
-        <% @years.map do |y| %>
-          <option value="<%= y %>"><%= y %></option>
-        <% end %>
-      </select>
-      <!-- used for testing in select2.js -->
-      <%= content_tag :div, id: "temp_years", data: {temp: @years.max} do %>
-      <% end %>
+        <p class="fitler-title"><%= t('.flow_filter')%></p> <!-- flows -->
+        <select id="select2_flows", class="single-filter">
+          <% @flows.map do |fl| %>
+            <option value="<%= fl %>"><%= t("ar.attributes.type.flow.#{fl}") %></option>
+          <% end %>
+        </select>
 
-      <p class="fitler-title"><%= t('.flow_filter')%></p> <!-- flows -->
-      <select id="select2_flows", class="single-filter">
-        <% @flows.map do |fl| %>
-          <option value="<%= fl %>"><%= t("ar.attributes.type.flow.#{fl}") %></option>
-        <% end %>
-      </select>
+        <p class="fitler-title"><%= t('.family_filter')%></p> <!-- families -->
+        <select id="select2_families", class="single-filter">
+          <% @families.map do |f| %>
+            <option value="<%= f[:code] %>"><%= "#{f[:code].upcase} - #{f[:label].capitalize}" %></option>
+          <% end %>
+        </select>
 
-      <p class="fitler-title"><%= t('.family_filter')%></p> <!-- families -->
-      <select id="select2_families", class="single-filter">
-        <% @families.map do |f| %>
-          <option value="<%= f[:code] %>"><%= "#{f[:code].upcase} - #{f[:label].capitalize}" %></option>
-        <% end %>
-      </select>
-
-      <p class="fitler-title"><%= t('.subfamily1_filter')%></p> <!-- subfamilies1 -->
-      <select id="select2_subfamilies1", multiple=true, class="multiple-filter">
-        <% @subfamilies1.map %>
-        <!-- iteration not needed anymore due to loadSubfamilies1 function -->
-        <!-- <%# @subfamilies1.map do |sf| %> -->
-          <!-- <option value="<%#= sf[:code] %>"><%#= "#{sf[:code].upcase} - #{sf[:label].capitalize}" %></option> -->
+        <p class="fitler-title"><%= t('.subfamily1_filter')%></p> <!-- subfamilies1 -->
+        <select id="select2_subfamilies1", multiple=true, class="multiple-filter">
+          <% @subfamilies1.map %>
+          <!-- iteration not needed anymore due to loadSubfamilies1 function -->
+          <!-- <%# @subfamilies1.map do |sf| %> -->
+            <!-- <option value="<%#= sf[:code] %>"><%#= "#{sf[:code].upcase} - #{sf[:label].capitalize}" %></option> -->
+          <%# end %>
+        </select>
+        <!-- used for testing in index.js.erb -->
+        <%#= content_tag :div, id: "temp_subfamilies1", data: {temp: @subfamilies1} do %>
         <%# end %>
-      </select>
-      <!-- used for testing in index.js.erb -->
-      <%#= content_tag :div, id: "temp_subfamilies1", data: {temp: @subfamilies1} do %>
-      <%# end %>
 
-      <p class="fitler-title"><%= t('.subfamily2_filter')%></p> <!-- subfamilies2 -->
-      <select id="select2_subfamilies2", multiple=true, class="multiple-filter">
-        <% @subfamilies2.map %>
-      </select>
+        <p class="fitler-title"><%= t('.subfamily2_filter')%></p> <!-- subfamilies2 -->
+        <select id="select2_subfamilies2", multiple=true, class="multiple-filter">
+          <% @subfamilies2.map %>
+        </select>
 
-      <p class="fitler-title"><%= t('.subfamily3_filter')%></p> <!-- subfamilies3 -->
-      <select id="select2_subfamilies3", multiple=true, class="multiple-filter">
-        <% @subfamilies3.map %>
-      </select>
+        <p class="fitler-title"><%= t('.subfamily3_filter')%></p> <!-- subfamilies3 -->
+        <select id="select2_subfamilies3", multiple=true, class="multiple-filter">
+          <% @subfamilies3.map %>
+        </select>
 
+      </div>
     </div>
   </div>
-</div>
 
-<!--   <%# @harbours.map do |h| %>
-    <li><%#= h.totvol_filter(params) %></li>
-  <%# end %> -->
+  <!--   <%# @harbours.map do |h| %>
+      <li><%#= h.totvol_filter(params) %></li>
+    <%# end %> -->
 
-<!-- Map -->
-<div class="map-container">
+  <!-- Map -->
+  <div class="map-container">
     <div class="row">
-  <div
-    id="map"
-    data-geojson="<%= @geojson.to_json %>"
-  ></div>
-</div>
+      <div
+        id="map"
+        data-geojson="<%= @geojson.to_json %>"
+      ></div>
+    </div>
+  </div>
 </div>
