@@ -57,7 +57,6 @@ end
   end
 
   def vol_filter_by_flow(params) #(3)
-    # TBU if tot lines exist
     @types_criterias[:flow] = if (params[:flow] == ["imp"] || params[:flow] == ["exp"])
       params[:flow]
     elsif self.movements.joins(:type).where(types: {flow: ["tot"]}).exists?
@@ -82,38 +81,22 @@ end
 
   def vol_filter_by_subfamily1(params) # (5a) -> criterias replace 4 in select2.js OK
     # binding.pry
-    @types_criterias[:code] = if (params[:sub_one])
-      # if (params[:sub_one].length == 2)
-        params[:sub_one]
-      # else
-        # @types_criterias[:sub_one]
-      # end
-    else
-      @types_criterias[:code]
+    if (params[:sub_one])
+      @types_criterias[:code] = params[:sub_one]
     end
   end
 
   def vol_filter_by_subfamily2(params) # (5b) -> criterias add to 5a in select2.js TBF
     # binding.pry
-
-    @types_criterias[:code] = if (params[:sub_two])
-      # if (params[:sub_two].length == 3)
-        params[:sub_two]
-      # else
-        # @types_criterias[:sub_two]
-      # end
-    else
-      @types_criterias[:code]
+    if (params[:sub_two])
+      sub_two_array = params[:sub_two]
+      params[:sub_one].each do |pso|
+        unless params[:sub_two].any? {|pst| pst.to_s[0, 2] == pso}
+          sub_two_array << pso
+        end
+      end
+      @types_criterias[:code] = sub_two_array
     end
-
-    # # @types_criterias[:code] = "a1"
-    # @fam = @types_criterias[:code]
-    # Type::filtered_subfamilies1.map do |t|
-    #   if t[:code][0] == @fam
-    #     @types_criterias[:code].to_a << ",#{t[:code]}"
-    #   end
-    # end
-    # # binding.pry
   end
 
 
