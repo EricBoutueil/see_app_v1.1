@@ -7,19 +7,12 @@ $('#select2_harbours').select2({ // harbours
   allowClear: true
 });
 
+var maxYears = document.getElementById('temp_years').dataset.temp;
 $('#select2_years').select2({ // years
   placeholder: "Valeur par défaut: dernière année disponible",
   allowClear: true
-});
-
-// // manually pre-select year
-// }).select2('val', ['2014']);
-// // attempt to automatically select max year - FAILED
-// }).select2('val', ['getMaxTableau(dropDownList)']);
-// // find max for years
-// var dropDownList = $('#select2_years').on('select2-loaded', function(e) {
-//     return e.items.results;
 // });
+}).select2('val', [maxYears]);
 
 $('#select2_flows').select2(); // flows
 
