@@ -18,6 +18,9 @@
           <option value="<%= y %>"><%= y %></option>
         <% end %>
       </select>
+      <!-- used for testing in select2.js -->
+      <%= content_tag :div, id: "temp_years", data: {temp: @years.max} do %>
+      <% end %>
 
       <p class="fitler-title"><%= t('.flow_filter')%></p> <!-- flows -->
       <select id="select2_flows", class="single-filter">
