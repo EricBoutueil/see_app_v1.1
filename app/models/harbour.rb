@@ -11,7 +11,7 @@ class Harbour < ApplicationRecord
   after_validation :geocode #:address_changed?
 
 
-  YEAR_MAX = Movement.maximum("year") # to be updated with selharbours?
+  YEAR_MAX = Movement.maximum(:year) # to be updated with selharbours?
 
   def full_address
     "#{address}, #{country}"
