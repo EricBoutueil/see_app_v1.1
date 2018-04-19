@@ -20,12 +20,12 @@ puts "DB cleaned excluding users"
 #     )
 # puts "Added user@example.com"
 
-admin = User.find_or_create_by(
-    email: "e.boutueil@gmail.com",
-    password: "admin123!",
-    admin: true
-    )
-puts "Added admin e.b@g"
+# admin = User.create!(
+#     email: "e.boutueil@gmail.com",
+#     password: "admin123!",
+#     admin: true
+#     )
+# puts "Added admin e.b@g"
 
 # Harbour creation
 
