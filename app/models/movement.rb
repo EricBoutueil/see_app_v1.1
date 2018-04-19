@@ -14,7 +14,7 @@ class Movement < ApplicationRecord
   # for Select2 years
   def self.all_years
     @years = []
-      Movement.all.each do |m|
+      self.all.each do |m|
         unless @years.include?(m.year)
           @years << m.year
         end
@@ -23,7 +23,7 @@ class Movement < ApplicationRecord
   end
 
   def self.max_year
-    @max_year = Movement.all_years.max
+    @max_year = self.all_years.max
   end
 
 end
