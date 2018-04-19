@@ -9,7 +9,7 @@
 puts "Starting seed for DEV ENV"
 
 Movement.destroy_all
-# Harbour.destroy_all # commented until google api access denied solved
+Harbour.destroy_all # commented until google api access denied solved
 Type.destroy_all
 # User.destroy_all
 puts "DB cleaned excluding users"
@@ -20,32 +20,39 @@ puts "DB cleaned excluding users"
 #     )
 # puts "Added user@example.com"
 
-# # Harbour creation
+admin = User.create!(
+    email: "e.boutueil@gmail.com",
+    password: "admin123!",
+    admin: true
+    )
+puts "Added admin e.b@g"
 
-# puts "Creating harbours seeds"
-# ajaccio = Harbour.create!(
-#   country: "France",
-#   name: "ajaccio",
-#   address: "ajaccio"
-#   )
-# sleep(1)
-# bastia = Harbour.create!(
-#   country: "France",
-#   name: "bastia",
-#   address: "bastia"
-#   )
-# sleep(1)
-# bayonne = Harbour.create!(
-#   country: "France",
-#   name: "bayonne",
-#   address: "bayonne"
-#   )
-# puts "done harbours seeds"
+# Harbour creation
+
+puts "Creating harbours seeds"
+ajaccio = Harbour.create!(
+  country: "France",
+  name: "ajaccio",
+  address: "ajaccio"
+  )
+sleep(1)
+bastia = Harbour.create!(
+  country: "France",
+  name: "bastia",
+  address: "bastia"
+  )
+sleep(1)
+bayonne = Harbour.create!(
+  country: "France",
+  name: "bayonne",
+  address: "bayonne"
+  )
+puts "done harbours seeds"
 
 # # Harbour find
-ajaccio = Harbour.find_by(name: "ajaccio")
-bastia = Harbour.find_by(name: "bastia")
-bayonne = Harbour.find_by(name: "bayonne")
+# ajaccio = Harbour.find_by(name: "ajaccio")
+# bastia = Harbour.find_by(name: "bastia")
+# bayonne = Harbour.find_by(name: "bayonne")
 
 # Type
 
