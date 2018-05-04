@@ -2,7 +2,7 @@ ActiveAdmin.register Harbour do
 
   menu priority: 4, label: proc{ t('ar.model.harbours') }
 
-  actions :all, except: [:new, :destroy]
+  actions :all, except: [:destroy]
 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters

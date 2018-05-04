@@ -2,7 +2,7 @@ ActiveAdmin.register User do
 
   menu priority: 5, label: proc{ t('ar.model.users') }
 
-  actions :all, except: [:new, :destroy]
+  actions :all
 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
@@ -17,12 +17,13 @@ ActiveAdmin.register User do
 #   permitted
 # end
 
-  permit_params :email, :first_name, :last_name, :phone_number, :company_name, :admin
+  permit_params :email, :password, :first_name, :last_name, :phone_number, :company_name, :admin
 
   form do |f|
     inputs 'Details' do
-      # semantic_errors
+      semantic_errors
       input :email
+      input :password
       input :first_name
       input :last_name
       input :phone_number
