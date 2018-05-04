@@ -1,5 +1,7 @@
 ActiveAdmin.register User do
 
+  menu priority: 5, label: proc{ t('ar.model.users') }
+
   actions :all
 
 # See permitted parameters documentation:

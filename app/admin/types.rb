@@ -1,5 +1,7 @@
 ActiveAdmin.register Type do
 
+  menu priority: 3, label: proc{ t('ar.model.types') }
+
   actions :all, except: [:new, :destroy]
 
 # See permitted parameters documentation:

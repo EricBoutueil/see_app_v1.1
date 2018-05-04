@@ -1,5 +1,7 @@
 ActiveAdmin.register Harbour do
 
+  menu priority: 4, label: proc{ t('ar.model.harbours') }
+
   actions :all, except: [:new, :destroy]
 
 # See permitted parameters documentation:
