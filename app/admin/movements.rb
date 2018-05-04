@@ -1,5 +1,7 @@
 ActiveAdmin.register Movement do
 
+  menu priority: 2, label: proc{ t('ar.model.movements') }
+
   actions :all, except: [:new, :destroy]
 
 # See permitted parameters documentation:

@@ -8,8 +8,13 @@ fr:
           has_many: "Vous ne pouvez pas supprimer l'enregistrement parce que les %{record} dépendants existent"
     model:
       movement: Trafic
+      movements: Trafics
       harbour: Port
+      harbours: Ports
       type: Famille
+      types: Familles
+      user: Utilisateur
+      users: Utilisateurs
     attributes:
       user:
         email: E-mail
@@ -30,11 +35,10 @@ fr:
         code: Famille
         name: Libellé
         description: Description
+        label: Libellé
         flow: Flux
         flow:
           tot: Total
           imp: Import
           exp: Export
-
-
 

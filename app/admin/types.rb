@@ -1,5 +1,7 @@
 ActiveAdmin.register Type do
 
+  menu priority: 3, label: proc{ t('ar.model.types') }
+
   actions :all, except: [:new, :destroy]
 
 # See permitted parameters documentation:
@@ -14,6 +16,8 @@ ActiveAdmin.register Type do
 #   permitted << :other if params[:action] == 'create' && current_user.admin?
 #   permitted
 # end
+
+  permit_params :code, :label, :description, :flow
 
   index do
     selectable_column

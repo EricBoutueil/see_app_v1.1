@@ -1,5 +1,7 @@
 ActiveAdmin.register Harbour do
 
+  menu priority: 4, label: proc{ t('ar.model.harbours') }
+
   actions :all, except: [:new, :destroy]
 
 # See permitted parameters documentation:
@@ -15,7 +17,7 @@ ActiveAdmin.register Harbour do
 #   permitted
 # end
 
-  permit_params :country, :name, :address
+  permit_params :country, :name, :address, :latitude, :longitude
 
   index do
     selectable_column
