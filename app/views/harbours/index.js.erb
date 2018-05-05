@@ -98,9 +98,14 @@ function setFeaturesStyle() {
 
     map.data.setStyle(function(feature) {
       var totalVolume = feature.getProperty('totvol');
+      var twoDigitTotalVol = twoDigitVol(totalVolume)
       console.log('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
       return {
-        icon: getCircle(totalVolume)
+        icon: getCircle(totalVolume),
+        label: {
+          text: twoDigitTotalVol,
+          color: "white"
+        }
       };
     });
   };
@@ -121,19 +126,33 @@ function maxTotvol() {
 function getCircle(totalVolume) {
   return {
     path: google.maps.SymbolPath.CIRCLE,
-    fillColor: 'blue',
-    fillOpacity: .8,
+    fillColor: '#007A8E',
+    fillOpacity: 1,
     scale: calcScale(totalVolume),
-    strokeColor: 'blue',
+    strokeColor: '#007A8E',
     strokeWeight: 1
   };
 }
 
 function calcScale(totalVolume) {
-  var scale = (Math.sqrt(totalVolume * Math.pow(20, 2) / totalVolumeMax));
+  var scale = (Math.sqrt(totalVolume * Math.pow(40, 2) / totalVolumeMax));
   // console.log('scale = '+ scale);
   return scale;
 }
+
+// calculate totalVolume twoDigit rounding
+function twoDigitVol(totalVolume) {
+  var totVolLength = totalVolumeMax.toString().length
+  var maxPowTen = (Math.pow(10, totVolLength)) / 10;
+  var twoDigitVol = (Math.round(totalVolume *100 / (maxPowTen)) / 100);
+  // console.log('scale = '+ scale);
+  console.log(totVolLength);
+  console.log(maxPowTen);
+  console.log(twoDigitVol);
+  console.log('2 digit total vol = '+ twoDigitVol);
+  return twoDigitVol;
+}
+
 
 // reload of subfamilies1 (for each change in family or subfamilies1)
 function loadSubfamilies1() {
