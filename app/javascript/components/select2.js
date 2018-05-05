@@ -10,7 +10,7 @@ $('#select2_harbours').select2({ // harbours
 var maxYears = document.getElementById('temp_years').dataset.temp;
 $('#select2_years').select2({ // years
   placeholder: "Valeur par défaut: dernière année disponible",
-  allowClear: true
+  //allowClear: true
 // });
 }).select2('val', [maxYears]);
 

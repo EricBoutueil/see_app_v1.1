@@ -15,7 +15,8 @@
         </select>
 
         <p class="fitler-title"><%= t('.year_filter')%></p> <!-- years -->
-        <select id="select2_years", multiple=true, class="multiple-filter">
+        <select id="select2_years", class="single-filter">
+          <!--, multiple=true, class="multiple-filter"> -->
           <% @years.map do |y| %>
             <option value="<%= y %>"><%= y %></option>
           <% end %>
