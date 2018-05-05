@@ -4,7 +4,7 @@ fr:
       profile: 'Profil'
       settings: 'Paramètres'
       sign_out: 'Se déconnecter'
-
+      powered_by: 'Outil proposé par'
   date:
     abbr_day_names:
     - dim

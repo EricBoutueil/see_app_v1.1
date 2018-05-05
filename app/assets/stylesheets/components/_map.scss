@@ -4,10 +4,10 @@
 }
 
 #map {
-  @extend .mt;
-  @extend .mr;
+  @extend .mt\-;
+  @extend .mr\-;
   flex: 0 0 450px;
-  height: calc(100vh - 107px);
-  width: calc(100vw - 465px);
+  height: calc(100vh - 97px);
+  width: calc(100vw - 364px);
   position: sticky !important; /* !important to override Gmaps inline CSS */
 }

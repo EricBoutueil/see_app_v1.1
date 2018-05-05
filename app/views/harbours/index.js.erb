@@ -36,7 +36,10 @@ function initMap() {
           zoom: 6,
           center: {lat:46.52863469527167, lng:2.43896484375},
           // FR: {lat:46.52863469527167, lng:2.43896484375} // MRS: {lat: 43.3, lng: 5.4}
-          styles: mapStyle
+          styles: mapStyle,
+          gestureHandling: 'greedy',
+          streetViewControl: false,
+          mapTypeControl: false
         });
 
   };

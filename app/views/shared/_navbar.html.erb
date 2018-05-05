@@ -2,19 +2,23 @@
 <div class="navbar-wagon hidden-xs hidden-sm">
 
   <!-- Logo -->
-  <%= link_to root_path, class: "navbar-wagon-brand" do %>
-    <%= image_tag "logo.png" %>
-  <% end %>
+  <%#= link_to root_path, class: "navbar-wagon-brand" do %>
+  <div class="navbar-wagon-left">
+    <p class="mb0 mr-"><%= t(".powered_by", default: "Powered by") %></p>
+    <%= link_to "http://www.see-up.fr/", class: "navbar-wagon-brand mb--" do %>
+      <%= image_tag "logo.png" %>
+    <% end %>
+  </div>
 
   <!-- Right Navigation desktop -->
-  <div class="navbar-wagon-child">
+  <div class="navbar-wagon-right">
 
-    <!-- Links always available -->
-    <%= link_to "ACCUEIL", "http://www.see-up.fr/", class: "navbar-wagon-item navbar-wagon-link" %>
-    <%= link_to "NOTRE OFFRE", "http://www.see-up.fr/#offre", class: "navbar-wagon-item navbar-wagon-link" %>
-    <%= link_to "L’ÉQUIPE", "http://www.see-up.fr/#equipe", class: "navbar-wagon-item navbar-wagon-link" %>
+    <!-- Top menu links -->
+    <%#= link_to "ACCUEIL", "http://www.see-up.fr/", class: "navbar-wagon-item navbar-wagon-link" %>
+    <%#= link_to "NOTRE OFFRE", "http://www.see-up.fr/#offre", class: "navbar-wagon-item navbar-wagon-link" %>
+    <%#= link_to "L’ÉQUIPE", "http://www.see-up.fr/#equipe", class: "navbar-wagon-item navbar-wagon-link" %>
     <%= link_to "CONTACTEZ-NOUS", "http://www.see-up.fr/contactez-see-up/", class: "navbar-wagon-item navbar-wagon-link" %>
-    <%= link_to "PORT TRAFFIC", "/", class: "navbar-wagon-item navbar-wagon-link" %>
+    <%#= link_to "PORT TRAFFIC", "/", class: "navbar-wagon-item navbar-wagon-link" %>
 
     <% if user_signed_in? %>
 

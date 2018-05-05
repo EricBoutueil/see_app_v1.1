@@ -4,7 +4,7 @@
 
   <div class="select2-menu-container">
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-xs-12 mt">
 
         <!-- Select2 options -->
         <p class="fitler-title"><%= t('.harbour_filter')%></p> <!-- harbours -->
@@ -31,6 +31,7 @@
           <% end %>
         </select>
 
+        <hr class="mt+">
         <p class="fitler-title"><%= t('.family_filter')%></p> <!-- families -->
         <select id="select2_families", class="single-filter">
           <% @families.map do |f| %>
