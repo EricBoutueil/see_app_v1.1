@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180504184509) do
+ActiveRecord::Schema.define(version: 20180505122006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20180504184509) do
 
   create_table "harbours", force: :cascade do |t|
     t.string "country"
-    t.string "name"
+    t.string "name", default: ""
     t.string "address"
     t.float "latitude"
     t.float "longitude"
@@ -43,8 +43,8 @@ ActiveRecord::Schema.define(version: 20180504184509) do
     t.bigint "harbour_id"
     t.bigint "type_id"
     t.integer "year"
-    t.string "terminal"
-    t.string "pol_pod"
+    t.string "terminal", default: ""
+    t.string "pol_pod", default: ""
     t.integer "volume"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -53,12 +53,13 @@ ActiveRecord::Schema.define(version: 20180504184509) do
   end
 
   create_table "types", force: :cascade do |t|
-    t.string "code"
-    t.string "label"
-    t.string "description"
+    t.string "code", default: ""
+    t.string "label", default: ""
+    t.string "description", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "flow"
+    t.string "unit", default: ""
   end
 
   create_table "users", force: :cascade do |t|
