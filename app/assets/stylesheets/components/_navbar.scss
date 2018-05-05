@@ -4,7 +4,7 @@
   background: white;
   transition: all 0.3s ease;
   height: 57px; /* see up: 67px */
-  padding: 0px 120px;
+  @extend .pl;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -22,8 +22,18 @@
   border-radius: 50%;
 }
 
-/* Right section */
-.navbar-wagon-child {
+/* Left and right sections (prev. child) */
+.navbar-wagon-left {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  color: $blue !important;
+  font-family: Open Sans;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.navbar-wagon-rigth {
   display: flex;
   align-items: center;
   justify-content: space-between;
