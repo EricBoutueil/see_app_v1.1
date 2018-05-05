@@ -47,4 +47,11 @@ ActiveAdmin.register User do
     actions
   end
 
+  controller do
+    def update_resource(object, attributes)
+      update_method = attributes.first[:password].present? ? :update_attributes : :update_without_password
+      object.send(update_method, *attributes)
+    end
+  end
+
 end

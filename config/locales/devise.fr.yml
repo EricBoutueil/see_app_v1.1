@@ -103,7 +103,7 @@ fr:
         # For "leave blank if you don't want to change it"
         password_instruction: "Laisser vide si vous ne voulez pas le changer"
         # For "we need your current password to confirm your changes"
-        current_password_instruction: "Vous devez saisir votre mot de passe actuel pour confirmer vos changements"
+        current_password_instruction: "Vous devez saisir votre mot de passe actuel pour confirmer votre changement de mot de passe"
         update: "Mettre à jour"
         cancel_my_account: "Annuler mon compte"
         unhappy?: "Pas content(e) ?"
