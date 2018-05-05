@@ -17,19 +17,41 @@ ActiveAdmin.register User do
 #   permitted
 # end
 
-  # permit_params :email, :first_name, :last_name, :company_name
+  permit_params :email, :password, :first_name, :last_name, :phone_number, :company_name, :admin
+
+  form do |f|
+    inputs 'Details' do
+      semantic_errors
+      input :email
+      input :password
+      input :first_name
+      input :last_name
+      input :phone_number
+      input :company_name
+      input :admin
+    end
+    actions
+  end
 
   index do
     selectable_column
     column :id
     column :email
     column :name
-    column :company_name
+    # column :company_name
+    # column :phone_number
     column :created_at
     column :last_sign_in_at
     column :sign_in_count
     column :admin
     actions
+  end
+
+  controller do
+    def update_resource(object, attributes)
+      update_method = attributes.first[:password].present? ? :update_attributes : :update_without_password
+      object.send(update_method, *attributes)
+    end
   end
 
 end

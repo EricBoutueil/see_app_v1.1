@@ -2,7 +2,7 @@ ActiveAdmin.register Movement do
 
   menu priority: 2, label: proc{ t('ar.model.movements') }
 
-  actions :all, except: [:new, :destroy]
+  actions :all
 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters

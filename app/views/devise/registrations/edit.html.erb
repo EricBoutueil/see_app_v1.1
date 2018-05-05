@@ -15,11 +15,13 @@
 
         <%= f.input :last_name %>
         <%= f.input :first_name %>
+        <%= f.input :phone_number %>
         <%= f.input :company_name %>
 
-        <%#= f.input :new_password, autocomplete: "off", hint: t(".password_instruction"), required: false %>
+        <!-- To update password the 3 fields are needed -->
+        <%#= f.input :password, autocomplete: "off", hint: t(".password_instruction"), required: false %>
         <%#= f.input :password_confirmation, required: false %>
-        <%= f.input :current_password, hint: t(".current_password_instruction"), required: true %>
+        <%#= f.input :current_password, hint: t(".current_password_instruction")%>
 
       </div>
 
