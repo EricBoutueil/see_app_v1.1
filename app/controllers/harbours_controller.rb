@@ -20,7 +20,8 @@ class HarboursController < ApplicationController
           "country": harb.country,
           "name": harb.name,
           "address": harb.address,
-          "totvol": harb.totvol_filter(params)
+          "totvol": harb.totvol_filter(params),
+          "unit": harb.filtered_family_unit(params)
         },
         "geometry": {
           "type": "Point",
@@ -43,7 +44,8 @@ class HarboursController < ApplicationController
 
     @families = Type::all_families
 
-    @subfamilies1 = Type::filtered_subfamilies1(params) # before was all_subfamilies1
+    # only show subfamilies depending on selected higher level
+    @subfamilies1 = Type::filtered_subfamilies1(params)
 
     @subfamilies2 = Type::filtered_subfamilies2(params)
 

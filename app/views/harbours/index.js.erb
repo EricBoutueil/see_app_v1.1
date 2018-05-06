@@ -141,18 +141,30 @@ function calcScale(totalVolume) {
 }
 
 // calculate totalVolume twoDigit rounding
-function twoDigitVol(totalVolume) {
-  var totVolLength = totalVolumeMax.toString().length
+function maxPowTen() {
+  var totVolLength = totalVolumeMax.toString().length;
   var maxPowTen = (Math.pow(10, totVolLength)) / 10;
-  var twoDigitVol = (Math.round(totalVolume *100 / (maxPowTen)) / 100);
-  // console.log('scale = '+ scale);
-  console.log(totVolLength);
-  console.log(maxPowTen);
-  console.log(twoDigitVol);
-  console.log('2 digit total vol = '+ twoDigitVol);
+  return maxPowTen;
+}
+
+function twoDigitVol(totalVolume) {
+  var twoDigitVol = (Math.round(totalVolume *100 / (maxPowTen())) / 100);
+  // console.log('2 digit total vol = '+ twoDigitVol);
   return twoDigitVol;
 }
 
+
+// add unit below family field
+function addUnitBelowFamilyField() {
+  var unitSelectedFamily = ""
+  map.data.forEach(function(feature) {
+    unitSelectedFamily = feature.getProperty('unit');
+  });
+
+  var unitDisplay = document.querySelector('#unit-display')
+  var maxPowTenToLocaleString = maxPowTen().toLocaleString(undefined);
+  unitDisplay.innerText = `Unité: ${maxPowTenToLocaleString} ${unitSelectedFamily}`
+}
 
 // reload of subfamilies1 (for each change in family or subfamilies1)
 function loadSubfamilies1() {
@@ -184,6 +196,8 @@ function loadSubfamilies1() {
       selectId.appendChild(newOpt);
     });
   }
+
+  addUnitBelowFamilyField()
 }
 
 // reload of subfamilies2 (for each change in family or subfamilies2)

@@ -21,7 +21,7 @@
             <option value="<%= y %>"><%= y %></option>
           <% end %>
         </select>
-        <!-- used for testing in select2.js -->
+        <!-- used in select2.js -->
         <%= content_tag :div, id: "temp_years", data: {temp: @years.max} do %>
         <% end %>
 
@@ -39,6 +39,7 @@
             <option value="<%= f[:code] %>"><%= "#{f[:code].upcase} - #{f[:label].capitalize}" %></option>
           <% end %>
         </select>
+        <p id="unit-display" class="mt--"></p>
 
         <p class="fitler-title"><%= t('.subfamily1_filter')%></p> <!-- subfamilies1 -->
         <select id="select2_subfamilies1", multiple=true, class="multiple-filter">
