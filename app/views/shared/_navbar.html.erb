@@ -17,13 +17,12 @@
     <%#= link_to "ACCUEIL", "http://www.see-up.fr/", class: "navbar-wagon-item navbar-wagon-link" %>
     <%#= link_to "NOTRE OFFRE", "http://www.see-up.fr/#offre", class: "navbar-wagon-item navbar-wagon-link" %>
     <%#= link_to "L’ÉQUIPE", "http://www.see-up.fr/#equipe", class: "navbar-wagon-item navbar-wagon-link" %>
-    <%= link_to "CONTACTEZ-NOUS", "http://www.see-up.fr/contactez-see-up/", class: "navbar-wagon-item navbar-wagon-link" %>
-    <%#= link_to "PORT TRAFFIC", "/", class: "navbar-wagon-item navbar-wagon-link" %>
+      <%= link_to "CONTACTEZ-NOUS", "http://www.see-up.fr/contactez-see-up/", class: "navbar-wagon-item navbar-wagon-link" %>
+      <%#= link_to "PORT TRAFFIC", "/", class: "navbar-wagon-item navbar-wagon-link" %>
 
     <% if user_signed_in? %>
-
       <!-- Dropdown menu -->
-      <div class="navbar-wagon-item pr0">
+      <div class="navbar-wagon-item">
         <div class="dropdown">
           <i class="fa fa-bars dropdown-toggle" data-toggle="dropdown"></i>
           <ul class="dropdown-menu dropdown-menu-right navbar-wagon-dropdown-menu">
@@ -42,10 +41,8 @@
       </div>
 
     <% else %>
-
       <!-- Login link (when logged out) -->
       <%= link_to t(".sign_in", default: "Se connecter"), new_user_session_path, class: "navbar-wagon-item navbar-wagon-link" %>
-
     <% end %>
   </div>
 </div>
