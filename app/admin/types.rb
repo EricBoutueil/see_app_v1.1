@@ -17,7 +17,7 @@ ActiveAdmin.register Type do
 #   permitted
 # end
 
-  permit_params :code, :label, :description, :flow
+  permit_params :code, :flow, :label, :unit, :description
 
   index do
     selectable_column
@@ -25,6 +25,7 @@ ActiveAdmin.register Type do
     column :code
     column :flow
     column :label
+    column :unit
     column :description
     actions
   end

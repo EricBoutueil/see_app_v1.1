@@ -10,6 +10,7 @@
             <td><%= t('.code') %></td>
             <td><%= t('.flow') %></td>
             <td><%= t('.label') %></td>
+            <td><%= t('.unit') %></td>
             <td><%= t('.terminal') %></td>
             <td><%= t('.pol_pod') %></td>
             <td><%= t('.year') %></td>
@@ -29,6 +30,7 @@
             <td>
               <%= t("types.label.#{movement.type.label}") %>
             </td>
+            <td><%= movement.type.unit.capitalize %></td>
             <td><%= movement.terminal.capitalize %></td>
             <td><%= movement.pol_pod.capitalize %></td>
             <td><%= movement.year %></td>

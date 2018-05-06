@@ -79,6 +79,18 @@ end
     end
   end
 
+  def filtered_family_unit(params)
+    @filtered_family_unit = if (params[:fam])
+      if (params[:fam].length == 1)
+        self.movements.joins(:type).where(types: {code: params[:fam]}).select('unit as unit_fam').first.unit_fam
+      else
+        "tonnes"
+      end
+    else
+      "tonnes"
+    end
+  end
+
   def vol_filter_by_subfamily1(params) # (5a) -> criterias replace 4 in select2.js OK
     if (params[:sub_one])
       @types_criterias[:code] = params[:sub_one]

@@ -7,6 +7,7 @@ fr:
       code: Famille
       flow: Flux
       label: Libellé
+      unit: Unité
       terminal: Terminal
       pol_pod: Origine / Dest.
       year: Année
