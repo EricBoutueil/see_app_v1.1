@@ -41,7 +41,6 @@ function initMap() {
           streetViewControl: false,
           mapTypeControl: false
         });
-
   };
 }
 
@@ -64,31 +63,31 @@ function loadGeoJson() {
 
 // auto center map on data layer
 function zoom() {
-    // initialize the bounds
-    var bounds = new google.maps.LatLngBounds();
-    // loadGeoJson  runs asnchronously, listen to the addfeature-event
-    google.maps.event.addListener(map.data, 'addfeature', function(e) {
-        // check for points
-        if (e.feature.getGeometry().getType() === 'Point') {
-          // extend the bounds
-          bounds.extend(e.feature.getGeometry().get());
-        }
-        // use the bounds
-        map.fitBounds(bounds);
+  // initialize the bounds
+  var bounds = new google.maps.LatLngBounds();
+  // loadGeoJson  runs asnchronously, listen to the addfeature-event
+  google.maps.event.addListener(map.data, 'addfeature', function(e) {
+      // check for points
+      if (e.feature.getGeometry().getType() === 'Point') {
+        // extend the bounds
+        bounds.extend(e.feature.getGeometry().get());
+      }
+      // use the bounds
+      map.fitBounds(bounds);
 
-        // adapt zoom to bounds
-        // var z = map.getZoom();
-        // console.log(z);
-        zoomChangeBoundsListener =
-            google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
-                if ( this.getZoom() > 10 ){   // or set a minimum
-                    this.setZoom(10);  // set zoom here
-                }
-        });
-        setTimeout(function(){google.maps.event.removeListener(zoomChangeBoundsListener)}, 2000);
-        // var z = map.getZoom();
-        // console.log(z);
+      // adapt zoom to bounds
+      // var z = map.getZoom();
+      // console.log(z);
+      zoomChangeBoundsListener =
+          google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
+              if ( this.getZoom() > 10 ){   // or set a minimum
+                  this.setZoom(10);  // set zoom here
+              }
       });
+      setTimeout(function(){google.maps.event.removeListener(zoomChangeBoundsListener)}, 2000);
+      // var z = map.getZoom();
+      // console.log(z);
+    });
 }
 
 // STEP 3: set data style
@@ -183,7 +182,7 @@ function addUnitLegend() {
   // var maxPowTenToLocaleString = maxPowTen().toLocaleString(undefined);
   // legend.innerText = `Unité: ${maxPowTenToLocaleString} ${unitSelectedFamily}`
   legend.innerText = `Unité: ${unitScaleText()} ${unitSelectedFamily}`
-  map.controls[google.maps.ControlPosition.LEFT_TOP].push(legend)
+  // map.controls[google.maps.ControlPosition.LEFT_TOP].push(legend)
 }
 
 // reload of subfamilies1 (for each change in family or subfamilies1)
@@ -217,7 +216,8 @@ function loadSubfamilies1() {
     });
   }
 
-  addUnitLegend()
+    addUnitLegend()
+
 }
 
 // reload of subfamilies2 (for each change in family or subfamilies2)
