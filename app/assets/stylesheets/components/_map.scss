@@ -11,3 +11,9 @@
   width: calc(100vw - 364px);
   position: sticky !important; /* !important to override Gmaps inline CSS */
 }
+
+#legend {
+  @extend .mt\-;
+  @extend .ml\-;
+  @extend .text-size-body-small;
+}

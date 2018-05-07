@@ -161,9 +161,10 @@ function addUnitBelowFamilyField() {
     unitSelectedFamily = feature.getProperty('unit');
   });
 
-  var unitDisplay = document.querySelector('#unit-display')
+  var legend = document.querySelector('#legend')
   var maxPowTenToLocaleString = maxPowTen().toLocaleString(undefined);
-  unitDisplay.innerText = `Unité: ${maxPowTenToLocaleString} ${unitSelectedFamily}`
+  legend.innerText = `Unité: ${maxPowTenToLocaleString} ${unitSelectedFamily}`
+  map.controls[google.maps.ControlPosition.LEFT_TOP].push(legend)
 }
 
 // reload of subfamilies1 (for each change in family or subfamilies1)
