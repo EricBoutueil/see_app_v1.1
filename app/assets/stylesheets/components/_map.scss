@@ -1,6 +1,7 @@
 .map-container{
   width: 1px;
   height: 1px;
+  position: relative;
 }
 
 #map {
@@ -9,5 +10,14 @@
   flex: 0 0 450px;
   height: calc(100vh - 97px);
   width: calc(100vw - 364px);
-  position: sticky !important; /* !important to override Gmaps inline CSS */
+  position: relative !important; /* !important to override Gmaps inline CSS */
+}
+
+#legend {
+  @extend .mt\-;
+  @extend .ml\-;
+  @extend .text-size-body-small;
+  position: absolute;
+  top: 5px;
+  left: -20px;
 }

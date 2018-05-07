@@ -41,7 +41,6 @@ function initMap() {
           streetViewControl: false,
           mapTypeControl: false
         });
-
   };
 }
 
@@ -64,31 +63,31 @@ function loadGeoJson() {
 
 // auto center map on data layer
 function zoom() {
-    // initialize the bounds
-    var bounds = new google.maps.LatLngBounds();
-    // loadGeoJson  runs asnchronously, listen to the addfeature-event
-    google.maps.event.addListener(map.data, 'addfeature', function(e) {
-        // check for points
-        if (e.feature.getGeometry().getType() === 'Point') {
-          // extend the bounds
-          bounds.extend(e.feature.getGeometry().get());
-        }
-        // use the bounds
-        map.fitBounds(bounds);
+  // initialize the bounds
+  var bounds = new google.maps.LatLngBounds();
+  // loadGeoJson  runs asnchronously, listen to the addfeature-event
+  google.maps.event.addListener(map.data, 'addfeature', function(e) {
+      // check for points
+      if (e.feature.getGeometry().getType() === 'Point') {
+        // extend the bounds
+        bounds.extend(e.feature.getGeometry().get());
+      }
+      // use the bounds
+      map.fitBounds(bounds);
 
-        // adapt zoom to bounds
-        // var z = map.getZoom();
-        // console.log(z);
-        zoomChangeBoundsListener =
-            google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
-                if ( this.getZoom() > 10 ){   // or set a minimum
-                    this.setZoom(10);  // set zoom here
-                }
-        });
-        setTimeout(function(){google.maps.event.removeListener(zoomChangeBoundsListener)}, 2000);
-        // var z = map.getZoom();
-        // console.log(z);
+      // adapt zoom to bounds
+      // var z = map.getZoom();
+      // console.log(z);
+      zoomChangeBoundsListener =
+          google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
+              if ( this.getZoom() > 10 ){   // or set a minimum
+                  this.setZoom(10);  // set zoom here
+              }
       });
+      setTimeout(function(){google.maps.event.removeListener(zoomChangeBoundsListener)}, 2000);
+      // var z = map.getZoom();
+      // console.log(z);
+    });
 }
 
 // STEP 3: set data style
@@ -98,12 +97,12 @@ function setFeaturesStyle() {
 
     map.data.setStyle(function(feature) {
       var totalVolume = feature.getProperty('totvol');
-      var twoDigitTotalVol = twoDigitVol(totalVolume)
+      var displayedTotalVol = displayedVol(totalVolume)
       console.log('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
       return {
         icon: getCircle(totalVolume),
         label: {
-          text: twoDigitTotalVol,
+          text: displayedTotalVol,
           color: "white"
         }
       };
@@ -140,30 +139,50 @@ function calcScale(totalVolume) {
   return scale;
 }
 
-// calculate totalVolume twoDigit rounding
+// calculate totalVolume displayed rounding
 function maxPowTen() {
   var totVolLength = totalVolumeMax.toString().length;
   var maxPowTen = (Math.pow(10, totVolLength)) / 10;
   return maxPowTen;
 }
 
-function twoDigitVol(totalVolume) {
-  var twoDigitVol = (Math.round(totalVolume *100 / (maxPowTen())) / 100);
-  // console.log('2 digit total vol = '+ twoDigitVol);
-  return twoDigitVol;
+function unitScaleText() {
+  var unitScaleText = ""
+  if (maxPowTen() >= 1000000) {
+    unitScaleText = " millions "
+  } else if (maxPowTen() >= 1000) {
+    unitScaleText = " milliers "
+  }
+  return unitScaleText
+}
+
+function displayedVol(totalVolume) {
+  // var displayedVol = (Math.round(totalVolume *100 / (maxPowTen())) / 100);
+  var displayedVol = 0
+  if (unitScaleText() == " millions ") {
+    displayedVol = (Math.round(totalVolume * 100 / 1000000) / 100);
+  } else if (unitScaleText() == " milliers ") {
+    displayedVol = (Math.round(totalVolume * 100 / 1000) / 100);
+  } else {
+    displayedVol = (Math.round(totalVolume * 100) / 100);
+  }
+  // console.log('2 digit total vol = '+ displayedVol);
+  return displayedVol;
 }
 
 
 // add unit below family field
-function addUnitBelowFamilyField() {
+function addUnitLegend() {
   var unitSelectedFamily = ""
   map.data.forEach(function(feature) {
     unitSelectedFamily = feature.getProperty('unit');
   });
 
-  var unitDisplay = document.querySelector('#unit-display')
-  var maxPowTenToLocaleString = maxPowTen().toLocaleString(undefined);
-  unitDisplay.innerText = `Unité: ${maxPowTenToLocaleString} ${unitSelectedFamily}`
+  var legend = document.querySelector('#legend')
+  // var maxPowTenToLocaleString = maxPowTen().toLocaleString(undefined);
+  // legend.innerText = `Unité: ${maxPowTenToLocaleString} ${unitSelectedFamily}`
+  legend.innerText = `Unité: ${unitScaleText()} ${unitSelectedFamily}`
+  // map.controls[google.maps.ControlPosition.LEFT_TOP].push(legend)
 }
 
 // reload of subfamilies1 (for each change in family or subfamilies1)
@@ -197,7 +216,8 @@ function loadSubfamilies1() {
     });
   }
 
-  addUnitBelowFamilyField()
+    addUnitLegend()
+
 }
 
 // reload of subfamilies2 (for each change in family or subfamilies2)

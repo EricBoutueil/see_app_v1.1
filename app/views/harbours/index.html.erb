@@ -4,7 +4,7 @@
 
   <div class="select2-menu-container">
     <div class="row">
-      <div class="col-xs-12 mt">
+      <div class="col-xs-12 mt-">
 
         <!-- Select2 options -->
         <p class="fitler-title"><%= t('.harbour_filter')%></p> <!-- harbours -->
@@ -32,14 +32,13 @@
           <% end %>
         </select>
 
-        <hr class="mt+">
+        <hr class="mt mb0">
         <p class="fitler-title"><%= t('.family_filter')%></p> <!-- families -->
         <select id="select2_families", class="single-filter">
           <% @families.map do |f| %>
             <option value="<%= f[:code] %>"><%= "#{f[:code].upcase} - #{f[:label].capitalize}" %></option>
           <% end %>
         </select>
-        <p id="unit-display" class="label label-primary mt--"></p>
 
         <p class="fitler-title"><%= t('.subfamily1_filter')%></p> <!-- subfamilies1 -->
         <select id="select2_subfamilies1", multiple=true, class="multiple-filter">
@@ -78,6 +77,7 @@
         id="map"
         data-geojson="<%= @geojson.to_json %>"
       ></div>
+      <p id="legend" class="label label-primary"></p>
     </div>
   </div>
 </div>
