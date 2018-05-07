@@ -98,12 +98,12 @@ function setFeaturesStyle() {
 
     map.data.setStyle(function(feature) {
       var totalVolume = feature.getProperty('totvol');
-      var twoDigitTotalVol = twoDigitVol(totalVolume)
+      var displayedTotalVol = displayedVol(totalVolume)
       console.log('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
       return {
         icon: getCircle(totalVolume),
         label: {
-          text: twoDigitTotalVol,
+          text: displayedTotalVol,
           color: "white"
         }
       };
@@ -140,30 +140,49 @@ function calcScale(totalVolume) {
   return scale;
 }
 
-// calculate totalVolume twoDigit rounding
+// calculate totalVolume displayed rounding
 function maxPowTen() {
   var totVolLength = totalVolumeMax.toString().length;
   var maxPowTen = (Math.pow(10, totVolLength)) / 10;
   return maxPowTen;
 }
 
-function twoDigitVol(totalVolume) {
-  var twoDigitVol = (Math.round(totalVolume *100 / (maxPowTen())) / 100);
-  // console.log('2 digit total vol = '+ twoDigitVol);
-  return twoDigitVol;
+function unitScaleText() {
+  var unitScaleText = ""
+  if (maxPowTen() >= 1000000) {
+    unitScaleText = " millions "
+  } else if (maxPowTen() >= 1000) {
+    unitScaleText = " milliers "
+  }
+  return unitScaleText
+}
+
+function displayedVol(totalVolume) {
+  // var displayedVol = (Math.round(totalVolume *100 / (maxPowTen())) / 100);
+  var displayedVol = 0
+  if (unitScaleText() == " millions ") {
+    displayedVol = (Math.round(totalVolume * 100 / 1000000) / 100);
+  } else if (unitScaleText() == " milliers ") {
+    displayedVol = (Math.round(totalVolume * 100 / 1000) / 100);
+  } else {
+    displayedVol = (Math.round(totalVolume * 100) / 100);
+  }
+  // console.log('2 digit total vol = '+ displayedVol);
+  return displayedVol;
 }
 
 
 // add unit below family field
-function addUnitBelowFamilyField() {
+function addUnitLegend() {
   var unitSelectedFamily = ""
   map.data.forEach(function(feature) {
     unitSelectedFamily = feature.getProperty('unit');
   });
 
   var legend = document.querySelector('#legend')
-  var maxPowTenToLocaleString = maxPowTen().toLocaleString(undefined);
-  legend.innerText = `Unité: ${maxPowTenToLocaleString} ${unitSelectedFamily}`
+  // var maxPowTenToLocaleString = maxPowTen().toLocaleString(undefined);
+  // legend.innerText = `Unité: ${maxPowTenToLocaleString} ${unitSelectedFamily}`
+  legend.innerText = `Unité: ${unitScaleText()} ${unitSelectedFamily}`
   map.controls[google.maps.ControlPosition.LEFT_TOP].push(legend)
 }
 
@@ -198,7 +217,7 @@ function loadSubfamilies1() {
     });
   }
 
-  addUnitBelowFamilyField()
+  addUnitLegend()
 }
 
 // reload of subfamilies2 (for each change in family or subfamilies2)
