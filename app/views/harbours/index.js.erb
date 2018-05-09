@@ -145,7 +145,7 @@ function calcScale(totalVolume) {
   if (scale < 15) {
     scale = 15;
   }
-  // scale = scale * zoomActual / zoomBounds;
+  scale = scale * zoomActual / zoomBounds;
   return scale;
 }
 
