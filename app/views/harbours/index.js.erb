@@ -30,6 +30,8 @@ var mapStyle = [
     ]
   }
 ];
+
+
 function initMap() {
   if (mapElement) {
     map = new google.maps.Map(mapElement, {
@@ -62,6 +64,7 @@ function loadGeoJson() {
 }
 
 // auto center map on data layer
+var zoomBounds = 0;
 function zoom() {
   // initialize the bounds
   var bounds = new google.maps.LatLngBounds();
@@ -76,17 +79,19 @@ function zoom() {
       map.fitBounds(bounds);
 
       // adapt zoom to bounds
-      // var z = map.getZoom();
-      // console.log(z);
       zoomChangeBoundsListener =
-          google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
-              if ( this.getZoom() > 10 ){   // or set a minimum
-                  this.setZoom(10);  // set zoom here
-              }
-      });
+        google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
+          if ( this.getZoom() > 10 ){   // or set a minimum
+              this.setZoom(10);  // set zoom here
+          }
+        });
       setTimeout(function(){google.maps.event.removeListener(zoomChangeBoundsListener)}, 2000);
-      // var z = map.getZoom();
-      // console.log(z);
+    });
+
+    // calculate zoomBounds for circles scales
+    google.maps.event.addListenerOnce(map, 'zoom_changed', function(event) {
+      zoomBounds = map.getZoom();
+      console.log('zoomBounds:' + zoomBounds);
     });
 }
 
@@ -99,6 +104,7 @@ function setFeaturesStyle() {
       var totalVolume = feature.getProperty('totvol');
       var displayedTotalVol = displayedVol(totalVolume)
       console.log('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
+      console.log(calcScale(totalVolume));
       return {
         icon: getCircle(totalVolume),
         label: {
@@ -136,6 +142,10 @@ function getCircle(totalVolume) {
 function calcScale(totalVolume) {
   var scale = (Math.sqrt(totalVolume * Math.pow(40, 2) / totalVolumeMax));
   // console.log('scale = '+ scale);
+  if (scale < 15) {
+    scale = 15;
+  }
+  scale = scale * zoomActual / zoomBounds;
   return scale;
 }
 
@@ -149,9 +159,9 @@ function maxPowTen() {
 function unitScaleText() {
   var unitScaleText = ""
   if (maxPowTen() >= 1000000) {
-    unitScaleText = " millions "
+    unitScaleText = " millions de "
   } else if (maxPowTen() >= 1000) {
-    unitScaleText = " milliers "
+    unitScaleText = " milliers de "
   }
   return unitScaleText
 }
@@ -159,9 +169,9 @@ function unitScaleText() {
 function displayedVol(totalVolume) {
   // var displayedVol = (Math.round(totalVolume *100 / (maxPowTen())) / 100);
   var displayedVol = 0
-  if (unitScaleText() == " millions ") {
+  if (unitScaleText() == " millions de ") {
     displayedVol = (Math.round(totalVolume * 100 / 1000000) / 100);
-  } else if (unitScaleText() == " milliers ") {
+  } else if (unitScaleText() == " milliers de ") {
     displayedVol = (Math.round(totalVolume * 100 / 1000) / 100);
   } else {
     displayedVol = (Math.round(totalVolume * 100) / 100);
@@ -287,10 +297,17 @@ function loadSubfamilies3() {
 initMap();
 loadGeoJson();
 setFeaturesStyle();
+
+var zoomActual = 0;
+google.maps.event.addListener(map, 'zoom_changed', function() {
+    zoomActual = map.getZoom();
+    console.log('zoomActual:' + zoomActual);
+    setFeaturesStyle()
+});
+
 loadSubfamilies1();
 loadSubfamilies2();
 loadSubfamilies3();
-
 
 // notes for console.log(1)
   // console.log("new select2Subfamilies1:");
