@@ -54,9 +54,8 @@ function loadGeoJson() {
   if (mapElement) {
     var jsonParsed = JSON.parse(mapElement.dataset.geojson);
 
-    getZoomActual();
-
     zoom();
+    getZoomActual();
 
     map.data.addGeoJson(jsonParsed);
 
@@ -90,7 +89,7 @@ function zoom() {
     });
 }
 
-// calculate zoomActual for circles scales
+// retrieve zoomActual for circles scales
 var zoomActual;
 function getZoomActual() {
   google.maps.event.addListener(map, 'zoom_changed', function() {
@@ -98,18 +97,6 @@ function getZoomActual() {
     console.log('zoom actual:' + zoomActual);
     // setFeaturesStyle();
     setFeaturesStyleZoomed();
-  });
-}
-
-// calculate zoomBounds for circles scales
-var zoomBounds;
-function getZoomBounds() {
-  google.maps.event.addListenerOnce(map, 'zoom_changed', function() {
-    zoomBounds = map.getZoom();
-    if (zoomBounds > 10) {
-      zoomBounds = 10
-    }
-    console.log('zoom bounds:' + zoomBounds);
   });
 }
 
@@ -122,7 +109,7 @@ function setFeaturesStyle() {
       var totalVolume = feature.getProperty('totvol');
       var displayedTotalVol = displayedVol(totalVolume)
       console.log('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
-      console.log('***calc scale ' +feature.getProperty('name') +' = '+calcScale(totalVolume));
+      console.log('calc scale ' +feature.getProperty('name') +' = '+calcScale(totalVolume));
       return {
         icon: getCircle(totalVolume),
         label: {
@@ -164,6 +151,16 @@ function maxTotvol() {
     };
   });
   console.log('total vol max = '+ totalVolumeMax);
+}
+
+// calculate zoomBounds for circles scales
+var zoomBounds;
+function getZoomBounds() {
+    zoomBounds = map.getZoom();
+    if (zoomBounds > 10) {
+      zoomBounds = 10
+    }
+    console.log('zoom bounds:' + zoomBounds);
 }
 
 // show proportional markers (note: markers ares symbols == circles)
