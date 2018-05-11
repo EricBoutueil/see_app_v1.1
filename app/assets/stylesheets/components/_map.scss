@@ -1,16 +1,29 @@
 .map-container{
-  width: 1px;
-  height: 1px;
+  width: 100%;
+  height: 100%;
   position: relative;
 }
 
 #map {
   @extend .mt\-;
   @extend .mr\-;
-  flex: 0 0 450px;
-  height: calc(100vh - 97px);
-  width: calc(100vw - 364px);
+  // flex: 0 0 450px;
+  height: calc(100vh - 95px);
+  width: calc(100vw - 395px);
   position: relative !important; /* !important to override Gmaps inline CSS */
+}
+
+@media (max-width: 540px) {
+  /* For a screen < 540px, this CSS will be read */
+  #map {
+    // @extend .mt\-;
+    // @extend .mr\-;
+    // flex: 0 0 450px;
+    margin-bottom: 10px !important;
+    height: calc(100vh - 20px);
+    width: calc(100vw - 30px);
+    position: relative !important; /* !important to override Gmaps inline CSS */
+  }
 }
 
 #legend {
@@ -19,5 +32,5 @@
   @extend .text-size-body-small;
   position: absolute;
   top: 5px;
-  left: -20px;
+  left: 5px;
 }
