@@ -1,10 +1,9 @@
 <!-- filters: (1)harb, (2)year, (3)flow, (4)fam, (5)subfam [+ (6)term, (7)pol_pod] -->
 
-<div class='main-container'>
-
-  <div class="select2-menu-container">
-    <div class="row">
-      <div class="col-xs-12 mt-">
+<div class='container ml0 mr0'>
+  <div class="row">
+    <div class="col-xs-12 col-sm-3 mt-">
+      <div class="select2-menu-container">
 
         <!-- Select2 options -->
         <p class="fitler-title"><%= t('.harbour_filter')%></p> <!-- harbours -->
@@ -64,20 +63,21 @@
 
       </div>
     </div>
-  </div>
 
   <!--   <%# @harbours.map do |h| %>
       <li><%#= h.totvol_filter(params) %></li>
     <%# end %> -->
 
   <!-- Map -->
-  <div class="map-container">
-    <div class="row">
-      <div
-        id="map"
-        data-geojson="<%= @geojson.to_json %>"
-      ></div>
-      <p id="legend" class="label label-primary"></p>
+
+    <div class="col-xs-12 col-sm-9 mt-">
+      <div class="map-container">
+        <div
+          id="map"
+          data-geojson="<%= @geojson.to_json %>"
+        ></div>
+        <p id="legend" class="label label-primary"></p>
+      </div>
     </div>
   </div>
 </div>
