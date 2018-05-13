@@ -47,7 +47,7 @@ class Harbour < ApplicationRecord
     # binding.pry
     @totvol = self.movements.joins(:type).where(@mvts_criterias).where(types: @types_criterias).pluck(:volume).sum
     # ex. -> where({year: ["2014", "2013"]}).where(types: {code: ["e"]})
-end
+  end
 
   def vol_filter_by_year(params) # (2)
     @mvts_criterias[:year] = if (params[:year])
