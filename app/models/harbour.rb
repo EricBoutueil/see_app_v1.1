@@ -8,10 +8,14 @@ class Harbour < ApplicationRecord
   validates :address, presence: true, uniqueness: true
 
   geocoded_by :full_address
-  after_validation :geocode #:address_changed?
+  after_validation :geocode, if: :latitude_nil?
 
 
   YEAR_MAX = Movement::max_year
+
+  def latitude_nil?
+    self.latitude.nil?
+  end
 
   def full_address
     "port #{name}, #{address}, #{country}"
