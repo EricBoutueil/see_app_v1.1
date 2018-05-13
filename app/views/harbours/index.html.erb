@@ -6,14 +6,14 @@
       <div class="select2-menu-container">
 
         <!-- Select2 options -->
-        <p class="fitler-title"><%= t('.harbour_filter')%></p> <!-- harbours -->
+        <p class="filter-title"><%= t('.harbour_filter')%></p> <!-- harbours -->
         <select id="select2_harbours", multiple=true, class="multiple-filter">
           <% @harbours.map do |h| %>
             <option value="<%= h.name %>"><%= h.name %></option>
           <% end %>
         </select>
 
-        <p class="fitler-title"><%= t('.year_filter')%></p> <!-- years -->
+        <p class="filter-title"><%= t('.year_filter')%></p> <!-- years -->
         <select id="select2_years", class="single-filter">
           <!--, multiple=true, class="multiple-filter"> -->
           <% @years.map do |y| %>
@@ -24,7 +24,7 @@
         <%= content_tag :div, id: "temp_years", data: {temp: @years.max} do %>
         <% end %>
 
-        <p class="fitler-title"><%= t('.flow_filter')%></p> <!-- flows -->
+        <p class="filter-title"><%= t('.flow_filter')%></p> <!-- flows -->
         <select id="select2_flows", class="single-filter">
           <% @flows.map do |fl| %>
             <option value="<%= fl %>"><%= t("ar.attributes.type.flow.#{fl}") %></option>
@@ -32,14 +32,14 @@
         </select>
 
         <hr class="mt mb0">
-        <p class="fitler-title"><%= t('.family_filter')%></p> <!-- families -->
+        <p class="filter-title"><%= t('.family_filter')%></p> <!-- families -->
         <select id="select2_families", class="single-filter">
           <% @families.map do |f| %>
             <option value="<%= f[:code] %>"><%= "#{f[:code].upcase} - #{f[:label].capitalize}" %></option>
           <% end %>
         </select>
 
-        <p class="fitler-title"><%= t('.subfamily1_filter')%></p> <!-- subfamilies1 -->
+        <p class="filter-title"><%= t('.subfamily1_filter')%></p> <!-- subfamilies1 -->
         <select id="select2_subfamilies1", multiple=true, class="multiple-filter">
           <% @subfamilies1.map %>
           <!-- iteration not needed anymore due to loadSubfamilies1 function -->
@@ -51,12 +51,12 @@
         <%#= content_tag :div, id: "temp_subfamilies1", data: {temp: @subfamilies1} do %>
         <%# end %>
 
-        <p class="fitler-title"><%= t('.subfamily2_filter')%></p> <!-- subfamilies2 -->
+        <p class="filter-title"><%= t('.subfamily2_filter')%></p> <!-- subfamilies2 -->
         <select id="select2_subfamilies2", multiple=true, class="multiple-filter">
           <% @subfamilies2.map %>
         </select>
 
-        <p class="fitler-title"><%= t('.subfamily3_filter')%></p> <!-- subfamilies3 -->
+        <p class="filter-title"><%= t('.subfamily3_filter')%></p> <!-- subfamilies3 -->
         <select id="select2_subfamilies3", multiple=true, class="multiple-filter">
           <% @subfamilies3.map %>
         </select>

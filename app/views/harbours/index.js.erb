@@ -31,7 +31,6 @@ var mapStyle = [
   }
 ];
 
-
 function initMap() {
   if (mapElement) {
     map = new google.maps.Map(mapElement, {
@@ -54,17 +53,19 @@ function loadGeoJson() {
   if (mapElement) {
     var jsonParsed = JSON.parse(mapElement.dataset.geojson);
 
-    zoom();
-    getZoomActual();
+    zoom(); // 2.1
+    getZoomActual(); // 2.2
 
     map.data.addGeoJson(jsonParsed);
 
     console.log("loaded GeoJson:");
     console.log(mapElement.dataset.geojson);
+
+    loadInfoWindows(); // 2.3
   };
 }
 
-// auto center map on data layer
+// 2.1 auto center map on data layer
 function zoom() {
   // initialize the bounds
   var bounds = new google.maps.LatLngBounds();
@@ -89,7 +90,7 @@ function zoom() {
     });
 }
 
-// retrieve zoomActual for circles scales
+// 2.2 retrieve zoomActual for circles scales
 var zoomActual;
 function getZoomActual() {
   google.maps.event.addListener(map, 'zoom_changed', function() {
@@ -100,14 +101,36 @@ function getZoomActual() {
   });
 }
 
+// 2.3 show an info window when the user click on a circle
+function loadInfoWindows() {
+  var infowindow = new google.maps.InfoWindow();
+  map.data.addListener('click', function(event) {
+    var myHTML =  '<p class="infowindow-title">'+
+                  event.feature.getProperty("name").toUpperCase() +
+                  '</p>' +
+                  '<p class="mb0">'+
+                  event.feature.getProperty('totvol').toLocaleString(undefined) +
+                  " "+
+                  event.feature.getProperty('unit') +
+                  '</p>'
+
+    infowindow.setContent("<div style='width:100px;'>"+myHTML+"</div>");
+    // position the infowindow on the marker
+    infowindow.setPosition(event.feature.getGeometry().get());
+    // anchor the infowindow on the marker
+    infowindow.setOptions({pixelOffset: new google.maps.Size(0,0)});
+    infowindow.open(map);
+  });
+}
+
 // STEP 3: set data style
 function setFeaturesStyle() {
   if (mapElement) {
-    maxTotvol();
-    getZoomBounds();
+    maxTotvol(); // 3.1
+    getZoomBounds(); // 3.2
     map.data.setStyle(function(feature) {
       var totalVolume = feature.getProperty('totvol');
-      var displayedTotalVol = displayedVol(totalVolume)
+      var displayedTotalVol = displayedVol(totalVolume) // 3.3
       console.log('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
       console.log('calc scale ' +feature.getProperty('name') +' = '+calcScale(totalVolume));
       return {
@@ -121,14 +144,14 @@ function setFeaturesStyle() {
   };
 }
 
-// for manual zoom:
+// 3.0bis do it for manual zoom (from 2.2):
 function setFeaturesStyleZoomed() {
   if (mapElement) {
-    maxTotvol();
-    // getZoomBounds(); // -> not updated when zoomed manually
+    maxTotvol(); // 3.1
+    // getZoomBounds(); // 3.2 -> not updated when zoomed manually
     map.data.setStyle(function(feature) {
       var totalVolume = feature.getProperty('totvol');
-      var displayedTotalVol = displayedVol(totalVolume)
+      var displayedTotalVol = displayedVol(totalVolume) // 3.3
       console.log('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
       console.log('***calc scale ' +feature.getProperty('name') +' = '+calcScale(totalVolume));
       return {
@@ -142,7 +165,7 @@ function setFeaturesStyleZoomed() {
   };
 }
 
-// calculate total volume max of filtered features
+// 3.1 calculate total volume max of filtered features (from 3.0 and 3.0bis)
 var totalVolumeMax = 0;
 function maxTotvol() {
   map.data.forEach(function(feature) {
@@ -153,7 +176,7 @@ function maxTotvol() {
   console.log('total vol max = '+ totalVolumeMax);
 }
 
-// calculate zoomBounds for circles scales
+// 3.2 calculate zoomBounds for circles scales (from 3.0 only)
 var zoomBounds;
 function getZoomBounds() {
     zoomBounds = map.getZoom();
@@ -163,48 +186,9 @@ function getZoomBounds() {
     console.log('zoom bounds:' + zoomBounds);
 }
 
-// show proportional markers (note: markers ares symbols == circles)
-function getCircle(totalVolume) {
-  return {
-    path: google.maps.SymbolPath.CIRCLE,
-    fillColor: '#007A8E',
-    fillOpacity: 1,
-    scale: calcScale(totalVolume),
-    strokeColor: '#007A8E',
-    strokeWeight: 1
-  };
-}
-
-function calcScale(totalVolume) {
-  var scale = (Math.sqrt(totalVolume * Math.pow(40, 2) / totalVolumeMax));
-  // console.log('scale = '+ scale);
-  if (scale < 15) {
-    scale = 15;
-  }
-  scale = scale * zoomActual / zoomBounds;
-  // console.log('zoom scale final:' + scale)
-  return scale;
-}
-
-// calculate totalVolume displayed rounding
-function maxPowTen() {
-  var totVolLength = totalVolumeMax.toString().length;
-  var maxPowTen = (Math.pow(10, totVolLength)) / 10;
-  return maxPowTen;
-}
-
-function unitScaleText() {
-  var unitScaleText = ""
-  if (maxPowTen() >= 1000000) {
-    unitScaleText = " millions de "
-  } else if (maxPowTen() >= 1000) {
-    unitScaleText = " milliers de "
-  }
-  return unitScaleText
-}
-
+// 3.3 calcl vol to display on circles (from 3.0 and 3.0bis)
 function displayedVol(totalVolume) {
-  // var displayedVol = (Math.round(totalVolume *100 / (maxPowTen())) / 100);
+  // var displayedVol = (Math.round(totalVolume *100 / (maxPowTen())) / 100); // for proportional units
   var displayedVol = 0
   if (unitScaleText() == " millions de ") {
     displayedVol = (Math.round(totalVolume * 100 / 1000000) / 100);
@@ -217,8 +201,31 @@ function displayedVol(totalVolume) {
   return displayedVol;
 }
 
+// 3.0.1 show proportional markers (note: markers ares symbols == circles)
+function getCircle(totalVolume) {
+  return {
+    path: google.maps.SymbolPath.CIRCLE,
+    fillColor: '#007A8E',
+    fillOpacity: 1,
+    scale: calcScale(totalVolume),
+    strokeColor: '#007A8E',
+    strokeWeight: 1
+  };
+}
 
-// add unit on top left corner of the map
+// 3.0.2 calc scale for circles scales
+function calcScale(totalVolume) {
+  var scale = (Math.sqrt(totalVolume * Math.pow(40, 2) / totalVolumeMax));
+  // console.log('scale = '+ scale);
+  if (scale < 15) {
+    scale = 15;
+  }
+  scale = scale * zoomActual / zoomBounds;
+  // console.log('zoom scale final:' + scale)
+  return scale;
+}
+
+// 3.4 from 4.1 add unit on top left corner of the map
 function addUnitLegend() {
   var unitSelectedFamily = ""
   map.data.forEach(function(feature) {
@@ -232,7 +239,26 @@ function addUnitLegend() {
   // map.controls[google.maps.ControlPosition.LEFT_TOP].push(legend)
 }
 
-// reload of subfamilies1 (for each change in family or subfamilies1)
+// 3.4.1 calc unit from legend
+function unitScaleText() {
+  var unitScaleText = ""
+  if (maxPowTen() >= 1000000) {
+    unitScaleText = " millions de "
+  } else if (maxPowTen() >= 1000) {
+    unitScaleText = " milliers de "
+  }
+  return unitScaleText
+}
+
+// 3.4.2 calculate max displayed totalVolume pow of 10
+function maxPowTen() {
+  var totVolLength = totalVolumeMax.toString().length;
+  var maxPowTen = (Math.pow(10, totVolLength)) / 10;
+  return maxPowTen;
+}
+
+// STEP 4: reload subfamilies drop down
+// 4.1 reload of subfamilies1 (for each change in family or subfamilies1)
 function loadSubfamilies1() {
 
   var select2Subfamilies1 = '<%= @subfamilies1.to_json.html_safe %>'; // ok
@@ -263,11 +289,11 @@ function loadSubfamilies1() {
     });
   }
 
-  addUnitLegend();
+  addUnitLegend(); // 3.4
 
 }
 
-// reload of subfamilies2 (for each change in family or subfamilies2)
+// 4.2 reload of subfamilies2 (for each change in family or subfamilies2)
 function loadSubfamilies2() {
 
   var select2Subfamilies2 = '<%= @subfamilies2.to_json.html_safe %>'; // ok
@@ -299,7 +325,7 @@ function loadSubfamilies2() {
   }
 }
 
-// reload of subfamilies3 (for each change in family or subfamilies3)
+// 4.3 reload of subfamilies3 (for each change in family or subfamilies3)
 function loadSubfamilies3() {
 
   var select2Subfamilies3 = '<%= @subfamilies3.to_json.html_safe %>'; // ok
@@ -330,13 +356,14 @@ function loadSubfamilies3() {
     });
   }
 }
+
 // execution
-initMap();
-loadGeoJson();
-setFeaturesStyle();
-loadSubfamilies1();
-loadSubfamilies2();
-loadSubfamilies3();
+initMap(); // STEP 1
+loadGeoJson(); // STEP 2
+setFeaturesStyle(); // STEP 3
+loadSubfamilies1(); // STEP 4.1
+loadSubfamilies2(); // STEP 4.2
+loadSubfamilies3(); // STEP 4.3
 
 // notes for console.log(1)
   // console.log("new select2Subfamilies1:");
