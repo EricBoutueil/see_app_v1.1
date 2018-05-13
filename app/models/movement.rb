@@ -43,15 +43,20 @@ class Movement < ApplicationRecord
         .joins(:harbour, :type)
         .where(harbours: {name: row[:name].downcase})
         .where(types: {code: row[:code].downcase, flow: row[:flow].downcase})
+        .where(year: row[:year])
         .update(
-          volume: row[:volume].to_i
+          volume: row[:volume].to_i,
+          terminal: row[:terminal].downcase,
+          pol_pod: row[:pol_pod].downcase
           )
       else
         Movement.create!(
           harbour: Harbour.find_by(name: row[:name].downcase),
           type: Type.find_by(code: row[:code].downcase, flow: row[:flow].downcase),
           year: row[:year].to_i,
-          volume: row[:volume].to_i
+          volume: row[:volume].to_i,
+          terminal: row[:terminal].downcase,
+          pol_pod: row[:pol_pod].downcase
           )
       end
 
