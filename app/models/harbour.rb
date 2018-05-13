@@ -14,7 +14,7 @@ class Harbour < ApplicationRecord
   YEAR_MAX = Movement::max_year
 
   def full_address
-    "#{address}, #{country}"
+    "port #{name}, #{address}, #{country}"
   end
 
   # A) filtering harbours in geojson

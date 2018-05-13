@@ -33,30 +33,79 @@ class Movement < ApplicationRecord
 
     CSV.foreach(file.path, headers: true, header_converters: :symbol ) do |row|
 
-    # updating or creating movements (on existing harbours)
-      if Movement
-      .joins(:harbour, :type)
-      .where(harbours: {name: row[:name].downcase})
-      .where(types: {code: row[:code].downcase, flow: row[:flow].downcase})
+
+    # updating if lat nil or creating harbours
+    if Harbour
+    .where(name: row[:name].to_s.downcase)
+    .where(latitude: nil)
+    .exists?
+      Harbour
+      .where(name: row[:name].to_s.downcase)
+      .update(
+      country: row[:country],
+      name: row[:name].to_s.downcase,
+      address: row[:address].to_s.downcase
+      )
+    elsif Harbour
+    .where(name: row[:name].to_s.downcase)
+    .where.not(latitude: nil)
+    .exists?
+      puts 'ok'
+    else
+      Harbour.create!(
+      country: row[:country],
+      name: row[:name].to_s.downcase,
+      address: row[:address].to_s.downcase
+      )
+    end
+
+
+    # updating or creating types
+      if Type
+      .where(code: row[:code].to_s.downcase, flow: row[:flow].to_s.downcase)
       .exists?
-        Movement
-        .joins(:harbour, :type)
-        .where(harbours: {name: row[:name].downcase})
-        .where(types: {code: row[:code].downcase, flow: row[:flow].downcase})
-        .where(year: row[:year])
+        Type
+        .where(code: row[:code].to_s.downcase, flow: row[:flow].to_s.downcase)
         .update(
-          volume: row[:volume].to_i,
-          terminal: row[:terminal].downcase,
-          pol_pod: row[:pol_pod].downcase
+          label: row[:label].to_s.downcase,
+          unit: row[:unit].to_s.downcase,
+          description: row[:description].to_s.downcase
           )
       else
         Movement.create!(
-          harbour: Harbour.find_by(name: row[:name].downcase),
-          type: Type.find_by(code: row[:code].downcase, flow: row[:flow].downcase),
+          code: row[:code].to_s.downcase,
+          flow: row[:flow].to_s.downcase,
+          label: row[:label].to_s.downcase,
+          unit: row[:unit].to_s.downcase,
+          description: row[:description].to_s.downcase
+          )
+      end
+
+    # updating or creating movements (on existing harbours)
+      if Movement
+      .joins(:harbour, :type)
+      .where(harbours: {name: row[:name].to_s.downcase})
+      .where(types: {code: row[:code].to_s.downcase, flow: row[:flow].to_s.downcase})
+      .where(year: row[:year])
+      .exists?
+        Movement
+        .joins(:harbour, :type)
+        .where(harbours: {name: row[:name].to_s.downcase})
+        .where(types: {code: row[:code].to_s.downcase, flow: row[:flow].to_s.downcase})
+        .where(year: row[:year])
+        .update(
+          volume: row[:volume].to_i,
+          terminal: row[:terminal].to_s.downcase,
+          pol_pod: row[:pol_pod].to_s.downcase
+          )
+      else
+        Movement.create!(
+          harbour: Harbour.find_by(name: row[:name].to_s.downcase),
+          type: Type.find_by(code: row[:code].to_s.downcase, flow: row[:flow].to_s.downcase),
           year: row[:year].to_i,
           volume: row[:volume].to_i,
-          terminal: row[:terminal].downcase,
-          pol_pod: row[:pol_pod].downcase
+          terminal: row[:terminal].to_s.downcase,
+          pol_pod: row[:pol_pod].to_s.downcase
           )
       end
 
