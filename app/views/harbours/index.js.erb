@@ -60,6 +60,8 @@ function loadGeoJson() {
 
     console.log("loaded GeoJson:");
     console.log(mapElement.dataset.geojson);
+
+    loadInfoWindows(); // 2.3
   };
 }
 
@@ -96,6 +98,28 @@ function getZoomActual() {
     console.log('zoom actual:' + zoomActual);
     // setFeaturesStyle();
     setFeaturesStyleZoomed();
+  });
+}
+
+// 2.3 show an info window when the user click on a circle
+function loadInfoWindows() {
+  var infowindow = new google.maps.InfoWindow();
+  map.data.addListener('click', function(event) {
+    var myHTML =  '<p class="infowindow-title">'+
+                  event.feature.getProperty("name").toUpperCase() +
+                  '</p>' +
+                  '<p class="mb0">'+
+                  event.feature.getProperty('totvol').toLocaleString(undefined) +
+                  " "+
+                  event.feature.getProperty('unit') +
+                  '</p>'
+
+    infowindow.setContent("<div style='width:100px;'>"+myHTML+"</div>");
+    // position the infowindow on the marker
+    infowindow.setPosition(event.feature.getGeometry().get());
+    // anchor the infowindow on the marker
+    infowindow.setOptions({pixelOffset: new google.maps.Size(0,0)});
+    infowindow.open(map);
   });
 }
 
@@ -233,7 +257,7 @@ function maxPowTen() {
   return maxPowTen;
 }
 
-// STEP 4:
+// STEP 4: reload subfamilies drop down
 // 4.1 reload of subfamilies1 (for each change in family or subfamilies1)
 function loadSubfamilies1() {
 
