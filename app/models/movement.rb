@@ -59,6 +59,26 @@ class Movement < ApplicationRecord
       )
     end
 
+    if Harbour.where(name: "pointe-à-pitre").exists?
+      Harbour.where(name: "pointe-à-pitre").update(
+        latitude: 46.5,
+        longitude: -6.35
+        )
+    end
+
+    if Harbour.where(name: "fort-de-france").exists?
+      Harbour.where(name: "fort-de-france").update(
+        latitude: 45.5,
+        longitude: -6.35
+        )
+    end
+
+    if Harbour.where(name: "port réunion").exists?
+      Harbour.where(name: "port réunion").update(
+        latitude: 44.5,
+        longitude: -6.35
+        )
+    end
 
     # updating or creating types
       if Type

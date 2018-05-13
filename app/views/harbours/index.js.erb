@@ -42,6 +42,22 @@ function initMap() {
           streetViewControl: false,
           mapTypeControl: false
         });
+
+    // add rectangle for DOM TOM
+    var rectangle = new google.maps.Rectangle({
+          strokeColor: '#007A8E',
+          strokeOpacity: 1,
+          strokeWeight: 2,
+          // fillColor: '#007A8E',
+          fillOpacity: 0,
+          map: map,
+          bounds: {
+            north: 47,
+            south: 44,
+            east: -5.7,
+            west: -7
+          }
+        });
   };
 }
 
