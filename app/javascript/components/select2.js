@@ -4,7 +4,20 @@ import 'select2';
 // (1a) select2 fields and selections management
 $('#select2_harbours').select2({ // harbours
   placeholder: "Sélectionner ou écrire pour filtrer",
-  allowClear: true
+  allowClear: true,
+  sorter: function(data) {
+      /* Sort data using lowercase comparison */
+      return data.sort(function (a, b) {
+          a = a.text.toLowerCase();
+          b = b.text.toLowerCase();
+          if (a > b) {
+              return 1;
+          } else if (a < b) {
+              return -1;
+          }
+          return 0;
+      });
+  }
 });
 
 var maxYears = document.getElementById('temp_years').dataset.temp;
@@ -12,25 +25,105 @@ $('#select2_years').select2({ // years
   placeholder: "Valeur par défaut: dernière année disponible",
   //allowClear: true
 // });
+  sorter: function(data) {
+      /* Sort data using lowercase comparison */
+      return data.sort(function (a, b) {
+          a = a.text.toLowerCase();
+          b = b.text.toLowerCase();
+          if (a > b) {
+              return 1;
+          } else if (a < b) {
+              return -1;
+          }
+          return 0;
+      });
+  }
 }).select2('val', [maxYears]);
 
-$('#select2_flows').select2(); // flows
+$('#select2_flows').select2({
+  sorter: function(data) {
+      /* Sort data using lowercase comparison */
+      return data.sort(function (a, b) {
+          a = a.text.toLowerCase();
+          b = b.text.toLowerCase();
+          if (a > b) {
+              return 1;
+          } else if (a < b) {
+              return -1;
+          }
+          return 0;
+      });
+  }
+}); // flows
 
-$('#select2_families').select2(); // families
+$('#select2_families').select2({
+  sorter: function(data) {
+      /* Sort data using lowercase comparison */
+      return data.sort(function (a, b) {
+          a = a.text.toLowerCase();
+          b = b.text.toLowerCase();
+          if (a > b) {
+              return 1;
+          } else if (a < b) {
+              return -1;
+          }
+          return 0;
+      });
+  }
+}); // families
 
 $('#select2_subfamilies1').select2({ // subfamilies1
   placeholder: "Optionnel",
-  allowClear: true
+  allowClear: true,
+  sorter: function(data) {
+      /* Sort data using lowercase comparison */
+      return data.sort(function (a, b) {
+          a = a.text.toLowerCase();
+          b = b.text.toLowerCase();
+          if (a > b) {
+              return 1;
+          } else if (a < b) {
+              return -1;
+          }
+          return 0;
+      });
+  }
 });
 
 $('#select2_subfamilies2').select2({ // subfamilies2
   placeholder: "Optionnel",
-  allowClear: true
+  allowClear: true,
+  sorter: function(data) {
+      /* Sort data using lowercase comparison */
+      return data.sort(function (a, b) {
+          a = a.text.toLowerCase();
+          b = b.text.toLowerCase();
+          if (a > b) {
+              return 1;
+          } else if (a < b) {
+              return -1;
+          }
+          return 0;
+      });
+  }
 });
 
 $('#select2_subfamilies3').select2({ // subfamilies2
   placeholder: "Optionnel",
-  allowClear: true
+  allowClear: true,
+  sorter: function(data) {
+      /* Sort data using lowercase comparison */
+      return data.sort(function (a, b) {
+          a = a.text.toLowerCase();
+          b = b.text.toLowerCase();
+          if (a > b) {
+              return 1;
+          } else if (a < b) {
+              return -1;
+          }
+          return 0;
+      });
+  }
 });
 
 // (1b) requiring CSS

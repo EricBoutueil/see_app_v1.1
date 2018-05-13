@@ -28,6 +28,10 @@ class MovementPolicy < ApplicationPolicy
     user_is_admin?
   end
 
+  def import?
+    user_is_admin?
+  end
+
   private
 
   def user_is_admin?

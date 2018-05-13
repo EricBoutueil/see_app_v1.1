@@ -8,13 +8,17 @@ class Harbour < ApplicationRecord
   validates :address, presence: true, uniqueness: true
 
   geocoded_by :full_address
-  after_validation :geocode #:address_changed?
+  after_validation :geocode, if: :latitude_nil?
 
 
   YEAR_MAX = Movement::max_year
 
+  def latitude_nil?
+    self.latitude.nil?
+  end
+
   def full_address
-    "#{address}, #{country}"
+    "port #{name}, #{address}, #{country}"
   end
 
   # A) filtering harbours in geojson
@@ -47,7 +51,7 @@ class Harbour < ApplicationRecord
     # binding.pry
     @totvol = self.movements.joins(:type).where(@mvts_criterias).where(types: @types_criterias).pluck(:volume).sum
     # ex. -> where({year: ["2014", "2013"]}).where(types: {code: ["e"]})
-end
+  end
 
   def vol_filter_by_year(params) # (2)
     @mvts_criterias[:year] = if (params[:year])
