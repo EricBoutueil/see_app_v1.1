@@ -29,6 +29,8 @@ gem 'geocoder'
 
 gem 'country_select', require: 'country_select_without_sort_alphabetical'
 
+gem 'mailjet'
+
 group :development do
   gem 'web-console', '>= 3.3.0'
 end
