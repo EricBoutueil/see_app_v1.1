@@ -206,13 +206,28 @@ function getZoomBounds() {
 // 3.3 calcl vol to display on circles (from 3.0 and 3.0bis)
 function displayedVol(totalVolume) {
   // var displayedVol = (Math.round(totalVolume *100 / (maxPowTen())) / 100); // for proportional units
-  var displayedVol = 0
+  var displayedVol = ""
   if (unitScaleText() == " millions de ") {
-    displayedVol = (Math.round(totalVolume * 100 / 1000000) / 100);
+    rounding = (Math.round(totalVolume * 100 / 1000000) / 100);
+    if (rounding < 0.01) {
+      displayedVol = "<0.01";
+    } else {
+      displayedVol = rounding.toString();
+    }
   } else if (unitScaleText() == " milliers de ") {
-    displayedVol = (Math.round(totalVolume * 100 / 1000) / 100);
+    rounding = (Math.round(totalVolume * 100 / 1000) / 100);
+    if (rounding < 0.01) {
+      displayedVol = "<0.01";
+    } else {
+      displayedVol = rounding.toString();
+    }
   } else {
-    displayedVol = (Math.round(totalVolume * 100) / 100);
+    rounding = (Math.round(totalVolume * 100) / 100);
+    if (rounding < 0.01) {
+      displayedVol = "<0.01";
+    } else {
+      displayedVol = rounding.toString();
+    }
   }
   // console.log('2 digit total vol = '+ displayedVol);
   return displayedVol;
