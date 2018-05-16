@@ -189,7 +189,7 @@ function buildData() {
   // harbours
   var harbours = []
   $('#select2_harbours').find("option:selected").each(function(i, selected){
-    harbours[i] = $(selected).text();
+    harbours[i] = $(selected).text().toLowerCase();
   });
   console.log("harbours selection(s) = " + harbours);
 

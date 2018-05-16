@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'm.jeanmichel@see-up.fr'
+  default from: 'contact@see-up.fr'
   layout 'mailer'
 end
