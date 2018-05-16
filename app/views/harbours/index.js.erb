@@ -77,8 +77,9 @@ function initMap() {
     // https://mapstyle.withgoogle.com/
     // landmarks and labels off
     // sea color: R178 G219 B255 for png on figma
+    let omi = `<%= image_path('omi.png') %>`;
     OutreMerImageOverlay = new google.maps.GroundOverlay(
-        'assets/omi.png',
+        omi,
         {
           north: 47.90,
           south: 45.1,
@@ -88,8 +89,9 @@ function initMap() {
     OutreMerImageOverlay.setMap(map);
 
     // country names
+    let omn = `<%= image_path('omn.svg') %>`;
     OutreMerNamesOverlay = new google.maps.GroundOverlay(
-        'assets/omn.svg',
+        omn,
         {
           north: 47.90,
           south: 45.8,
