@@ -43,7 +43,7 @@ function initMap() {
           mapTypeControl: false
         });
 
-    // add rectangle for DOM TOM
+    // add rectangle, legend, image for Outre Mer (FR)
     var rectangle = new google.maps.Rectangle({
           strokeColor: '#007A8E',
           strokeOpacity: 1,
@@ -52,12 +52,48 @@ function initMap() {
           fillOpacity: 0,
           map: map,
           bounds: {
-            north: 47,
-            south: 44,
+            north: 48,
+            south: 45,
             east: -5.7,
             west: -7
           }
         });
+
+    // legend
+    OutreMerLegendOverlay = new google.maps.GroundOverlay(
+        'assets/oml.svg',
+        {
+          north: 47.65,
+          south: 45.35,
+          east: -7.3,
+          west: -8
+        });
+    OutreMerLegendOverlay.setMap(map);
+
+    // image
+    // https://mapstyle.withgoogle.com/
+    // landmarks and labels off
+    // sea color: R178 G219 B255 for png on figma
+    OutreMerImageOverlay = new google.maps.GroundOverlay(
+        'assets/omi.png',
+        {
+          north: 47.90,
+          south: 45.1,
+          east: -5.7,
+          west: -7
+        });
+    OutreMerImageOverlay.setMap(map);
+
+    // country names
+    OutreMerNamesOverlay = new google.maps.GroundOverlay(
+        'assets/omn.svg',
+        {
+          north: 47.90,
+          south: 45.8,
+          east: -5.7,
+          west: -7
+        });
+    OutreMerNamesOverlay.setMap(map);
   };
 }
 
