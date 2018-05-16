@@ -9,7 +9,7 @@
         <p class="filter-title"><%= t('.harbour_filter')%></p> <!-- harbours -->
         <select id="select2_harbours", multiple=true, class="multiple-filter">
           <% @harbours.map do |h| %>
-            <option value="<%= h.name %>"><%= h.name %></option>
+            <option value="<%= h.name %>"><%= h.name.capitalize %></option>
           <% end %>
         </select>
 

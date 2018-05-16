@@ -158,7 +158,7 @@ function loadInfoWindows() {
   var infowindow = new google.maps.InfoWindow();
   map.data.addListener('click', function(event) {
     var myHTML =  '<p class="infowindow-title">'+
-                  event.feature.getProperty("name").replace(/\b\w/g, l => l.toUpperCase()) +
+                  event.feature.getProperty("name").replace(/(^|\s)[a-z\u00E0-\u00FC]/g, l => l.toUpperCase()) +
                   '</p>' +
                   '<p class="mb0">'+
                   event.feature.getProperty('totvol').toLocaleString(undefined) +
@@ -352,7 +352,7 @@ function loadSubfamilies1() {
         }
       }
       newOpt.value = code;
-      newOpt.innerText = code.toUpperCase() + ' - ' + label.replace(/\b\w/g, l => l.toUpperCase());
+      newOpt.innerText = code.toUpperCase() + ' - ' + label.replace(/(^|\s)[a-z\u00E0-\u00FC]/g, l => l.toUpperCase());
       selectId.appendChild(newOpt);
     });
   }
@@ -387,7 +387,7 @@ function loadSubfamilies2() {
         }
       }
       newOpt.value = code;
-      newOpt.innerText = code.toUpperCase() + ' - ' + label.replace(/\b\w/g, l => l.toUpperCase());
+      newOpt.innerText = code.toUpperCase() + ' - ' + label.replace(/(^|\s)[a-z\u00E0-\u00FC]/g, l => l.toUpperCase());
       selectId.appendChild(newOpt);
     });
   }
@@ -419,7 +419,7 @@ function loadSubfamilies3() {
         }
       }
       newOpt.value = code;
-      newOpt.innerText = code.toUpperCase() + ' - ' + label.replace(/\b\w/g, l => l.toUpperCase());
+      newOpt.innerText = code.toUpperCase() + ' - ' + label.replace(/(^|\s)[a-z\u00E0-\u00FC]/g, l => l.toUpperCase());
       selectId.appendChild(newOpt);
     });
   }
