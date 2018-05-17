@@ -3,7 +3,7 @@ import 'select2';
 
 // (1a) select2 fields and selections management
 $('#select2_harbours').select2({ // harbours
-  placeholder: "Sélectionner ou écrire pour filtrer",
+  placeholder: "Tapez les premières lettres…",
   allowClear: true,
   sorter: function(data) {
       /* Sort data using lowercase comparison */
