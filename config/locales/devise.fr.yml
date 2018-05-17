@@ -63,7 +63,7 @@ fr:
     common:
       forgot_your_password?: "Mot de passe oublié ?"
       hello: "Bonjour"
-      sign_in: "Se connecter"
+      sign_in: "Restez informés"
       sign_up: "S'enregistrer"
     shared:
       links:

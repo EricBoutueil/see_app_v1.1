@@ -42,7 +42,7 @@
 
     <% else %>
       <!-- Login link (when logged out) -->
-      <%= link_to t(".sign_in", default: "Se connecter"), new_user_session_path, class: "navbar-wagon-item navbar-wagon-link" %>
+      <%= link_to t(".sign_in", default: "Restez informés"), new_user_registration_path, class: "navbar-wagon-item navbar-wagon-link" %>
     <% end %>
   </div>
 </div>
@@ -83,14 +83,14 @@
     <div class="dropdown">
       <i class="fa fa-bars dropdown-toggle text-small" data-toggle="dropdown"></i>
       <ul class="dropdown-menu dropdown-menu-left navbar-wagon-dropdown-menu navbar-wagon-dropdown-menu-left">
+        <!-- <li> -->
+          <%#= link_to "ACCUEIL", "http://www.see-up.fr/" %>
+        <!-- </li> -->
+        <!-- <li> -->
+        <%#= link_to "CONTACTEZ-NOUS", "http://www.see-up.fr/contactez-see-up/" %>
+        <!-- </li> -->
         <li>
-          <%= link_to "ACCUEIL", "http://www.see-up.fr/" %>
-        </li>
-        <li>
-        <%= link_to "CONTACTEZ-NOUS", "http://www.see-up.fr/contactez-see-up/" %>
-        </li>
-        <li>
-            <%= link_to t(".sign_in", default: "Se connecter"), new_user_session_path %>
+            <%= link_to t(".sign_in", default: "Restez informés"), new_user_registration_path %>
         </li>
       </ul>
     </div>

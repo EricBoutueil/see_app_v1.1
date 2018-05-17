@@ -1,14 +1,14 @@
 fr:
   harbours:
     index:
-      harbour_filter: 'Filtre par port:'
-      year_filter: 'Filtre par année:'
-      flow_filter: 'Filtre par flux:'
-      family_filter: 'Filtre par famille:'
-      subfamily1_filter: 'Sous-filtre (niveau 1):'
-      subfamily2_filter: 'Sous-filtre (niveau 2):'
-      subfamily3_filter: 'Sous-filtre (niveau 3):'
+      harbour_filter: 'Ports sélectionnés'
+      year_filter: 'Année'
+      flow_filter: 'Total / Import / Export'
+      family_filter: 'Trafic'
+      subfamily1_filter: 'Filtre 1'
+      subfamily2_filter: 'Filtre 2'
+      subfamily3_filter: 'Filtre 3'
     #select2.js:
-      # harbour_placehoder: "Sélectionner ou écrire pour filtrer"
+      # harbour_placehoder: "Tapez les premières lettres…"
       # year_placehoder: "Valeur par défaut: dernière année disponible"
       # subfamily_placehoder: "Optionnel"
