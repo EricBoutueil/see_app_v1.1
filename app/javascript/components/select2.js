@@ -57,7 +57,7 @@ $('#select2_flows').select2({
           return 0;
       });
   }
-});
+}).select2('val', ['tot']);
 
 // families
 $('#select2_families').select2({
@@ -74,7 +74,7 @@ $('#select2_families').select2({
           return 0;
       });
   }
-});
+}).select2('val', ['a']);
 
 // subfamilies1
 $('#select2_subfamilies1').select2({
