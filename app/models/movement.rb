@@ -35,7 +35,8 @@ class Movement < ApplicationRecord
 
 
     # updating if lat nil or creating harbours
-    if Harbour
+    if row[:name] == nil # in case of types update only
+    elsif  Harbour
     .where(name: row[:name].to_s.downcase)
     .where(latitude: nil)
     .exists?
@@ -81,7 +82,38 @@ class Movement < ApplicationRecord
     end
 
     # updating or creating types
-      if Type
+      if row[:code] == nil # in case of harbours update only
+      elsif row[:flow] == nil
+        # update of type without flow column
+        if Type
+          .where(code: row[:code].to_s.downcase)
+          .exists?
+            Type
+            .where(code: row[:code].to_s.downcase)
+            .each do |type|
+              type.update(
+                label: row[:label].to_s.downcase,
+                unit: row[:unit].to_s.downcase,
+                description: row[:description].to_s.downcase
+                )
+            end
+        else
+          Type.create!(
+            code: row[:code].to_s.downcase,
+            flow: "imp",
+            label: row[:label].to_s.downcase,
+            unit: row[:unit].to_s.downcase,
+            description: row[:description].to_s.downcase
+            )
+          Type.create!(
+            code: row[:code].to_s.downcase,
+            flow: "exp",
+            label: row[:label].to_s.downcase,
+            unit: row[:unit].to_s.downcase,
+            description: row[:description].to_s.downcase
+            )
+        end
+      elsif Type
       .where(code: row[:code].to_s.downcase, flow: row[:flow].to_s.downcase)
       .exists?
         Type
@@ -92,7 +124,7 @@ class Movement < ApplicationRecord
           description: row[:description].to_s.downcase
           )
       else
-        Movement.create!(
+        Type.create!(
           code: row[:code].to_s.downcase,
           flow: row[:flow].to_s.downcase,
           label: row[:label].to_s.downcase,
@@ -102,7 +134,8 @@ class Movement < ApplicationRecord
       end
 
     # updating or creating movements (on existing harbours)
-      if Movement
+      if row[:year] == nil
+      elsif Movement
       .joins(:harbour, :type)
       .where(harbours: {name: row[:name].to_s.downcase})
       .where(types: {code: row[:code].to_s.downcase, flow: row[:flow].to_s.downcase})
