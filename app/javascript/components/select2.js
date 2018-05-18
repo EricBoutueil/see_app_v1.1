@@ -2,7 +2,8 @@ import $ from 'jquery';
 import 'select2';
 
 // (1a) select2 fields and selections management
-$('#select2_harbours').select2({ // harbours
+// harbours
+$('#select2_harbours').select2({
   placeholder: "Tapez les premières lettres…",
   allowClear: true,
   sorter: function(data) {
@@ -20,8 +21,9 @@ $('#select2_harbours').select2({ // harbours
   }
 });
 
+// years
 var maxYears = document.getElementById('temp_years').dataset.temp;
-$('#select2_years').select2({ // years
+$('#select2_years').select2({
   placeholder: "Valeur par défaut: dernière année disponible",
   //allowClear: true
 // });
@@ -40,6 +42,7 @@ $('#select2_years').select2({ // years
   }
 }).select2('val', [maxYears]);
 
+// flows
 $('#select2_flows').select2({
   sorter: function(data) {
       /* Sort data using lowercase comparison */
@@ -54,8 +57,9 @@ $('#select2_flows').select2({
           return 0;
       });
   }
-}); // flows
+});
 
+// families
 $('#select2_families').select2({
   sorter: function(data) {
       /* Sort data using lowercase comparison */
@@ -70,9 +74,10 @@ $('#select2_families').select2({
           return 0;
       });
   }
-}); // families
+});
 
-$('#select2_subfamilies1').select2({ // subfamilies1
+// subfamilies1
+$('#select2_subfamilies1').select2({
   placeholder: "Optionnel",
   allowClear: true,
   sorter: function(data) {
@@ -90,7 +95,8 @@ $('#select2_subfamilies1').select2({ // subfamilies1
   }
 });
 
-$('#select2_subfamilies2').select2({ // subfamilies2
+// subfamilies2
+$('#select2_subfamilies2').select2({
   placeholder: "Optionnel",
   allowClear: true,
   sorter: function(data) {
@@ -108,7 +114,8 @@ $('#select2_subfamilies2').select2({ // subfamilies2
   }
 });
 
-$('#select2_subfamilies3').select2({ // subfamilies2
+// subfamilies2
+$('#select2_subfamilies3').select2({
   placeholder: "Optionnel",
   allowClear: true,
   sorter: function(data) {

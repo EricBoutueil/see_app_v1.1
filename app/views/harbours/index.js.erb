@@ -396,7 +396,7 @@ function loadSubfamilies1() {
         }
       }
       newOpt.value = code;
-      newOpt.innerText = code.toUpperCase() + ' - ' + label.replace(/(^|\s)[a-z\u00E0-\u00FC]/g, l => l.toUpperCase());
+      newOpt.innerText = code.toUpperCase() + ' - ' + label.charAt(0).toUpperCase() + label.slice(1);
       selectId.appendChild(newOpt);
     });
   }
@@ -431,7 +431,7 @@ function loadSubfamilies2() {
         }
       }
       newOpt.value = code;
-      newOpt.innerText = code.toUpperCase() + ' - ' + label.replace(/(^|\s)[a-z\u00E0-\u00FC]/g, l => l.toUpperCase());
+      newOpt.innerText = code.toUpperCase() + ' - ' + label.charAt(0).toUpperCase() + label.slice(1);
       selectId.appendChild(newOpt);
     });
   }
@@ -463,7 +463,7 @@ function loadSubfamilies3() {
         }
       }
       newOpt.value = code;
-      newOpt.innerText = code.toUpperCase() + ' - ' + label.replace(/(^|\s)[a-z\u00E0-\u00FC]/g, l => l.toUpperCase());
+      newOpt.innerText = code.toUpperCase() + ' - ' + label.charAt(0).toUpperCase() + label.slice(1);
       selectId.appendChild(newOpt);
     });
   }
