@@ -104,37 +104,23 @@ function initMap() {
           fillOpacity: 0,
           map: map,
           bounds: {
-            north: 48,
-            south: 45,
+            north: 48.5,
+            south: 44.5,
             east: -6.3,
             west: -7.6
           }
         });
 
-    // // legend
-    // OutreMerLegendOverlay = new google.maps.GroundOverlay(
-    // // for dev env
-    //     'assets/oml.svg',
-    // // for prod env
-    //     'oml.svg',
-    //     {
-    //       north: 47.65,
-    //       south: 45.35,
-    //       east: -7.9,
-    //       west: -8.6
-    //     });
-    // OutreMerLegendOverlay.setMap(map);
-
     // image
     // https://mapstyle.withgoogle.com/
-    // landmarks and labels off
-    // sea color: R178 G219 B255 for png on figma
+    // parameters' scales: 1 / 1 / 0
+    // sea color: R178 G219 B255 (#B2DBFF) for png on figma
     let omi = `<%= image_path('omi.png') %>`;
     OutreMerImageOverlay = new google.maps.GroundOverlay(
         omi,
         {
-          north: 47.90,
-          south: 45.1,
+          north: 48.4,
+          south: 44.6,
           east: -6.3,
           west: -7.6
         });
@@ -145,8 +131,8 @@ function initMap() {
     OutreMerNamesOverlay = new google.maps.GroundOverlay(
         omn,
         {
-          north: 47.90,
-          south: 45.8,
+          north: 48.3,
+          south: 45.2,
           east: -6.3,
           west: -7.6
         });

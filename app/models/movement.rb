@@ -62,21 +62,28 @@ class Movement < ApplicationRecord
 
     if Harbour.where(name: "pointe-à-pitre").exists?
       Harbour.where(name: "pointe-à-pitre").update(
-        latitude: 47.5,
+        latitude: 48,
         longitude: -6.95
         )
     end
 
     if Harbour.where(name: "fort-de-france").exists?
       Harbour.where(name: "fort-de-france").update(
-        latitude: 46.5,
+        latitude: 47,
+        longitude: -6.95
+        )
+    end
+
+    if Harbour.where(name: "dégrad des cannes").exists?
+      Harbour.where(name: "dégrad des cannes").update(
+        latitude: 46,
         longitude: -6.95
         )
     end
 
     if Harbour.where(name: "port réunion").exists?
       Harbour.where(name: "port réunion").update(
-        latitude: 45.5,
+        latitude: 45,
         longitude: -6.95
         )
     end
