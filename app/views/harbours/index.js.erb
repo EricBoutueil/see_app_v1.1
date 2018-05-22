@@ -301,14 +301,14 @@ function getZoomBounds() {
 function displayedVol(totalVolume) {
   // var displayedVol = (Math.round(totalVolume *100 / (maxPowTen())) / 100); // for proportional units
   var displayedVol = ""
-  if (unitScaleText() == " millions de ") {
+  if (unitScaleText() == " millions ") {
     rounding = (Math.round(totalVolume * 100 / 1000000) / 100);
     if (rounding < 0.01) {
       displayedVol = "<0.01";
     } else {
       displayedVol = rounding.toString();
     }
-  } else if (unitScaleText() == " milliers de ") {
+  } else if (unitScaleText() == " milliers ") {
     rounding = (Math.round(totalVolume * 100 / 1000) / 100);
     if (rounding < 0.01) {
       displayedVol = "<0.01";
