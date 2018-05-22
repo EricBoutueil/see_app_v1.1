@@ -177,8 +177,22 @@ function zoom() {
       // adapt zoom to bounds
       zoomChangeBoundsListener =
         google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
-          if ( this.getZoom() > 10 ){   // or set a minimum
-              this.setZoom(10);  // set zoom here
+          if ( this.getZoom() > 10 ) {   // or set a minimum
+            this.setZoom(10);  // set zoom here
+          } else if ( this.getZoom() < 6 ) {
+            var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if (!isMobile) {
+              // set min zoom if FR only
+              var france = ['fr', 'FR', 'france', 'France', 'FRANCE']
+              map.data.forEach(function(feature) {
+                if (france.includes(feature.getProperty('country'))){
+                  franceOnly = true;
+                };
+              });
+              if (franceOnly) {
+                this.setZoom(6);
+              }
+            }
           }
         });
       setTimeout(function(){google.maps.event.removeListener(zoomChangeBoundsListener)}, 2000);
