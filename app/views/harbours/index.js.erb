@@ -337,17 +337,12 @@ function calcScale(totalVolume) {
   return scale;
 }
 
-// 3.4 from 4.1 add unit on top left corner of the map
+// 3.4 from 4.1 add legend (unit on top left corner of the map)
 function addUnitLegend() {
-  var unitSelectedFamily = ""
-  map.data.forEach(function(feature) {
-    unitSelectedFamily = feature.getProperty('unit');
-  });
-
   var legend = document.querySelector('#legend')
   // var maxPowTenToLocaleString = maxPowTen().toLocaleString(undefined);
   // legend.innerText = `Unité : ${maxPowTenToLocaleString} ${unitSelectedFamily}`
-  legend.innerText = `Unité : ${unitScaleText()} ${unitSelectedFamily}`
+  legend.innerText = `Unité : ${unitScaleText()} ${unitSelectedFamily()}`
   // map.controls[google.maps.ControlPosition.LEFT_TOP].push(legend)
 }
 
@@ -355,9 +350,9 @@ function addUnitLegend() {
 function unitScaleText() {
   var unitScaleText = ""
   if (maxPowTen() >= 1000000) {
-    unitScaleText = " millions de "
+    unitScaleText = " millions "
   } else if (maxPowTen() >= 1000) {
-    unitScaleText = " milliers de "
+    unitScaleText = " milliers "
   }
   return unitScaleText
 }
@@ -367,6 +362,24 @@ function maxPowTen() {
   var totVolLength = totalVolumeMax.toString().length;
   var maxPowTen = (Math.pow(10, totVolLength)) / 10;
   return maxPowTen;
+}
+
+// 3.4.3 find unit family
+function unitSelectedFamily() {
+  var unitSelectedFamily = ""
+  map.data.forEach(function(feature) {
+    unitSelectedFamily = feature.getProperty('unit');
+  });
+  switch (unitSelectedFamily) {
+  case 'escales':
+    return "d\'escales"
+    break;
+  case 'evp':
+    return "d\'EVP"
+    break;
+  default:
+    return `de ${unitSelectedFamily}`
+  }
 }
 
 // STEP 4: reload subfamilies drop down
