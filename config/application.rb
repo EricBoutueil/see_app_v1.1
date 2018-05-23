@@ -26,7 +26,7 @@ module SeeAppV11
     # -- all .rb files in that directory are automatically loaded.
 
     Raven.configure do |config|
-      config.dsn = 'https://52b48da967bd4252bcbaddbfe04238df:de77847ee6ed46e1bc4d6eeabcf62232@sentry.io/1211871'
+      config.dsn = ENV['SENTRY_DSN']
     end
   end
 end
