@@ -30,65 +30,64 @@ class Movement < ApplicationRecord
 
   def self.import(file)
     # csv_options = { col_sep: ',', quote_char: '"', headers: :first_row }
-
     CSV.foreach(file.path, headers: true, header_converters: :symbol ) do |row|
 
 
-    # updating if lat nil or creating harbours
-    if row[:name] == nil # in case of types update only
-    elsif  Harbour
-    .where(name: row[:name].to_s.downcase)
-    .where(latitude: nil)
-    .exists?
-      Harbour
+      # updating if lat nil or creating harbours
+      if row[:name] == nil # in case of types update only
+      elsif  Harbour
       .where(name: row[:name].to_s.downcase)
-      .update(
-      country: row[:country],
-      name: row[:name].to_s.downcase,
-      address: row[:address].to_s.downcase
-      )
-    elsif Harbour
-    .where(name: row[:name].to_s.downcase)
-    .where.not(latitude: nil)
-    .exists?
-      puts 'ok'
-    else
-      Harbour.create!(
-      country: row[:country],
-      name: row[:name].to_s.downcase,
-      address: row[:address].to_s.downcase
-      )
-    end
-
-    if Harbour.where(name: "pointe-à-pitre").exists?
-      Harbour.where(name: "pointe-à-pitre").update(
-        latitude: 48,
-        longitude: -6.95
+      .where(latitude: nil)
+      .exists?
+        Harbour
+        .where(name: row[:name].to_s.downcase)
+        .update(
+        country: row[:country],
+        name: row[:name].to_s.downcase,
+        address: row[:address].to_s.downcase
         )
-    end
-
-    if Harbour.where(name: "fort-de-france").exists?
-      Harbour.where(name: "fort-de-france").update(
-        latitude: 47,
-        longitude: -6.95
+      elsif Harbour
+      .where(name: row[:name].to_s.downcase)
+      .where.not(latitude: nil)
+      .exists?
+        puts 'ok'
+      else
+        Harbour.create!(
+        country: row[:country],
+        name: row[:name].to_s.downcase,
+        address: row[:address].to_s.downcase
         )
-    end
+      end
 
-    if Harbour.where(name: "dégrad des cannes").exists?
-      Harbour.where(name: "dégrad des cannes").update(
-        latitude: 46,
-        longitude: -6.95
-        )
-    end
+      if Harbour.where(name: "pointe-à-pitre").exists?
+        Harbour.where(name: "pointe-à-pitre").update(
+          latitude: 48,
+          longitude: -6.95
+          )
+      end
 
-    if Harbour.where(name: "port réunion").exists?
-      Harbour.where(name: "port réunion").update(
-        latitude: 45,
-        longitude: -6.95
-        )
-    end
+      if Harbour.where(name: "fort-de-france").exists?
+        Harbour.where(name: "fort-de-france").update(
+          latitude: 47,
+          longitude: -6.95
+          )
+      end
 
-    # updating or creating types
+      if Harbour.where(name: "dégrad des cannes").exists?
+        Harbour.where(name: "dégrad des cannes").update(
+          latitude: 46,
+          longitude: -6.95
+          )
+      end
+
+      if Harbour.where(name: "port réunion").exists?
+        Harbour.where(name: "port réunion").update(
+          latitude: 45,
+          longitude: -6.95
+          )
+      end
+
+      # updating or creating types
       if row[:code] == nil # in case of harbours update only
       elsif row[:flow] == nil
         # update of type without flow column
@@ -168,7 +167,6 @@ class Movement < ApplicationRecord
           pol_pod: row[:pol_pod].to_s.downcase
           )
       end
-
     end
   end
 
