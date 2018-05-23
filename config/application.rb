@@ -24,5 +24,9 @@ module SeeAppV11
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+
+    Raven.configure do |config|
+      config.dsn = 'https://52b48da967bd4252bcbaddbfe04238df:de77847ee6ed46e1bc4d6eeabcf62232@sentry.io/1211871'
+    end
   end
 end
