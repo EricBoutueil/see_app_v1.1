@@ -31,6 +31,8 @@ gem 'country_select', require: 'country_select_without_sort_alphabetical'
 
 gem 'mailjet'
 
+gem "sentry-raven"
+
 group :development do
   gem 'web-console', '>= 3.3.0'
 end
