@@ -21,7 +21,7 @@ class Harbour < ApplicationRecord
     "port #{name}, #{address}, #{country}"
   end
 
-  # A) filtering harbours in geojson
+  # STEP1: filtering harbours in geojson
   def self.filter_by_harbour(params, harbours)
     # binding.pry
     @selected_harbours = []
@@ -35,7 +35,7 @@ class Harbour < ApplicationRecord
     return @selected_harbours
   end
 
-  # B) filtering each selected harbour DB lines to calculate @totvol
+  # STEP2: filtering each selected harbour DB lines to calculate @totvol
   # filters: (1)harb, (2)year, (3)flow, (4)fam, (5)subfam [+ (6)term, (7)pol_pod]
   def totvol_filter(params)
     # building 1 criterias hash by model, filter by filter
