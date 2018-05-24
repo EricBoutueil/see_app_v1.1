@@ -141,7 +141,7 @@ function initMap() {
 }
 
 // STEP 2: load GeoJson UPDATED
-// update value of geojson through dataset.geojson == data-geojson
+// 2.0 update value of geojson through dataset.geojson == data-geojson
 mapElement.dataset.geojson = JSON.stringify(<%= @geojson.to_json.html_safe %>);
 
 function loadGeoJson() {
@@ -234,6 +234,7 @@ function loadInfoWindows() {
 }
 
 // STEP 3: set data style
+// 3.0 create a circle for each feature
 function setFeaturesStyle() {
   if (mapElement) {
     maxTotvol(); // 3.1
@@ -244,7 +245,7 @@ function setFeaturesStyle() {
       console.log('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
       console.log('calc scale ' +feature.getProperty('name') +' = '+calcScale(totalVolume));
       return {
-        icon: getCircle(totalVolume),
+        icon: getCircle(totalVolume), // 3.4
         label: {
           text: displayedTotalVol,
           color: "#17375E"
@@ -265,7 +266,7 @@ function setFeaturesStyleZoomed() {
       console.log('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
       console.log('***calc scale ' +feature.getProperty('name') +' = '+calcScale(totalVolume));
       return {
-        icon: getCircle(totalVolume),
+        icon: getCircle(totalVolume), // 3.4
         label: {
           text: displayedTotalVol,
           color: "#17375E",
@@ -327,19 +328,19 @@ function displayedVol(totalVolume) {
   return displayedVol;
 }
 
-// 3.0.1 show proportional markers (note: markers ares symbols == circles)
+// 3.4 show proportional markers (note: markers ares symbols == circles)
 function getCircle(totalVolume) {
   return {
     path: google.maps.SymbolPath.CIRCLE,
     fillColor: '#00bcdb',
     fillOpacity: 0.9,
-    scale: calcScale(totalVolume),
+    scale: calcScale(totalVolume), // 3.4.1
     strokeColor: '#17375E',
     strokeWeight: 0
   };
 }
 
-// 3.0.2 calc scale for circles scales
+// 3.4.1 calc scale for circles scales
 function calcScale(totalVolume) {
   var scale = (Math.sqrt(totalVolume * Math.pow(40, 2) / totalVolumeMax));
   // console.log('scale = '+ scale);
@@ -351,34 +352,34 @@ function calcScale(totalVolume) {
   return scale;
 }
 
-// 3.4 from 4.1 add legend (unit on top left corner of the map)
+// 3.5 from 4.1 add legend (unit on top left corner of the map)
 function addUnitLegend() {
   var legend = document.querySelector('#legend')
   // var maxPowTenToLocaleString = maxPowTen().toLocaleString(undefined);
   // legend.innerText = `Unité : ${maxPowTenToLocaleString} ${unitSelectedFamily}`
-  legend.innerText = `Unité : ${unitScaleText()} ${unitSelectedFamily()}`
+  legend.innerText = `Unité : ${unitScaleText()} ${unitSelectedFamily()}` // 3.5.1&3
   // map.controls[google.maps.ControlPosition.LEFT_TOP].push(legend)
 }
 
-// 3.4.1 calc unit from legend
+// 3.5.1 calc unit from legend
 function unitScaleText() {
   var unitScaleText = ""
-  if (maxPowTen() >= 1000000) {
+  if (maxPowTen() >= 1000000) { // 3.5.2
     unitScaleText = " millions "
-  } else if (maxPowTen() >= 1000) {
+  } else if (maxPowTen() >= 1000) { // 3.5.2
     unitScaleText = " milliers "
   }
   return unitScaleText
 }
 
-// 3.4.2 calculate max displayed totalVolume pow of 10
+// 3.5.2 calculate max displayed totalVolume pow of 10
 function maxPowTen() {
   var totVolLength = totalVolumeMax.toString().length;
   var maxPowTen = (Math.pow(10, totVolLength)) / 10;
   return maxPowTen;
 }
 
-// 3.4.3 identify unit family
+// 3.5.3 identify unit family
 function unitSelectedFamily() {
   var unitSelectedFamily = ""
   map.data.forEach(function(feature) {
@@ -408,16 +409,16 @@ function loadSubfamilies1() {
   // creating new dropdown options only when selecting a new family (not when selecting subfamilies1)
   if (prevOptions.length == 0) {
     // iteration on @subfamilies1 parsed to create new dropdow options
-    subfamilies1Parsed.forEach(function(sf) {
+    subfamilies1Parsed.forEach(function(subf) {
       var newOpt = document.createElement('option');
       var code;
       var label;
-      for (var k in sf) {
-        // console.log('key is: ' + k + ', value is: ' + sf[k]);
-        if (k === "code") {
-          code = sf[k];
+      for (var key in subf) {
+        // console.log('key is: ' + key + ', value is: ' + subf[key]);
+        if (key === "code") {
+          code = subf[key];
         } else {
-          label = sf[k];
+          label = subf[key];
         }
       }
       newOpt.value = code;
@@ -426,7 +427,7 @@ function loadSubfamilies1() {
     });
   }
 
-  addUnitLegend(); // 3.4
+  addUnitLegend(); // 3.5
 
 }
 
@@ -443,16 +444,16 @@ function loadSubfamilies2() {
   // creating new dropdown options only when selecting a new family (not when selecting subfamilies2)
   if (prevOptions.length == 0) {
     // iteration on @subfamilies2 parsed to create new dropdow options
-    subfamilies2Parsed.forEach(function(sf) {
+    subfamilies2Parsed.forEach(function(subf) {
       var newOpt = document.createElement('option');
       var code;
       var label;
-      for (var k in sf) {
-        // console.log('key is: ' + k + ', value is: ' + sf[k]);
-        if (k === "code") {
-          code = sf[k];
+      for (var key in subf) {
+        // console.log('key is: ' + key + ', value is: ' + subf[key]);
+        if (key === "code") {
+          code = subf[key];
         } else {
-          label = sf[k];
+          label = subf[key];
         }
       }
       newOpt.value = code;
@@ -475,16 +476,16 @@ function loadSubfamilies3() {
   // creating new dropdown options only when selecting a new family (not when selecting subfamilies3)
   if (prevOptions.length == 0) {
     // iteration on @subfamilies3 parsed to create new dropdow options
-    subfamilies3Parsed.forEach(function(sf) {
+    subfamilies3Parsed.forEach(function(subf) {
       var newOpt = document.createElement('option');
       var code;
       var label;
-      for (var k in sf) {
-        // console.log('key is: ' + k + ', value is: ' + sf[k]);
-        if (k === "code") {
-          code = sf[k];
+      for (var key in subf) {
+        // console.log('key is: ' + key + ', value is: ' + subf[key]);
+        if (key === "code") {
+          code = subf[key];
         } else {
-          label = sf[k];
+          label = subf[key];
         }
       }
       newOpt.value = code;
