@@ -1,4 +1,5 @@
 class MovementsController < ApplicationController
+  before_action :ensure_admin!
 
   def index
     @movements = policy_scope(Movement)
