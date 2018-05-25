@@ -2,21 +2,20 @@ require "importer"
 
 class MovementsController < ApplicationController
   before_action :ensure_admin!
-
-  def index
-    @movements = policy_scope(Movement)
-  end
+  skip_after_action :verify_authorized, only: :import
 
   def import
-    @movements = policy_scope(Movement)
+    if request.post?
+      if params[:file] == nil
+        flash.now[:notice] = "Veuillez choisir un fichier non vide."
+      else
+        Thread.new {
+          importer = Importer.new(params[:file])
+          importer.call
+        }
 
-    if params[:file] == nil
-      redirect_to movements_path, alert: "Veuillez choisir un fichier non vide."
-    else
-      importer = Importer.new(params[:file])
-      importer.call
-
-      redirect_to movements_path, notice: "Base de donnée mise à jour avec succès !"
+        redirect_to admin_movements_path, notice: "Base de données en train d'être mises à jour, ceci peut prendre plusieurs minutes !"
+      end
     end
   end
 end
