@@ -25,8 +25,8 @@
         <tbody>
           <% @movements.each do |movement| %>
           <tr>
-            <td><%= movement.harbour.name.capitalize %></td>
-            <td><%= movement.type.code.upcase %></td>
+            <td><%= movement.harbour.name&.capitalize %></td>
+            <td><%= movement.type.code&.upcase %></td>
             <!-- <td><%= movement.type.flow %></td> -->
             <td>
               <%= t("ar.attributes.type.flow.#{movement.type.flow}") %>
@@ -35,9 +35,9 @@
             <td>
               <%= t("types.label.#{movement.type.label}") %>
             </td>
-            <td><%= movement.type.unit.capitalize %></td>
-            <td><%= movement.terminal.capitalize %></td>
-            <td><%= movement.pol_pod.capitalize %></td>
+            <td><%= movement.type.unit&.capitalize %></td>
+            <td><%= movement.terminal&.capitalize %></td>
+            <td><%= movement.pol_pod&.capitalize %></td>
             <td><%= movement.year %></td>
             <td><%= movement.volume %></td>
           </tr>

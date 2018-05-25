@@ -1,3 +1,5 @@
+require "importer"
+
 class MovementsController < ApplicationController
   before_action :ensure_admin!
 
@@ -11,7 +13,9 @@ class MovementsController < ApplicationController
     if params[:file] == nil
       redirect_to movements_path, alert: "Veuillez choisir un fichier non vide."
     else
-      Movement.import(params[:file])
+      importer = Importer.new(params[:file])
+      importer.call
+
       redirect_to movements_path, notice: "Base de donnée mise à jour avec succès !"
     end
   end
