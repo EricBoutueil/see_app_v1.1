@@ -8,9 +8,9 @@ class Importer
   def call
     CSV.foreach(file.path, headers: true, header_converters: :symbol) do |row|
       # updating if lat nil or creating harbours
-      name = row[:name]&.downcase
-      code = row[:code]&.downcase
-      flow = row[:flow]&.downcase
+      name = row[:name]&.downcase&.strip
+      code = row[:code]&.downcase&.strip
+      flow = row[:flow]&.downcase&.strip
 
       update_or_create_harbour(name, row)
 
@@ -112,7 +112,7 @@ class Importer
 
 
   def update_outre_mer(name, lat, lng)
-    Harbour.where(name: name).update(latitude: lat, longitude: lng)
+    Harbour.where("LOWER(name) = ?", name).update(latitude: lat, longitude: lng)
   end
 
   def hande_type_without_flow(row)
