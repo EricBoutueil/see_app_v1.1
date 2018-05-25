@@ -10,9 +10,6 @@ class Harbour < ApplicationRecord
   geocoded_by :full_address
   after_validation :geocode, if: :latitude_nil?
 
-
-  YEAR_MAX = Movement::max_year
-
   def latitude_nil?
     self.latitude.nil?
   end
@@ -57,7 +54,7 @@ class Harbour < ApplicationRecord
     @mvts_criterias[:year] = if (params[:year])
       params[:year]
     else
-      YEAR_MAX
+      Movement::max_year
     end
   end
 

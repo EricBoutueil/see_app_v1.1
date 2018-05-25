@@ -37,6 +37,12 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: update_attrs)
   end
 
+  def ensure_admin!
+    return true if current_user && current_user.admin?
+
+    user_not_authorized
+  end
+
   private
 
   def skip_pundit?
