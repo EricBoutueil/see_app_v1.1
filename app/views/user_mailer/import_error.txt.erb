@@ -1,0 +1,10 @@
+Bonjour <%= @user.first_name %> <%= @user.last_name %>,
+
+Malheureusement, la mise à jour de la base de donnée n'a pas pu se terminer
+et a renvoyé ce message :
+<%= @message %>
+
+Vous pouvez accéder à l'interface d'administration ici :
+<%= link_to admin_movements_url %>
+
+L'équipe See'Up
