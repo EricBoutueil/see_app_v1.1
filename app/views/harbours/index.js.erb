@@ -496,7 +496,9 @@ function loadSubfamilies3() {
 }
 
 // execution
-initMap(); // STEP 1
+if (map === undefined) {
+  initMap(); // STEP 1
+}
 loadGeoJson(); // STEP 2
 setFeaturesStyle(); // STEP 3
 loadSubfamilies1(); // STEP 4.1
