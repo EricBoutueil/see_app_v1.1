@@ -6,12 +6,8 @@ Rails.application.routes.draw do
 
     root to: 'harbours#index'
     resources :harbours, only:[:index]
-    resources :movements, only:[:index] do
-      collection do
-        post 'import'
-      end
-    end
+    get '/import', to: "movements#import", as: :new_import
+    post '/import', to: "movements#import", as: :import
     resources :types, only:[:index]
-
   end
 end
