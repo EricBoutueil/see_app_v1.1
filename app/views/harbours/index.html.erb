@@ -35,7 +35,7 @@
         <p class="filter-title"><%= t('.family_filter')%></p> <!-- families -->
         <select id="select2_families", class="single-filter">
           <% @families.map do |f| %>
-            <option value="<%= f[:code] %>"><%= "#{f[:label].capitalize}" %></option>
+            <option value="<%= f[:code] %>"><%= f[:label].capitalize %></option>
           <% end %>
         </select>
 
