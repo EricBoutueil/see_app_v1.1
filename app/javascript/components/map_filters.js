@@ -62,39 +62,12 @@ function initializeMapFilters() {
   }).select2('val', ['tot']);
 
   // families
-  $('#select2_families').select2({
-    sorter: function(data) {
-        /* Sort data using lowercase comparison */
-        return data.sort(function (a, b) {
-            a = a.text.toLowerCase();
-            b = b.text.toLowerCase();
-            if (a > b) {
-                return 1;
-            } else if (a < b) {
-                return -1;
-            }
-            return 0;
-        });
-    }
-  }).select2('val', ['a']);
+  $('#select2_families').select2();
 
   // subfamilies1
   $('#select2_subfamilies1').select2({
     placeholder: "Optionnel",
     allowClear: true,
-    sorter: function(data) {
-        /* Sort data using lowercase comparison */
-        return data.sort(function (a, b) {
-            a = a.text.toLowerCase();
-            b = b.text.toLowerCase();
-            if (a > b) {
-                return 1;
-            } else if (a < b) {
-                return -1;
-            }
-            return 0;
-        });
-    }
   });
 
   // subfamilies2

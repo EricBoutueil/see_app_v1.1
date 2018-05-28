@@ -20,7 +20,7 @@ class Type < ApplicationRecord
   # for Select2 families
   def self.all_families
     @families = []
-      Type.all.each do |t|
+      Type.all.order(:code).each do |t|
         unless @families.include?({code: t.code, label: t.label})
           if t.code.to_s.length == 1
             @families << {code: t.code, label: t.label}
@@ -35,7 +35,7 @@ class Type < ApplicationRecord
     @subfamilies1 = []
     if (params[:fam])
       x = params[:fam].first[0]
-      Type.all.each do |t|
+      Type.all.order(:code).each do |t|
         unless @subfamilies1.include?({code: t.code, label: t.label})
           if t.code.to_s[0] == x
             if t.code.to_s.length == 2
