@@ -9,7 +9,7 @@ function initializeMapFilters() {
     placeholder: "Tapez les premières lettres…",
     allowClear: true,
     sorter: function(data) {
-        /* Sort data using lowercase comparison */
+        /* Sort data ASC using lowercase comparison */
         return data.sort(function (a, b) {
             a = a.text.toLowerCase();
             b = b.text.toLowerCase();
@@ -30,13 +30,13 @@ function initializeMapFilters() {
     //allowClear: true
   // });
     sorter: function(data) {
-        /* Sort data using lowercase comparison */
+        /* Sort data DESC using lowercase comparison */
         return data.sort(function (a, b) {
             a = a.text.toLowerCase();
             b = b.text.toLowerCase();
-            if (a > b) {
+            if (a < b) {
                 return 1;
-            } else if (a < b) {
+            } else if (a > b) {
                 return -1;
             }
             return 0;
@@ -47,7 +47,7 @@ function initializeMapFilters() {
   // flows
   $('#select2_flows').select2({
     sorter: function(data) {
-        /* Sort data using lowercase comparison */
+        /* Sort data DESC using lowercase comparison */
         return data.sort(function (a, b) {
             a = a.text.toLowerCase();
             b = b.text.toLowerCase();
@@ -62,77 +62,24 @@ function initializeMapFilters() {
   }).select2('val', ['tot']);
 
   // families
-  $('#select2_families').select2({
-    sorter: function(data) {
-        /* Sort data using lowercase comparison */
-        return data.sort(function (a, b) {
-            a = a.text.toLowerCase();
-            b = b.text.toLowerCase();
-            if (a > b) {
-                return 1;
-            } else if (a < b) {
-                return -1;
-            }
-            return 0;
-        });
-    }
-  }).select2('val', ['a']);
+  $('#select2_families').select2();
 
   // subfamilies1
   $('#select2_subfamilies1').select2({
     placeholder: "Optionnel",
     allowClear: true,
-    sorter: function(data) {
-        /* Sort data using lowercase comparison */
-        return data.sort(function (a, b) {
-            a = a.text.toLowerCase();
-            b = b.text.toLowerCase();
-            if (a > b) {
-                return 1;
-            } else if (a < b) {
-                return -1;
-            }
-            return 0;
-        });
-    }
   });
 
   // subfamilies2
   $('#select2_subfamilies2').select2({
     placeholder: "Optionnel",
     allowClear: true,
-    sorter: function(data) {
-        /* Sort data using lowercase comparison */
-        return data.sort(function (a, b) {
-            a = a.text.toLowerCase();
-            b = b.text.toLowerCase();
-            if (a > b) {
-                return 1;
-            } else if (a < b) {
-                return -1;
-            }
-            return 0;
-        });
-    }
   });
 
-  // subfamilies2
+  // subfamilies3
   $('#select2_subfamilies3').select2({
     placeholder: "Optionnel",
     allowClear: true,
-    sorter: function(data) {
-        /* Sort data using lowercase comparison */
-        return data.sort(function (a, b) {
-            a = a.text.toLowerCase();
-            b = b.text.toLowerCase();
-            if (a > b) {
-                return 1;
-            } else if (a < b) {
-                return -1;
-            }
-            return 0;
-        });
-    }
   });
 
   // *********************************************************************

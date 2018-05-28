@@ -14,13 +14,14 @@ class Type < ApplicationRecord
 
   # for Select2 flows
   def self.all_flows
+    # working on enum flow (array)
     @flows = Type.flows.keys
   end
 
   # for Select2 families
   def self.all_families
     @families = []
-      Type.all.each do |t|
+      Type.all.order(:code).each do |t|
         unless @families.include?({code: t.code, label: t.label})
           if t.code.to_s.length == 1
             @families << {code: t.code, label: t.label}
@@ -35,7 +36,7 @@ class Type < ApplicationRecord
     @subfamilies1 = []
     if (params[:fam])
       x = params[:fam].first[0]
-      Type.all.each do |t|
+      Type.all.order(:code).each do |t|
         unless @subfamilies1.include?({code: t.code, label: t.label})
           if t.code.to_s[0] == x
             if t.code.to_s.length == 2
@@ -65,7 +66,7 @@ class Type < ApplicationRecord
     @subfamilies2 = []
     if (params[:sub_one])
       x = params[:sub_one]
-      Type.all.each do |t|
+      Type.all.order(:code).each do |t|
         unless @subfamilies2.include?({code: t.code, label: t.label})
           if x.include?(t.code.to_s[0, 2])
             if t.code.to_s.length == 3
@@ -85,7 +86,7 @@ class Type < ApplicationRecord
     @subfamilies3 = []
     if (params[:sub_two])
       x = params[:sub_two]
-      Type.all.each do |t|
+      Type.all.order(:code).each do |t|
         unless @subfamilies3.include?({code: t.code, label: t.label})
           if x.include?(t.code.to_s[0, 3])
             if t.code.to_s.length == 4
