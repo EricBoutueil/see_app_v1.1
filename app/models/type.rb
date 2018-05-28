@@ -14,7 +14,8 @@ class Type < ApplicationRecord
 
   # for Select2 flows
   def self.all_flows
-    @flows = Type.flows.keys.sort_by{|e| -e}
+    # working on enum flow (array)
+    @flows = Type.flows.keys
   end
 
   # for Select2 families
