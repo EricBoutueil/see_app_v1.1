@@ -15,6 +15,20 @@
     <%= render 'shared/navbar' %>
     <%= render 'shared/flashes' %>
 
+    <noscript>
+      <div class='container ml0 mr0'>
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 col-sm-offset-4 mt+">
+            <style>#map_filters { display: none; }</style>
+            <p>Attention : </p>
+            <p>Afin de pouvoir utiliser l'outil Port Traffic, JavaScript doit être activé.</p>
+            <p>Or, il semble que JavaScript soit désactivé ou qu'il ne soit pas supporté par votre navigateur.</p>
+            <p>Pour afficher l'outil Port Traffic, activez JavaScript en modifiant les options de votre navigateur, puis essayez à nouveau.</p>
+          </div>
+        </div>
+      </div>
+    </noscript>
+
         <%= yield %>
 
     <!-- js in app/assets -->
