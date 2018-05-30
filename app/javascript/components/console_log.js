@@ -1,5 +1,5 @@
 if(window.location.href.indexOf("localhost") >= 0) {
-   window.DEBUG = true;
+   var DEBUG = false;
 }
 
 function log(a, b, c, d) {
