@@ -2,6 +2,8 @@ import $ from 'jquery';
 import 'select2';
 import 'select2/dist/css/select2.css';
 
+import { log } from "./console_log";
+
 function initializeMapFilters() {
   // (1a) select2 fields and selections management
   // harbours
@@ -117,7 +119,7 @@ function initializeMapFilters() {
 
   // (pre-3.1) when selecting families
   function resetSubfamilies1() {
-    console.log("***** reseting subfamilies *****");
+    log("***** reseting subfamilies *****");
     // deselect all subfamilies1 selections
     $('#select2_subfamilies1').val(null);
     // empty subfamilies1 options
@@ -138,25 +140,25 @@ function initializeMapFilters() {
 
   // (3) build harbours data in hash + execution
   function buildData() {
-    console.log('***** building data *****');
+    log('***** building data *****');
     // harbours
     var harbours = []
     $('#select2_harbours').find("option:selected").each(function(i, selected){
       harbours[i] = $(selected).text().toLowerCase();
     });
-    console.log("harbours selection(s) = " + harbours);
+    log("harbours selection(s) = " + harbours);
 
     // years
     var years = []
     $('#select2_years').find("option:selected").each(function(i, selected){
       years[i] = $(selected).text();
     });
-    console.log("years selection(s) = " + years);
+    log("years selection(s) = " + years);
 
     // flows
     var flows = []
     flows = $('#select2_flows').select2('data').map(fl => fl.id);
-    console.log("flows selection(s) = " + flows);
+    log("flows selection(s) = " + flows);
 
     // codes = families + all subfamilies
     // level0: families
@@ -177,11 +179,11 @@ function initializeMapFilters() {
     $('#select2_subfamilies3').find("option:selected").each(function(k, selected){
      sub_three[k] = $(selected).attr("value"); // add to subfamilies1&2 (+overwrite families & parent sub1&2)
     });
-    console.log("codes selection(s) = " + fam + ";" + sub_one + ";" + sub_two + ";" + sub_three);
+    log("codes selection(s) = " + fam + ";" + sub_one + ";" + sub_two + ";" + sub_three);
 
     // data in values:
     var values = {harbours, years, flows, fam, sub_one, sub_two, sub_three}; // all
-    // console.log("values = " + values);
+    // log("values = " + values);
 
     callAjax(values); // -> (4)
   }
@@ -204,18 +206,18 @@ function initializeMapFilters() {
       dataType: "script",
       data: dataAjax // all
     });
-    console.log("ajax harbours data:");
-    console.log(dataAjax);
+    log("ajax harbours data:");
+    log(dataAjax);
   }
 
   // *********************************************************************
 
   // Notes:
-  // console.log(event);
-  // console.log(event.params);
-  // console.log(event.params.data);
+  // log(event);
+  // log(event.params);
+  // log(event.params.data);
   // var harbourSelected = event.params.data.text;
-  // console.log(harbourSelected); // -> bayonne  -> OK
+  // log(harbourSelected); // -> bayonne  -> OK
   // (1a): $ = document.querySelectorAll(...) for jquery plugin, and call select2 on it
   // (1b): == importing CSS! Path is relative to ./node_modules
   //       CSS included in JS (not in asset pipeline) and available in / compiled by Webpack
