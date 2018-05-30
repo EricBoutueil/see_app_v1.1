@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  validates :cgu_accepted, acceptance: { accept: true }
+
   after_create :send_welcome_email
 
   # for active_admin

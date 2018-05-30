@@ -10,6 +10,7 @@
         <%= f.input :email, required: true, autofocus: true %>
         <%= f.input :password, required: true, hint: (t('devise.shared.minimum_password_length', count: @minimum_password_length) if @minimum_password_length) %>
         <%= f.input :password_confirmation, required: true %>
+        <%= f.input :cgu_accepted, inline_label: "J\'accepte les #{link_to 'Conditions Générales d\'Utilisation', cgu_path, target: :_blank}".html_safe %>
       </div>
 
       <div class="form-actions text-center">
