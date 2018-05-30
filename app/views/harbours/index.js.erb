@@ -1,4 +1,19 @@
+// TO DO: NOT ABLE TO IMPORT FUNCTIONS FROM WEBPACK FILES INTO INDEX.JS.ERB
+
 // import { loadGeoJson } from '../../javascript/packs/map';
+
+// import { log } from "./console_log"; // -> not working, so instead:
+if(window.location.href.indexOf("localhost") >= 0) {
+   window.DEBUG = true;
+}
+
+function log(a, b, c, d) {
+  if(DEBUG) {
+    console.log(a, b, c, d);
+  }
+}
+
+// index.js.erb
 
 // STEP 1: init map
 var mapElement = document.getElementById('map');
@@ -153,8 +168,8 @@ function loadGeoJson() {
 
     map.data.addGeoJson(jsonParsed);
 
-    console.log("loaded GeoJson:");
-    console.log(mapElement.dataset.geojson);
+    log("loaded GeoJson:");
+    log(mapElement.dataset.geojson);
 
     loadInfoWindows(); // 2.3
   };
@@ -204,7 +219,7 @@ var zoomActual;
 function getZoomActual() {
   google.maps.event.addListener(map, 'zoom_changed', function() {
     zoomActual = map.getZoom();
-    console.log('zoom actual:' + zoomActual);
+    log('zoom actual:' + zoomActual);
     // setFeaturesStyle();
     setFeaturesStyleZoomed();
   });
@@ -242,8 +257,8 @@ function setFeaturesStyle() {
     map.data.setStyle(function(feature) {
       var totalVolume = feature.getProperty('totvol');
       var displayedTotalVol = displayedVol(totalVolume) // 3.3
-      console.log('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
-      console.log('calc scale ' +feature.getProperty('name') +' = '+calcScale(totalVolume));
+      log('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
+      log('calc scale ' +feature.getProperty('name') +' = '+calcScale(totalVolume));
       return {
         icon: getCircle(totalVolume), // 3.4
         label: {
@@ -263,8 +278,8 @@ function setFeaturesStyleZoomed() {
     map.data.setStyle(function(feature) {
       var totalVolume = feature.getProperty('totvol');
       var displayedTotalVol = displayedVol(totalVolume) // 3.3
-      console.log('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
-      console.log('***calc scale ' +feature.getProperty('name') +' = '+calcScale(totalVolume));
+      log('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
+      log('***calc scale ' +feature.getProperty('name') +' = '+calcScale(totalVolume));
       return {
         icon: getCircle(totalVolume), // 3.4
         label: {
@@ -285,7 +300,7 @@ function maxTotvol() {
       totalVolumeMax = feature.getProperty('totvol');
     };
   });
-  console.log('total vol max = '+ totalVolumeMax);
+  log('total vol max = '+ totalVolumeMax);
 }
 
 // 3.2 calculate zoomBounds for circles scales (from 3.0 only)
@@ -295,7 +310,7 @@ function getZoomBounds() {
     if (zoomBounds > 10) {
       zoomBounds = 10
     }
-    console.log('zoom bounds:' + zoomBounds);
+    log('zoom bounds:' + zoomBounds);
 }
 
 // 3.3 calcl vol to display on circles (from 3.0 and 3.0bis)
@@ -324,7 +339,7 @@ function displayedVol(totalVolume) {
       displayedVol = rounding.toString();
     }
   }
-  // console.log('2 digit total vol = '+ displayedVol);
+  // log('2 digit total vol = '+ displayedVol);
   return displayedVol;
 }
 
@@ -343,12 +358,12 @@ function getCircle(totalVolume) {
 // 3.4.1 calc scale for circles scales
 function calcScale(totalVolume) {
   var scale = (Math.sqrt(totalVolume * Math.pow(40, 2) / totalVolumeMax));
-  // console.log('scale = '+ scale);
+  // log('scale = '+ scale);
   if (scale < 3) {
     scale = 3;
   }
   scale = scale * zoomActual / zoomBounds;
-  // console.log('zoom scale final:' + scale)
+  // log('zoom scale final:' + scale)
   return scale;
 }
 
@@ -404,7 +419,7 @@ function loadSubfamilies1() {
 
   var prevOptions = document.querySelectorAll('#select2_subfamilies1 option'); // ok
   var selectId = document.getElementById('select2_subfamilies1'); // ok
-  // notes for console.log below(1)
+  // notes for log below(1)
 
   // creating new dropdown options only when selecting a new family (not when selecting subfamilies1)
   if (prevOptions.length == 0) {
@@ -414,7 +429,7 @@ function loadSubfamilies1() {
       var code;
       var label;
       for (var key in subf) {
-        // console.log('key is: ' + key + ', value is: ' + subf[key]);
+        // log('key is: ' + key + ', value is: ' + subf[key]);
         if (key === "code") {
           code = subf[key];
         } else {
@@ -439,7 +454,7 @@ function loadSubfamilies2() {
 
   var prevOptions = document.querySelectorAll('#select2_subfamilies2 option'); // ok
   var selectId = document.getElementById('select2_subfamilies2'); // ok
-  // notes for console.log below(1)
+  // notes for log below(1)
 
   // creating new dropdown options only when selecting a new family (not when selecting subfamilies2)
   if (prevOptions.length == 0) {
@@ -449,7 +464,7 @@ function loadSubfamilies2() {
       var code;
       var label;
       for (var key in subf) {
-        // console.log('key is: ' + key + ', value is: ' + subf[key]);
+        // log('key is: ' + key + ', value is: ' + subf[key]);
         if (key === "code") {
           code = subf[key];
         } else {
@@ -471,7 +486,7 @@ function loadSubfamilies3() {
 
   var prevOptions = document.querySelectorAll('#select2_subfamilies3 option'); // ok
   var selectId = document.getElementById('select2_subfamilies3'); // ok
-  // notes for console.log below(1)
+  // notes for log below(1)
 
   // creating new dropdown options only when selecting a new family (not when selecting subfamilies3)
   if (prevOptions.length == 0) {
@@ -481,7 +496,7 @@ function loadSubfamilies3() {
       var code;
       var label;
       for (var key in subf) {
-        // console.log('key is: ' + key + ', value is: ' + subf[key]);
+        // log('key is: ' + key + ', value is: ' + subf[key]);
         if (key === "code") {
           code = subf[key];
         } else {
@@ -505,20 +520,20 @@ loadSubfamilies1(); // STEP 4.1
 loadSubfamilies2(); // STEP 4.2
 loadSubfamilies3(); // STEP 4.3
 
-// notes for console.log(1)
-  // console.log("new select2Subfamilies1:");
-  // console.log(subfamilies1Parsed);
-  // console.log(typeof subfamilies1Parsed);
+// notes for log(1)
+  // log("new select2Subfamilies1:");
+  // log(subfamilies1Parsed);
+  // log(typeof subfamilies1Parsed);
 
-  // console.log("temp select2Subfamilies1:"); // used for testing
-  // console.log(document.getElementById('temp_subfamilies1').dataset.temp);
+  // log("temp select2Subfamilies1:"); // used for testing
+  // log(document.getElementById('temp_subfamilies1').dataset.temp);
   // document.getElementById('temp_subfamilies1').dataset.temp = select2Subfamilies1 //ok
 
-  // console.log("updated temp select2Subfamilies1:");
-  // console.log(document.getElementById('temp_subfamilies1').dataset.temp); // ok
+  // log("updated temp select2Subfamilies1:");
+  // log(document.getElementById('temp_subfamilies1').dataset.temp); // ok
   // [{"code":"a1","label":"vrac liquide"},{"code":"a2","label":"vrac solide"},{"code":"a3","label":"non vrac"}]
 
-  // console.log("prevOptions: ");
-  // console.log(prevOptions); // ok
-  // console.log(typeof prevOptions);
-  // console.log(prevOptions.length); // ok
+  // log("prevOptions: ");
+  // log(prevOptions); // ok
+  // log(typeof prevOptions);
+  // log(prevOptions.length); // ok
