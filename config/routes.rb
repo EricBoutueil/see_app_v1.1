@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   scope '(:locale)', locale: /en|es/ do
 
     root to: 'harbours#index'
+    get "/conditions_generales_d_utilisation", to: "pages#cgu", as: :cgu
     resources :harbours, only:[:index]
     get '/import', to: "movements#import", as: :new_import
     post '/import', to: "movements#import", as: :import

@@ -73,3 +73,5 @@ fr:
       mark: "*"
       text: Champs requis
     'yes': Oui
+    error_notification:
+      default_message: "Veuillez vérifier les champs ci-dessous:"
