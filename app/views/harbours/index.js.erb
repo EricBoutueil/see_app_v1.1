@@ -161,6 +161,12 @@ mapElement.dataset.geojson = JSON.stringify(<%= @geojson.to_json.html_safe %>);
 
 function loadGeoJson() {
   if (mapElement) {
+    // removing previous features
+    map.data.forEach(function(feature) {
+        map.data.remove(feature);
+    });
+
+    // adding the new features
     var jsonParsed = JSON.parse(mapElement.dataset.geojson);
 
     zoom(); // 2.1

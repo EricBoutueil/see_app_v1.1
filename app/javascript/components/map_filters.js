@@ -175,6 +175,7 @@ function initializeMapFilters() {
     $('#select2_subfamilies2').find("option:selected").each(function(j, selected){
      sub_two[j] = $(selected).attr("value"); // add to subfamilies1 (+overwrite families & parent sub1)
     });
+    // level3: subfamilies3
     var sub_three = []
     $('#select2_subfamilies3').find("option:selected").each(function(k, selected){
      sub_three[k] = $(selected).attr("value"); // add to subfamilies1&2 (+overwrite families & parent sub1&2)
