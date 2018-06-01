@@ -232,8 +232,8 @@ function getZoomActual() {
 }
 
 // 2.3 show an info window when the user click on a circle
+var infowindow = new google.maps.InfoWindow();
 function loadInfoWindows() {
-  var infowindow = new google.maps.InfoWindow();
   map.data.addListener('click', function(event) {
     var myHTML =  '<p class="infowindow-title">'+
                   event.feature.getProperty("name").replace(/(^|\s)[a-z\u00E0-\u00FC]/g, l => l.toUpperCase()) +
