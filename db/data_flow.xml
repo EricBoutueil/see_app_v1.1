@@ -346,7 +346,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="1351" y="701.111111164093" name="javascript">
+<table x="1351" y="701" name="javascript">
 <key type="PRIMARY" name="">
 </key>
 </table>
@@ -361,7 +361,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="1023" y="789" name="select2.js">
+<table x="1023" y="789" name="map_filters.js">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
