@@ -37,7 +37,7 @@
     <type label="SET" length="1" sql="SET" quote=""/>
     <type label="Bit" length="0" sql="bit" quote=""/>
   </group>
-</datatypes><table x="408" y="44" name="movements">
+</datatypes><table x="445" y="43" name="movements">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -49,16 +49,16 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="types" row="id" />
 </row>
-<row name="terminal" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="pol_pod" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
 <row name="year" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="volume" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="terminal" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="pol_pod" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
@@ -136,22 +136,11 @@
 <row name="admin" null="1" autoincrement="0">
 <datatype>BINARY</datatype>
 <default>NULL</default></row>
+<row name="cgu_accepted" null="0" autoincrement="0">
+<datatype>BINARY</datatype>
+</row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
-</table>
-<table x="263" y="268" name="mapping">
-<row name="total (tot) = sum import (imp) + sum export (exp)" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="A = [A1, A2 ...]" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="UNIT { A1 => TEU, A2 => litre }" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<key type="PRIMARY" name="">
-</key>
-<comment>A = [A1, A2...] ==&gt; method Type.compare(harbour_id; Type.code --&gt; if code.lenght = 1 ...)                                          // UNIT { A1 =&gt; TEU, A2 =&gt; litre }</comment>
 </table>
 </sql>
