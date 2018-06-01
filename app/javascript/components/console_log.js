@@ -2,9 +2,9 @@ if(window.location.href.indexOf("localhost") >= 0) {
    var DEBUG = true;
 }
 
-function log(a, b, c, d) {
+function log(a) {
   if(DEBUG) {
-    console.log(a, b, c, d);
+    console.log(a);
   }
 }
 
