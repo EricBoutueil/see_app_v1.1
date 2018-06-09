@@ -8,6 +8,7 @@ gem 'pg', '~> 1.0'
 gem 'puma'
 gem 'rails', '5.1.6'
 gem 'redis'
+gem 'sidekiq', '~> 5.1'
 
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass', '~> 3.3'
