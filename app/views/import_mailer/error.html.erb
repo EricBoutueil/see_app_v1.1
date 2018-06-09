@@ -1,0 +1,42 @@
+<p>Bonjour <%= @user.first_name %> <%= @user.last_name %>,</p>
+
+<p>Une erreur est survenue pendant l'import et a renvoyé ce message :</p>
+<p><%= @exception.message %></p>
+
+<p>La trace complète de l'erreur est jointe ci-dessous.</p>
+
+<p>
+  Notez qu'il s'agit d'un <strong>fragment de l'import </strong>qui a provoqué
+  cette erreur. D'autres lignes du fichier CSV ont pu déjà être importées
+  ou le seront dans les minutes qui viennent.
+  <br />
+  Vous recevrez un email lorsque l'ensemble de l'import s'est terminé.
+</p>
+
+<p>Vous pouvez accéder à l'interface d'administration ici :</p>
+<p><%= link_to nil, admin_dashboard_url %></p>
+
+<p>L'équipe See'Up</p>
+
+<br />
+<br />
+
+<p><%= "=" * 40 %></p>
+<p>Trace complète de l'erreur :</p>
+
+<pre>
+  <code>
+<%= @exception.backtrace.join("\n") %>
+  </code>
+</pre>
+
+<br />
+<br />
+
+<p><%= "=" * 40 %></p>
+<p>Lignes du CSV ayant provoqué cette erreur : </p>
+<pre>
+  <code>
+<%= @formatted_rows %>
+  </code>
+</pre>

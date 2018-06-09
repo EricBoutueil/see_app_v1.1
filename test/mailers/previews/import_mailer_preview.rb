@@ -6,4 +6,18 @@ class ImportMailerPreview < ActionMailer::Preview
     user = User.first
     ImportMailer.done(user)
   end
+
+  # Preview this email at http://localhost:3000/rails/mailers/import_mailer/error
+  def error
+    rows = [
+      { "name" => "Marseille", "country" => "France", "address" => "Marseille" },
+      { "name" => "Sète", "country" => "France", "address" => "Sète" },
+    ]
+
+    exception = StandardError.new("my error")
+    exception.set_backtrace(caller)
+
+    user = User.first
+    ImportMailer.error(user, rows, exception)
+  end
 end

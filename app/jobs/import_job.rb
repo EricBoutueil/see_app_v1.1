@@ -8,6 +8,9 @@ class ImportJob < ApplicationJob
     $import_pool.with do
       importer = Importer.new(rows.map(&:symbolize_keys))
       importer.call
+    rescue => ex
+      user = User.find user_id
+      ImportMailer.error(user, rows, ex).deliver_now
     end
   end
 end
