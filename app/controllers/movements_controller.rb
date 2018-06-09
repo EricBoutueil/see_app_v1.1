@@ -9,12 +9,9 @@ class MovementsController < ApplicationController
       if params[:file] == nil
         flash.now[:notice] = "Veuillez choisir un fichier non vide."
       else
-        Thread.new {
-          importer = Importer.new(params[:file])
-          importer.call
-        }
+        Importer.dispatch(params[:file].path)
 
-        redirect_to admin_movements_path, notice: "Base de données en train d'être mises à jour, ceci peut prendre plusieurs minutes !"
+        redirect_to admin_dashboard_path, notice: "Base de données en train d'être mise à jour, vous recevrez un email lorsque ce sera terminé !"
       end
     end
   end

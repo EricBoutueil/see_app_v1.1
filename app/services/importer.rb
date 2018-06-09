@@ -1,12 +1,29 @@
 class Importer
-  attr_reader :file
+  class << self
+    def rows_per_job
+      500
+    end
 
-  def initialize(file)
-    @file = file
+    def enqueue_jobs(from_user, file)
+      all_rows = CSV.read(file, headers: true).map(&:to_h)
+
+      all_rows.in_groups_of(self.rows_per_job, false) do |rows|
+        ImportJob.perform_later(from_user.id, rows)
+      end
+
+      FinnishImportJob.perform_later(from_user.id)
+    end
+  end
+
+
+  attr_reader :rows
+
+  def initialize(rows)
+    @rows = rows
   end
 
   def call
-    CSV.foreach(file.path, headers: true, header_converters: :symbol) do |row|
+    rows.each do |row|
       # updating if lat nil or creating harbours
       name = row[:name]&.downcase&.strip
       address = row[:address]&.downcase&.strip
@@ -15,11 +32,6 @@ class Importer
       label = row[:label]&.downcase&.strip
 
       update_or_create_harbour(name, address, row)
-
-      update_outre_mer("pointe-à-pitre", 48, -6.95)
-      update_outre_mer("fort-de-france", 47, -6.95)
-      update_outre_mer("dégrad des cannes", 46, -6.95)
-      update_outre_mer("port réunion", 45, -6.95)
 
       update_or_create_type(code, flow, label, row)
 
@@ -74,7 +86,7 @@ class Importer
 
     # update of type without flow column
     if flow.nil?
-      handle_type_without_flow(row)
+      handle_type_without_flow(code, label, row)
       return
     end
 
@@ -99,7 +111,7 @@ class Importer
     )
   end
 
-  def handle_type_without_flow(row)
+  def handle_type_without_flow(code, label, row)
     scope = Type.where(code: code)
 
     if scope.exists?
@@ -150,10 +162,4 @@ class Importer
       pol_pod: row[:pol_pod],
     )
   end
-
-
-  def update_outre_mer(name, lat, lng)
-    Harbour.where("LOWER(name) = ?", name).update(latitude: lat, longitude: lng)
-  end
-
 end
