@@ -1,6 +1,6 @@
 Rails.application.configure do
   config.action_mailer.delivery_method = :mailjet
-  config.action_mailer.default_url_options = { host: "porttraffic-seeup.herokuapp.com" }
+  config.action_mailer.default_url_options = { host: "www.port-traffic.com" }
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = false
 
