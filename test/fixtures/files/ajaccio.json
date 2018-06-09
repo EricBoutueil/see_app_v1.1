@@ -1,0 +1,59 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Port Tino Rossi",
+               "short_name" : "Port Tino Rossi",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Ajaccio",
+               "short_name" : "Ajaccio",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Corse-du-Sud",
+               "short_name" : "Corse-du-Sud",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Corse",
+               "short_name" : "Corse",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "France",
+               "short_name" : "FR",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "20000",
+               "short_name" : "20000",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "Port Tino Rossi, 20000 Ajaccio, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 41.9181658,
+               "lng" : 8.7430573
+            },
+            "location_type" : "GEOMETRIC_CENTER",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.9195147802915,
+                  "lng" : 8.744406280291502
+               },
+               "southwest" : {
+                  "lat" : 41.9168168197085,
+                  "lng" : 8.741708319708497
+               }
+            }
+         },
+         "place_id" : "ChIJXfKVA_Rp2hIR4tY4G58-7ic",
+         "types" : [ "establishment", "point_of_interest" ]
+      }
+   ],
+   "status" : "OK"
+}
