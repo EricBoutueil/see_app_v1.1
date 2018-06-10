@@ -15,16 +15,10 @@ class Movement < ApplicationRecord
 
   # for Select2 years
   def self.all_years
-    @years = []
-      self.all.each do |m|
-        unless @years.include?(m.year)
-          @years << m.year
-        end
-      end
-    return @years
+    @all_years ||= distinct("year").order(:year).pluck(:year)
   end
 
   def self.max_year
-    @max_year = self.all_years.max
+    @max_year ||= self.all_years.max
   end
 end
