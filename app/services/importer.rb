@@ -5,13 +5,15 @@ class Importer
     end
 
     def enqueue_jobs(from_user, file)
-      all_rows = CSV.read(file, headers: true).map(&:to_h)
-
-      all_rows.in_groups_of(self.rows_per_job, false) do |rows|
+      rows_from_file(file).in_groups_of(self.rows_per_job, false) do |rows|
         ImportJob.perform_later(from_user.id, rows)
       end
 
       FinnishImportJob.perform_later(from_user.id)
+    end
+
+    def rows_from_file(file)
+      CSV.read(file, headers: true).map(&:to_h)
     end
   end
 

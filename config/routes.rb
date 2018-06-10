@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :harbours, only:[:index]
     get '/import', to: "movements#import", as: :new_import
     post '/import', to: "movements#import", as: :import
+    post '/import-light', to: "movements#import_light", as: :import_light
     resources :types, only:[:index]
   end
 end
