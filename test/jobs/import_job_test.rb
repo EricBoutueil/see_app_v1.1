@@ -21,7 +21,7 @@ class ImportJobTest < ActiveJob::TestCase
   test "import create types in db" do
     file = file_fixture("types.csv")
 
-    assert_difference "Type.count", +6 do
+    assert_difference "Type.count", +8 do
       ImportJob.perform_now(@user.id, csv_file_to_named_rows(file))
     end
 
