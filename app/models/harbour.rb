@@ -8,7 +8,7 @@ class Harbour < ApplicationRecord
   validates :address, presence: true, uniqueness: true
 
   geocoded_by :full_address
-  after_validation :geocode, if: :latitude_nil?
+  after_validation :geocode#, if: :latitude_nil? # now allowing to update when CSV address is not nil
 
   def latitude_nil?
     self.latitude.nil?
