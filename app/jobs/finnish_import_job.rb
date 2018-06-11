@@ -17,11 +17,11 @@ class FinnishImportJob < ApplicationJob
     lat = 48
     lng = -6.95
 
-    %w[
-      pointe-à-pitre
-      fort-de-france
-      dégrad des cannes
-      port réunion
+    [
+      "pointe-à-pitre",
+      "fort-de-france",
+      "dégrad des cannes",
+      "port réunion"
     ].each do |name|
       Harbour.where("LOWER(name) = ?", name).update(latitude: lat, longitude: lng)
 
