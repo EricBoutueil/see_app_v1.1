@@ -26,6 +26,7 @@ class Importer
 
   def call
     rows.each do |row|
+      # updating if lat nil or creating harbours
       name = row[:name]&.downcase&.strip
       address = row[:address]&.downcase&.strip
       code = row[:code]&.downcase&.strip
@@ -52,7 +53,9 @@ class Importer
     if scope.exists?
       scope.update(
           country: row[:country],
-          address: address
+          address: address,
+          latitude: nil,
+          longitude: nil,
         )
       return
     end
