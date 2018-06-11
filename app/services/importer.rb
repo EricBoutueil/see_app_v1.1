@@ -57,6 +57,7 @@ class Importer
           latitude: nil,
           longitude: nil,
         )
+      sleep(0.05)
       return
     end
 
@@ -79,6 +80,7 @@ class Importer
       country: row[:country],
       address: address,
     )
+    sleep(0.05)
   end
 
   def update_or_create_type(code, flow, label, row)
