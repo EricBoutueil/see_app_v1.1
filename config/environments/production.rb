@@ -1,6 +1,6 @@
 Rails.application.configure do
   config.action_mailer.delivery_method = :mailjet
-  config.action_mailer.default_url_options = { host: "porttraffic-seeup.herokuapp.com" }
+  config.action_mailer.default_url_options = { host: "www.port-traffic.com" }
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = false
 
@@ -63,7 +63,7 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
-  # config.active_job.queue_adapter     = :resque
+  config.active_job.queue_adapter     = :sidekiq
   # config.active_job.queue_name_prefix = "see_app_v1_1_#{Rails.env}"
   config.action_mailer.perform_caching = false
 

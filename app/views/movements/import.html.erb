@@ -1,10 +1,32 @@
 <div class='container'>
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3 mt+">
-      <%= form_tag import_path, multipart: true, :id => "import-file", :class => "form-inline mt mb" do %>
-        <%= label_tag 'file', 'Mettre à jour la base de donnée:' %>
+      <h2>Import complet</h2>
+      <p class="help-block">
+        Nécessite d'activer le dyno <strong>worker</strong> (sidekiq)
+        sur Heroku le temps de l'import.<br />
+        Aucune limite de taille.
+      </p>
+
+      <%= form_tag import_path, multipart: true, class: "import-file form-inline mt mb" do %>
+        <%= label_tag 'file', 'Mettre à jour la base de données:' %>
         <%= file_field_tag :file %>
         <%= submit_tag "Importer CSV", class: 'btn btn-primary mt-' %>
       <% end %>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3 mt+">
+      <h2>Import léger (instantané)</h2>
+      <p class="help-block">
+        Uniquement pour les petits fichiers d'import (quelques centaines de lignes max.)
+      </p>
+      <%= form_tag import_light_path, multipart: true, class: "import-file form-inline mt mb" do %>
+        <%= label_tag 'file', 'Mettre à jour la base de données:' %>
+        <%= file_field_tag :file %>
+        <%= submit_tag "Importer CSV", class: 'btn btn-primary mt-' %>
+      <% end %>
+    </div>
+  </div>
+</div>

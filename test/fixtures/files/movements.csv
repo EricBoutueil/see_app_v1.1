@@ -1,0 +1,7 @@
+country,name,code,flow,year,volume
+France,Ajaccio,A,Imp,2014,100000
+France,Ajaccio,A,Imp,2015,200000
+France,Bastia,A1,Imp,2014,500
+France,Bastia,A1,Exp,2014,300
+France,Bastia,A1,Imp,2016,200000
+France,Bastia,A1,Exp,2016,4000

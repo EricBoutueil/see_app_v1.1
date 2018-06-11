@@ -1,13 +1,14 @@
 source 'https://rubygems.org'
-ruby '2.4.3'
+ruby '2.5.1'
 
 gem 'devise'
 gem 'figaro'
 gem 'jbuilder', '~> 2.0'
-gem 'pg', '~> 0.21'
+gem 'pg', '~> 1.0'
 gem 'puma'
-gem 'rails', '5.1.5'
+gem 'rails', '5.1.6'
 gem 'redis'
+gem 'sidekiq', '~> 5.1'
 
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass', '~> 3.3'
@@ -43,4 +44,5 @@ group :development, :test do
   gem 'listen', '~> 3.0.5'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'webmock'
 end

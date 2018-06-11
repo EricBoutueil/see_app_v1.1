@@ -1,0 +1,49 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Quai Nouveau Port de Commerce",
+               "short_name" : "Quai Nouveau Port de Commerce",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Bastia",
+               "short_name" : "Bastia",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "France",
+               "short_name" : "FR",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "20200",
+               "short_name" : "20200",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "Quai Nouveau Port de Commerce, 20200 Bastia, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 42.7019142,
+               "lng" : 9.455133799999999
+            },
+            "location_type" : "GEOMETRIC_CENTER",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 42.70326318029149,
+                  "lng" : 9.4564827802915
+               },
+               "southwest" : {
+                  "lat" : 42.7005652197085,
+                  "lng" : 9.453784819708495
+               }
+            }
+         },
+         "place_id" : "ChIJffCAPA8k1xIRFHU-6QN1g-4",
+         "types" : [ "establishment", "natural_feature", "point_of_interest" ]
+      }
+   ],
+   "status" : "OK"
+}
