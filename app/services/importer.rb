@@ -13,7 +13,7 @@ class Importer
     end
 
     def rows_from_file(file)
-      CSV.read(file, headers: true).map(&:to_h)
+      CSV.read(file, headers: true, row_sep: :auto).map(&:to_h)
     end
   end
 
