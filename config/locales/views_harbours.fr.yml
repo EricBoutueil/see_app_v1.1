@@ -8,7 +8,7 @@ fr:
       subfamily1_filter: 'Filtre 1'
       subfamily2_filter: 'Filtre 2'
       subfamily3_filter: 'Filtre 3'
-    #select2.js:
+    #map_filters.js:
       # harbour_placehoder: "Tapez les premières lettres…"
       # year_placehoder: "Valeur par défaut: dernière année disponible"
       # subfamily_placehoder: "Optionnel"

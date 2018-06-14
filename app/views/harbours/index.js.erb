@@ -161,7 +161,7 @@ mapElement.dataset.geojson = JSON.stringify(<%= @geojson.to_json.html_safe %>);
 
 function loadGeoJson() {
   if (mapElement) {
-    // removing previous features
+    // removing previous features --> needed because not reinitiating the map (for quotas)
     map.data.forEach(function(feature) {
         map.data.remove(feature);
     });
@@ -181,6 +181,8 @@ function loadGeoJson() {
   };
 }
 
+// [TBC COLIN 3]
+// how to optimize auto zoom of map (2.1) and retrieve/usage of zoom to caculate circles sizes (2.2 and all 3.)
 // 2.1 auto center map on data layer
 function zoom() {
   // initialize the bounds
@@ -201,9 +203,14 @@ function zoom() {
           if ( this.getZoom() > 10 ) {   // or set a minimum
             this.setZoom(10);  // set zoom here
           } else if ( this.getZoom() < 6 ) {
+            // [TBC COLIN 4]
+            // how to optimize this small "trick" to have a Zoom set at 6 when all harbours available or in France only?
+            // reason behind: if not, due to bounds, zoom is generally set to 5 for Franche, which make the map uglier
+            // should we simply add a country filter and select by default france?
+            // (tomorrow all EU countries available, so need options EU + each country)
+            // set min zoom if FR only
             var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             if (!isMobile) {
-              // set min zoom if FR only
               var france = ['fr', 'FR', 'france', 'France', 'FRANCE']
               map.data.forEach(function(feature) {
                 if (france.includes(feature.getProperty('country'))){
@@ -220,7 +227,7 @@ function zoom() {
     });
 }
 
-// 2.2 retrieve zoomActual for circles scales
+// 2.2 retrieve zoomActual (can be from zoom() or changed manually) for circles scales (3.)
 var zoomActual;
 function getZoomActual() {
   google.maps.event.addListener(map, 'zoom_changed', function() {
@@ -403,6 +410,8 @@ function maxPowTen() {
 // 3.5.3 identify unit family
 function unitSelectedFamily() {
   var unitSelectedFamily = ""
+  // [TBC Colin 5]
+  // can we reused function filtered_family_unit from harbour.rb ? or avoid .forEach and use only 1 feature?
   map.data.forEach(function(feature) {
     unitSelectedFamily = feature.getProperty('unit');
   });

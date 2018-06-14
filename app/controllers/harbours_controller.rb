@@ -37,7 +37,7 @@ class HarboursController < ApplicationController
         "features": @features
       }
 
-    # other instance variables
+    # other instance variables for filters options in index.html.erb
     @years = Movement::all_years
 
     @flows = Type::all_flows
