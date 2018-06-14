@@ -6,12 +6,12 @@ import { log } from "./console_log";
 
 function initializeMapFilters() {
   // (1a) select2 fields and selections management
-  // harbours
+  // harbours --> no (default) selection in filter = all harbours selected
   $('#select2_harbours').select2({
     placeholder: "Tapez les premières lettres…",
     allowClear: true,
     sorter: function(data) {
-        /* Sort data ASC using lowercase comparison */
+        /* Sort options ASC using lowercase comparison */
         return data.sort(function (a, b) {
             a = a.text.toLowerCase();
             b = b.text.toLowerCase();
@@ -25,14 +25,15 @@ function initializeMapFilters() {
     }
   });
 
-  // years
+  // [TBC Colin] : certainly maxYears retrieval can be optimized, but not sure it is helping for speed :)
+  // years --> default selection = maxYears (from dataset temp_years in index.html.erb)
   var maxYears = document.getElementById('temp_years').dataset.temp;
   $('#select2_years').select2({
     placeholder: "Valeur par défaut: dernière année disponible",
     //allowClear: true
   // });
     sorter: function(data) {
-        /* Sort data DESC using lowercase comparison */
+        /* Sort options DESC using lowercase comparison */
         return data.sort(function (a, b) {
             a = a.text.toLowerCase();
             b = b.text.toLowerCase();
@@ -46,10 +47,11 @@ function initializeMapFilters() {
     }
   }).select2('val', [maxYears]);
 
-  // flows
+  // flows --> default selection = enum flow 'tot' value (from type.rb)
+  // note: if no 'tot' line in DB for a given harbour, 'tot' = sum of 'imp' + 'exp' (from harbour.rb (3))
   $('#select2_flows').select2({
     sorter: function(data) {
-        /* Sort data DESC using lowercase comparison */
+        /* Sort options DESC using lowercase comparison */
         return data.sort(function (a, b) {
             a = a.text.toLowerCase();
             b = b.text.toLowerCase();
@@ -63,10 +65,10 @@ function initializeMapFilters() {
     }
   }).select2('val', ['tot']);
 
-  // families
+  // families --> default selection = label "tonnage total brut" = ordered (from type.rb) = code A
   $('#select2_families').select2();
 
-  // subfamilies1
+  // subfamilies1 --> no default selection = no subfam filter to volume calculation
   $('#select2_subfamilies1').select2({
     placeholder: "Optionnel",
     allowClear: true,
@@ -86,6 +88,14 @@ function initializeMapFilters() {
 
   // *********************************************************************
 
+  // [TBC COLIN 1]
+  // AVOID 2a below = first ajax call => make a default selection for filters: selected => displayed as such:
+  // harbours/"ports": none selected => all displayed
+  // years/"année": maxYears selected => maxYears data displayed
+  // flows/["total / import / export"]: Total selected => tot if exist or imp + exp displayed
+  // families/"trafic": "tonnage brut total" selected = code A displayed
+  // subfamilies/"Filtre [1 - 3]": none selected => no filter applied to volume calculation
+
   // (2a) initial build => AUTOMATIC FIRST AJAX CALL to ensure default data in params
   buildData();
 
@@ -99,7 +109,7 @@ function initializeMapFilters() {
   $('#select2_flows').on("change", (event) => { // flows
     buildData(); // -> (3)
   });
-  $('#select2_families').on("change", (event) => { // families
+  $('#select2_families').on("change", (event) => { // families -> see below
     resetSubfamilies1(); // -> (pre-3.1)
     resetSubfamilies2(); // -> (pre-3.2)
     resetSubfamilies3(); // -> (pre-3.3)
@@ -138,6 +148,8 @@ function initializeMapFilters() {
     $('#select2_subfamilies3').empty();
   }
 
+  // [TBC COLIN 2]
+  // Should that be optimized for loading speed?
   // (3) build harbours data in hash + execution
   function buildData() {
     log('***** building data *****');

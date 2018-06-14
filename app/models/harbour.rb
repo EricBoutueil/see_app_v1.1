@@ -18,9 +18,16 @@ class Harbour < ApplicationRecord
     "port #{name}, #{address}, #{country}"
   end
 
+  # [TBC Colin 6]
+  # a) should the filtering we rethought from scratch?
+  # current logic:
+  # data / params coming from AJAX call made in map_filters.js
+  # iterate over each param to include value in a dedicated array
+  # and combine all arrays to create 2 "big" hashes for SQL query: mts_criterias + types_criterias
+  # b) should we use ids only instead of complete objects if it is faster?
+
   # STEP1: filtering harbours in geojson
   def self.filter_by_harbour(params, harbours)
-    # binding.pry
     @selected_harbours = []
     if (params[:name])
       params[:name].each do |h|
@@ -38,40 +45,47 @@ class Harbour < ApplicationRecord
     # building 1 criterias hash by model, filter by filter
     @mvts_criterias = {}
     @types_criterias = {}
-    # each feature == filter (1)
+    # each feature == filter of harbours (1)
     self.vol_filter_by_year(params) # -> (2)
     self.vol_filter_by_flow(params) # -> (3)
     self.vol_filter_by_family(params) # -> (4)
     self.vol_filter_by_subfamily1(params) # -> (5a)
     self.vol_filter_by_subfamily2(params) # -> (5b)
     self.vol_filter_by_subfamily3(params) # -> (5c)
-    # binding.pry
     @totvol = self.movements.joins(:type).where(@mvts_criterias).where(types: @types_criterias).pluck(:volume).sum
     # ex. -> where({year: ["2014", "2013"]}).where(types: {code: ["e"]})
   end
 
-  def vol_filter_by_year(params) # (2)
+  # (2) filters lines by year
+  def vol_filter_by_year(params)
     @mvts_criterias[:year] = if (params[:year])
       params[:year]
+    # else, default selection = maxYears (from dataset temp_years in index.html.erb)
     else
       Movement::max_year
     end
   end
 
-  def vol_filter_by_flow(params) #(3)
+  # (3) filter lines by flow
+  def vol_filter_by_flow(params)
+    # is it filtered by imp or exp (enum flow from type.rb)?
     @types_criterias[:flow] = if (params[:flow] == ["imp"] || params[:flow] == ["exp"])
       params[:flow]
+    # else, does a 'tot' line exist in DB for this harbour?
     elsif self.movements.joins(:type).where(types: {flow: ["tot"]}).exists?
           ["tot"]
+    # if no 'tot' line in DB for this harbour, 'tot' = sum of 'imp' + 'exp' (from harbour.rb)
     else
       ["imp", "exp"]
     end
   end
 
-  def vol_filter_by_family(params) # (4) OK
+  # (4) filter lines with family codes only (1 letter)
+  def vol_filter_by_family(params)
     @types_criterias[:code] = if (params[:fam])
       if (params[:fam].length == 1)
         params[:fam]
+    # else, default selection = label "tonnage total brut" = ordered (from type.rb) = code A
       else
         "a"
       end
@@ -80,6 +94,7 @@ class Harbour < ApplicationRecord
     end
   end
 
+  # used in harbours_controller.rb to be included in geojson
   def filtered_family_unit(params)
     @filtered_family_unit = if (params[:fam])
       if (params[:fam].length == 1)
@@ -92,13 +107,16 @@ class Harbour < ApplicationRecord
     end
   end
 
-  def vol_filter_by_subfamily1(params) # (5a) -> criterias replace 4 in select2.js OK
+  # (5a) filter lines with subfamily 1 codes only (2 letters)
+  # -> criterias REPLACE (4) above
+  def vol_filter_by_subfamily1(params)
     if (params[:sub_one])
       @types_criterias[:code] = params[:sub_one]
     end
   end
 
-  def vol_filter_by_subfamily2(params) # (5b) -> criterias add to 5a in select2.js TBF
+  # (5b) -> criterias ADD to (5a) above
+  def vol_filter_by_subfamily2(params)
     if (params[:sub_two])
       sub_two_array = params[:sub_two]
       params[:sub_one].each do |pso|
@@ -110,7 +128,8 @@ class Harbour < ApplicationRecord
     end
   end
 
-  def vol_filter_by_subfamily3(params) # (5c) -> criterias add to 5b in select2.js TBF
+  # (5c) -> criterias ADD to (5b) above
+  def vol_filter_by_subfamily3(params)
     if (params[:sub_three])
       sub_three_array = params[:sub_three]
       params[:sub_two].each do |pstw|
