@@ -15,20 +15,16 @@ class Type < ApplicationRecord
   # for Select2 flows
   def self.all_flows
     # working on enum flow (array)
-    @flows = Type.flows.keys
+    Type.flows.keys
   end
 
   # for Select2 families
   def self.all_families
-    @families = []
-      Type.all.order(:code).each do |t|
-        unless @families.include?({code: t.code, label: t.label})
-          if t.code.to_s.length == 1
-            @families << {code: t.code, label: t.label}
-          end
-        end
-      end
-    return @families
+    keys = [:code, :label]
+
+    Type.distinct.where("LENGTH(code) = 1").order(:code).pluck(*keys).map do |type|
+      Hash[keys.zip(type)]
+    end
   end
 
   # for Select2 subfamilies1

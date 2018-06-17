@@ -19,7 +19,7 @@ class ImporterTest < ActiveSupport::TestCase
   end
 
   test "enqueue ImportJob with the expected arguments" do
-    assert_enqueued_with(job: ImportJob, queue: 'import', args: [@user.id, file_to_named_rows]) do
+    assert_enqueued_with(job: ImportJob, queue: 'import', args: [@user.id, csv_file_to_named_rows(@file)]) do
       Importer.enqueue_jobs(@user, @file)
     end
   end
@@ -28,11 +28,5 @@ class ImporterTest < ActiveSupport::TestCase
     assert_enqueued_with(job: FinnishImportJob, queue: 'import', args: [@user.id]) do
       Importer.enqueue_jobs(@user, @file)
     end
-  end
-
-  private
-
-  def file_to_named_rows
-    CSV.read(@file, headers: true).map(&:to_h)
   end
 end
