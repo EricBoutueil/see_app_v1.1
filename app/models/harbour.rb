@@ -18,26 +18,6 @@ class Harbour < ApplicationRecord
     "port #{name}, #{address}, #{country}"
   end
 
-  # [TBC Colin 6]
-  # a) should the filtering we rethought from scratch?
-  # current logic:
-  # data / params coming from AJAX call made in map_filters.js
-  # iterate over each param to include value in a dedicated array
-  # and combine all arrays to create 2 "big" hashes for SQL query: mts_criterias + types_criterias
-  # b) should we use ids only instead of complete objects if it is faster?
-
-  # STEP1: filtering harbours in geojson
-  def self.filter_by_harbour(params, harbours)
-    @selected_harbours = []
-    if (params[:name])
-      params[:name].each do |h|
-        @selected_harbours << harbours.where(name: h).first
-      end
-    else
-      @selected_harbours = harbours
-    end
-    return @selected_harbours
-  end
 
   # STEP2: filtering each selected harbour DB lines to calculate @totvol
   # filters: (1)harb, (2)year, (3)flow, (4)fam, (5)subfam [+ (6)term, (7)pol_pod]

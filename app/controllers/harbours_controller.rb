@@ -1,19 +1,31 @@
 class HarboursController < ApplicationController
 
-  skip_before_action :authenticate_user!, only: [:index]
+  skip_before_action :authenticate_user!, only: [:index, :geojson]
+  skip_after_action :verify_authorized, only: [:geojson]
+  before_action :set_subfamilies, only: [:index, :geojson]
 
   def index
+    @harbours = policy_scope(Harbour).pluck(:name)
+
+    # other instance variables for filters options in index.html.erb
+    @years = Movement::all_years
+
+    @flows = Type::all_flows
+
+    @families = Type::all_families
+  end
+
+  def geojson
     # harbours
-    @harbours = policy_scope(Harbour)
+    harbour_scope = policy_scope(Harbour)
 
-    # TO DO: refacto into model harb
-    @selected_harbours = Harbour.filter_by_harbour(params, @harbours)
+    harbour_scope = scope.where(name: params[:name]) if params[:name].present?
 
-    @sel_harb_with_vol = @selected_harbours.select do |harb|
+    sel_harb_with_vol = harbour_scope.select do |harb|
       harb.totvol_filter(params) > 0
     end
 
-    @features = @sel_harb_with_vol.map do |harb|
+    features = sel_harb_with_vol.map do |harb|
       {
         "type": "Feature", # 1 feature ~ 1 harbour where "movements.filtered.sum"
         "properties": {
@@ -34,28 +46,16 @@ class HarboursController < ApplicationController
     @geojson =
       {
         "type": "FeatureCollection",
-        "features": @features
+        "features": features
       }
+  end
 
-    # other instance variables for filters options in index.html.erb
-    @years = Movement::all_years
+  private
 
-    @flows = Type::all_flows
-
-    @families = Type::all_families
-
+  def set_subfamilies
     # only show subfamilies depending on selected higher level
     @subfamilies1 = Type::filtered_subfamilies1(params)
-
     @subfamilies2 = Type::filtered_subfamilies2(params)
-
     @subfamilies3 = Type::filtered_subfamilies3(params)
-
-    # rendering
-    respond_to do |format|
-      format.html
-      format.js  # <-- will render `app/views/harbours/index.js.erb`
-    end
-
   end
 end
