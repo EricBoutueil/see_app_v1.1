@@ -36,6 +36,14 @@ gem "sentry-raven"
 
 group :development do
   gem 'web-console', '>= 3.3.0'
+
+  # performance tracking gems
+  gem 'rack-mini-profiler'
+  gem 'memory_profiler'
+
+  # For call-stack profiling flamegraphs
+  gem 'flamegraph'
+  gem 'stackprof'
 end
 
 group :development, :test do
