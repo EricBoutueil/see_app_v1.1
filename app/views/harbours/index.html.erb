@@ -27,7 +27,7 @@
         <p class="filter-title"><%= t('.flow_filter')%></p> <!-- flows -->
         <select id="select2_flows", class="single-filter">
           <% @flows.map do |fl| %>
-            <option value="<%= fl %>"><%= t("ar.attributes.type.flow.#{fl}") %></option>
+            <option value="<%= fl %>"><%= t("activerecord.attributes.type.flow.#{fl}") %></option>
           <% end %>
         </select>
 
