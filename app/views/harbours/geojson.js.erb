@@ -3,9 +3,8 @@
 // import { loadGeoJson } from '../../javascript/packs/map';
 
 // import { log } from "./console_log"; // -> not working, so instead:
-if(window.location.href.indexOf("localhost") >= 0) {
-   var DEBUG = true;
-}
+
+var DEBUG = window.location.href.indexOf("localhost") >= 0;
 
 function log(a) {
   if(DEBUG) {

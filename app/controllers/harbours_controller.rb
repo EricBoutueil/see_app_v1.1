@@ -1,27 +1,37 @@
+require 'harbours_params_extractor'
+require 'harbours_filters'
+
 class HarboursController < ApplicationController
 
-  skip_before_action :authenticate_user!, only: [:index]
+  skip_before_action :authenticate_user!, only: [:index, :geojson]
+  skip_after_action :verify_authorized, only: [:geojson]
+  before_action :set_subfamilies, only: [:index, :geojson]
 
   def index
-    # harbours
-    @harbours = policy_scope(Harbour)
+    @harbours = policy_scope(Harbour).pluck(:name)
 
-    # TO DO: refacto into model harb
-    @selected_harbours = Harbour.filter_by_harbour(params, @harbours)
+    # other instance variables for filters options in index.html.erb
+    @years = Movement::all_years
 
-    @sel_harb_with_vol = @selected_harbours.select do |harb|
-      harb.totvol_filter(params) > 0
-    end
+    @flows = Type::all_flows
 
-    @features = @sel_harb_with_vol.map do |harb|
+    @families = Type::all_families
+  end
+
+  def geojson
+    params_extractor = HarboursParamsExtractor.new(params)
+
+    filters = HarboursFilters.new(policy_scope(Harbour), policy_scope(Movement), params_extractor.extract)
+
+    features = filters.harbours.map do |harb|
       {
         "type": "Feature", # 1 feature ~ 1 harbour where "movements.filtered.sum"
         "properties": {
           "country": harb.country,
           "name": harb.name,
           "address": harb.address,
-          "totvol": harb.totvol_filter(params),
-          "unit": harb.filtered_family_unit(params)
+          "totvol": harb.filtered_volume,
+          "unit": harb.filtered_unit,
         },
         "geometry": {
           "type": "Point",
@@ -34,28 +44,16 @@ class HarboursController < ApplicationController
     @geojson =
       {
         "type": "FeatureCollection",
-        "features": @features
+        "features": features
       }
+  end
 
-    # other instance variables for filters options in index.html.erb
-    @years = Movement::all_years
+  private
 
-    @flows = Type::all_flows
-
-    @families = Type::all_families
-
+  def set_subfamilies
     # only show subfamilies depending on selected higher level
     @subfamilies1 = Type::filtered_subfamilies1(params)
-
     @subfamilies2 = Type::filtered_subfamilies2(params)
-
     @subfamilies3 = Type::filtered_subfamilies3(params)
-
-    # rendering
-    respond_to do |format|
-      format.html
-      format.js  # <-- will render `app/views/harbours/index.js.erb`
-    end
-
   end
 end

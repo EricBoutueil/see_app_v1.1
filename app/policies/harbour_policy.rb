@@ -24,11 +24,13 @@ class HarbourPolicy < ApplicationPolicy
     user_is_admin?
   end
 
+  def geojson?
+    true
+  end
+
   private
 
   def user_is_admin?
     user.admin
   end
 end
-
-

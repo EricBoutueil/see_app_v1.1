@@ -10,8 +10,8 @@ class ImportJobTest < ActiveJob::TestCase
 
     stub_geocoder_fixtures
 
-    assert_difference "Harbour.count", +2 do
-      ImportJob.perform_now(@user.id, file_to_named_rows(file))
+    assert_difference "Harbour.count", +3 do
+      ImportJob.perform_now(@user.id, csv_file_to_named_rows(file))
     end
 
     assert Harbour.exists?(name: "ajaccio", address: "ajaccio", country: "France")
@@ -21,8 +21,8 @@ class ImportJobTest < ActiveJob::TestCase
   test "import create types in db" do
     file = file_fixture("types.csv")
 
-    assert_difference "Type.count", +6 do
-      ImportJob.perform_now(@user.id, file_to_named_rows(file))
+    assert_difference "Type.count", 2 * (file.readlines.count - 1) do
+      ImportJob.perform_now(@user.id, csv_file_to_named_rows(file))
     end
 
     assert Type.exists?(code: "a", label: "tonnage brut total", flow: "imp")
@@ -33,16 +33,16 @@ class ImportJobTest < ActiveJob::TestCase
     file = file_fixture("movements.csv")
 
     stub_geocoder_fixtures
-    ImportJob.perform_now(@user.id, file_to_named_rows(file_fixture("harbours.csv")))
-    ImportJob.perform_now(@user.id, file_to_named_rows(file_fixture("types.csv")))
+    ImportJob.perform_now(@user.id, csv_file_to_named_rows(file_fixture("harbours.csv")))
+    ImportJob.perform_now(@user.id, csv_file_to_named_rows(file_fixture("types.csv")))
 
-    assert_difference "Movement.count", +6 do
-      ImportJob.perform_now(@user.id, file_to_named_rows(file))
+    assert_difference "Movement.count", file.readlines.count - 1 do
+      ImportJob.perform_now(@user.id, csv_file_to_named_rows(file))
     end
 
     ajaccio = Harbour.find_by!(name: "ajaccio")
 
-    assert_equal 2, Movement.where(harbour: ajaccio).count
+    assert_equal 3, Movement.where(harbour: ajaccio).count
     assert_equal 1, Movement.where(volume: 500).count
   end
 
@@ -61,9 +61,5 @@ class ImportJobTest < ActiveJob::TestCase
     assert_match "Échec", email.subject
     # current file name will be in the exception backtrace
     assert_match __FILE__, email.html_part.body.to_s
-  end
-
-  def file_to_named_rows(file)
-    CSV.read(file, headers: true).map(&:to_h)
   end
 end

@@ -10,6 +10,9 @@ class Harbour < ApplicationRecord
   geocoded_by :full_address
   after_validation :geocode, if: :latitude_nil?
 
+  attribute :filtered_volume
+  attribute :filtered_unit
+
   def latitude_nil?
     self.latitude.nil?
   end
@@ -17,130 +20,6 @@ class Harbour < ApplicationRecord
   def full_address
     "port #{name}, #{address}, #{country}"
   end
-
-  # [TBC Colin 6]
-  # a) should the filtering we rethought from scratch?
-  # current logic:
-  # data / params coming from AJAX call made in map_filters.js
-  # iterate over each param to include value in a dedicated array
-  # and combine all arrays to create 2 "big" hashes for SQL query: mts_criterias + types_criterias
-  # b) should we use ids only instead of complete objects if it is faster?
-
-  # STEP1: filtering harbours in geojson
-  def self.filter_by_harbour(params, harbours)
-    @selected_harbours = []
-    if (params[:name])
-      params[:name].each do |h|
-        @selected_harbours << harbours.where(name: h).first
-      end
-    else
-      @selected_harbours = harbours
-    end
-    return @selected_harbours
-  end
-
-  # STEP2: filtering each selected harbour DB lines to calculate @totvol
-  # filters: (1)harb, (2)year, (3)flow, (4)fam, (5)subfam [+ (6)term, (7)pol_pod]
-  def totvol_filter(params)
-    # building 1 criterias hash by model, filter by filter
-    @mvts_criterias = {}
-    @types_criterias = {}
-    # each feature == filter of harbours (1)
-    self.vol_filter_by_year(params) # -> (2)
-    self.vol_filter_by_flow(params) # -> (3)
-    self.vol_filter_by_family(params) # -> (4)
-    self.vol_filter_by_subfamily1(params) # -> (5a)
-    self.vol_filter_by_subfamily2(params) # -> (5b)
-    self.vol_filter_by_subfamily3(params) # -> (5c)
-    @totvol = self.movements.joins(:type).where(@mvts_criterias).where(types: @types_criterias).pluck(:volume).sum
-    # ex. -> where({year: ["2014", "2013"]}).where(types: {code: ["e"]})
-  end
-
-  # (2) filters lines by year
-  def vol_filter_by_year(params)
-    @mvts_criterias[:year] = if (params[:year])
-      params[:year]
-    # else, default selection = maxYears (from dataset temp_years in index.html.erb)
-    else
-      Movement::max_year
-    end
-  end
-
-  # (3) filter lines by flow
-  def vol_filter_by_flow(params)
-    # is it filtered by imp or exp (enum flow from type.rb)?
-    @types_criterias[:flow] = if (params[:flow] == ["imp"] || params[:flow] == ["exp"])
-      params[:flow]
-    # else, does a 'tot' line exist in DB for this harbour?
-    elsif self.movements.joins(:type).where(types: {flow: ["tot"]}).exists?
-          ["tot"]
-    # if no 'tot' line in DB for this harbour, 'tot' = sum of 'imp' + 'exp' (from harbour.rb)
-    else
-      ["imp", "exp"]
-    end
-  end
-
-  # (4) filter lines with family codes only (1 letter)
-  def vol_filter_by_family(params)
-    @types_criterias[:code] = if (params[:fam])
-      if (params[:fam].length == 1)
-        params[:fam]
-    # else, default selection = label "tonnage total brut" = ordered (from type.rb) = code A
-      else
-        "a"
-      end
-    else
-      "a"
-    end
-  end
-
-  # used in harbours_controller.rb to be included in geojson
-  def filtered_family_unit(params)
-    @filtered_family_unit = if (params[:fam])
-      if (params[:fam].length == 1)
-        self.movements.joins(:type).where(types: {code: params[:fam]}).select('unit as unit_fam').first.unit_fam
-      else
-        "tonnes"
-      end
-    else
-      "tonnes"
-    end
-  end
-
-  # (5a) filter lines with subfamily 1 codes only (2 letters)
-  # -> criterias REPLACE (4) above
-  def vol_filter_by_subfamily1(params)
-    if (params[:sub_one])
-      @types_criterias[:code] = params[:sub_one]
-    end
-  end
-
-  # (5b) -> criterias ADD to (5a) above
-  def vol_filter_by_subfamily2(params)
-    if (params[:sub_two])
-      sub_two_array = params[:sub_two]
-      params[:sub_one].each do |pso|
-        unless params[:sub_two].any? {|pst| pst.to_s[0, 2] == pso}
-          sub_two_array << pso
-        end
-      end
-      @types_criterias[:code] = sub_two_array
-    end
-  end
-
-  # (5c) -> criterias ADD to (5b) above
-  def vol_filter_by_subfamily3(params)
-    if (params[:sub_three])
-      sub_three_array = params[:sub_three]
-      params[:sub_two].each do |pstw|
-        unless params[:sub_three].any? {|pstr| pstr.to_s[0, 3] == pstw}
-          sub_three_array << pstw
-        end
-      end
-      @types_criterias[:code] = sub_three_array
-    end
-  end
-
 end
 
 # NOTES:

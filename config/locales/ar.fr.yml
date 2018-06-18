@@ -1,5 +1,5 @@
 fr:
-  ar:
+  activerecord:
     errors:
       messages:
         record_invalid: 'La validation a échoué : %{errors}'
@@ -41,4 +41,3 @@ fr:
           tot: Total
           imp: Import
           exp: Export
-

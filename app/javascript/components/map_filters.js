@@ -215,7 +215,7 @@ function initializeMapFilters() {
       sub_three: values.sub_three
     }
     $.get({
-      url: '/harbours',
+      url: '/geojson',
       dataType: "script",
       data: dataAjax // all
     });

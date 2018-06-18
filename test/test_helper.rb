@@ -9,6 +9,7 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  include FactoryBot::Syntax::Methods
 end
 
 require "webmock/minitest"
@@ -21,4 +22,26 @@ def stub_geocoder_fixtures
 
   stub_request(:get, "https://maps.googleapis.com/maps/api/geocode/json?address=port%20bastia,%20bastia,%20France&key=&language=en&sensor=false").
     to_return(status: 200, body: file_fixture("bastia.json"))
+
+  stub_request(:get, "https://maps.googleapis.com/maps/api/geocode/json?address=port%20sete,%20sete,%20France&key=&language=en&sensor=false").
+    to_return(status: 200, body: file_fixture("sete.json"))
+end
+
+def load_fixtures_files
+  user_id = users(:admin).id
+
+  stub_geocoder_fixtures
+
+  %w[
+    harbours
+    types
+    movements
+  ].each do |name|
+    file = file_fixture("#{name}.csv")
+    ImportJob.perform_now(user_id, csv_file_to_named_rows(file), as_sync: true)
+  end
+end
+
+def csv_file_to_named_rows(file)
+  CSV.read(file, headers: true).map(&:to_h)
 end

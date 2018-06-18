@@ -11,15 +11,15 @@ class ImporterTest < ActiveSupport::TestCase
 
   test "dispatch a csv file into multiples jobs" do
     # stub Importer.rows_per_job so we can verify the split at each 2 rows
-    Importer.stub :rows_per_job, 2 do
-      assert_enqueued_jobs 3, only: ImportJob do
+    Importer.stub :rows_per_job, 3 do
+      assert_enqueued_jobs 6, only: ImportJob do
         Importer.enqueue_jobs(@user, @file)
       end
     end
   end
 
   test "enqueue ImportJob with the expected arguments" do
-    assert_enqueued_with(job: ImportJob, queue: 'import', args: [@user.id, file_to_named_rows]) do
+    assert_enqueued_with(job: ImportJob, queue: 'import', args: [@user.id, csv_file_to_named_rows(@file)]) do
       Importer.enqueue_jobs(@user, @file)
     end
   end
@@ -28,11 +28,5 @@ class ImporterTest < ActiveSupport::TestCase
     assert_enqueued_with(job: FinnishImportJob, queue: 'import', args: [@user.id]) do
       Importer.enqueue_jobs(@user, @file)
     end
-  end
-
-  private
-
-  def file_to_named_rows
-    CSV.read(@file, headers: true).map(&:to_h)
   end
 end
