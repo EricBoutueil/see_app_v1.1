@@ -1,6 +1,6 @@
 ActiveAdmin.register User do
 
-  menu priority: 5, label: proc{ t('ar.model.users') }
+  menu priority: 5, label: proc{ t('activerecord.model.users') }
 
   actions :all
 
