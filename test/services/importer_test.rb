@@ -11,8 +11,8 @@ class ImporterTest < ActiveSupport::TestCase
 
   test "dispatch a csv file into multiples jobs" do
     # stub Importer.rows_per_job so we can verify the split at each 2 rows
-    Importer.stub :rows_per_job, 2 do
-      assert_enqueued_jobs 3, only: ImportJob do
+    Importer.stub :rows_per_job, 3 do
+      assert_enqueued_jobs 6, only: ImportJob do
         Importer.enqueue_jobs(@user, @file)
       end
     end

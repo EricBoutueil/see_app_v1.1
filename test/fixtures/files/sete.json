@@ -1,0 +1,64 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "1",
+               "short_name" : "1",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Quai Philippe Régy",
+               "short_name" : "Quai Philippe Régy",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Sète",
+               "short_name" : "Sète",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Hérault",
+               "short_name" : "Hérault",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Occitanie",
+               "short_name" : "Occitanie",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "France",
+               "short_name" : "FR",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "34200",
+               "short_name" : "34200",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "1 Quai Philippe Régy, 34200 Sète, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 43.406727,
+               "lng" : 3.6974933
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 43.40807598029151,
+                  "lng" : 3.698842280291502
+               },
+               "southwest" : {
+                  "lat" : 43.40537801970851,
+                  "lng" : 3.696144319708498
+               }
+            }
+         },
+         "place_id" : "ChIJQclbw5g1sRIRi0aRF_pKAPE",
+         "types" : [ "establishment", "natural_feature", "point_of_interest" ]
+      }
+   ],
+   "status" : "OK"
+}

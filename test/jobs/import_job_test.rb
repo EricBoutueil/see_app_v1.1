@@ -10,7 +10,7 @@ class ImportJobTest < ActiveJob::TestCase
 
     stub_geocoder_fixtures
 
-    assert_difference "Harbour.count", +2 do
+    assert_difference "Harbour.count", +3 do
       ImportJob.perform_now(@user.id, csv_file_to_named_rows(file))
     end
 
@@ -21,7 +21,7 @@ class ImportJobTest < ActiveJob::TestCase
   test "import create types in db" do
     file = file_fixture("types.csv")
 
-    assert_difference "Type.count", +8 do
+    assert_difference "Type.count", 2 * (file.readlines.count - 1) do
       ImportJob.perform_now(@user.id, csv_file_to_named_rows(file))
     end
 
@@ -36,13 +36,13 @@ class ImportJobTest < ActiveJob::TestCase
     ImportJob.perform_now(@user.id, csv_file_to_named_rows(file_fixture("harbours.csv")))
     ImportJob.perform_now(@user.id, csv_file_to_named_rows(file_fixture("types.csv")))
 
-    assert_difference "Movement.count", +6 do
+    assert_difference "Movement.count", file.readlines.count - 1 do
       ImportJob.perform_now(@user.id, csv_file_to_named_rows(file))
     end
 
     ajaccio = Harbour.find_by!(name: "ajaccio")
 
-    assert_equal 2, Movement.where(harbour: ajaccio).count
+    assert_equal 3, Movement.where(harbour: ajaccio).count
     assert_equal 1, Movement.where(volume: 500).count
   end
 

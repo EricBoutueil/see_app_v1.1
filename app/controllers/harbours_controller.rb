@@ -1,3 +1,6 @@
+require 'harbours_params_extractor'
+require 'harbours_filters'
+
 class HarboursController < ApplicationController
 
   skip_before_action :authenticate_user!, only: [:index, :geojson]
@@ -16,24 +19,19 @@ class HarboursController < ApplicationController
   end
 
   def geojson
-    # harbours
-    harbour_scope = policy_scope(Harbour)
+    params_extractor = HarboursParamsExtractor.new(params)
 
-    harbour_scope = scope.where(name: params[:name]) if params[:name].present?
+    filters = HarboursFilters.new(policy_scope(Harbour), policy_scope(Movement), params_extractor.extract)
 
-    sel_harb_with_vol = harbour_scope.select do |harb|
-      harb.totvol_filter(params) > 0
-    end
-
-    features = sel_harb_with_vol.map do |harb|
+    features = filters.harbours.map do |harb|
       {
         "type": "Feature", # 1 feature ~ 1 harbour where "movements.filtered.sum"
         "properties": {
           "country": harb.country,
           "name": harb.name,
           "address": harb.address,
-          "totvol": harb.totvol_filter(params),
-          "unit": harb.filtered_family_unit(params)
+          "totvol": harb.filtered_volume,
+          "unit": harb.filtered_unit,
         },
         "geometry": {
           "type": "Point",

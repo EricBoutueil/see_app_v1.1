@@ -13,6 +13,8 @@ class Movement < ApplicationRecord
   #   "#{self.type.code} #{self.type.flow}"
   # end
 
+  delegate :tot?, :imp?, :exp?, to: :type
+
   # for Select2 years
   def self.all_years
     @all_years ||= distinct("year").order(:year).pluck(:year)

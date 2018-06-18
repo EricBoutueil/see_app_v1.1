@@ -2,4 +2,6 @@ code,label,unit,description
 A,tonnage brut total,tonnes,Tonnage brut total (A1+A2+A3)
 A1,vrac liquide,tonnes,Toutes marchandises liquides en vrac (A11+A12)
 A11,hydrocarbures,tonnes,Produits pétroliers (A111+A112+A113)
+A12,autre chose,tonnes,Produits bizarres
+A13,gaz spatiaux,tonnes,Provenance astéroides
 B,conteneurs (nombres),conteneurs,Nombre de conteneurs de 20' ou plus, avec ou sans cargaison, levés ou roulés (B1+B2)
