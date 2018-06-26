@@ -2,7 +2,7 @@ import $ from 'jquery';
 import 'select2';
 import 'select2/dist/css/select2.css';
 
-import { log } from "./console_log";
+import { debug } from "./helpers";
 
 function initializeMapFilters() {
   // (1a) select2 fields and selections management
@@ -129,7 +129,7 @@ function initializeMapFilters() {
 
   // (pre-3.1) when selecting families
   function resetSubfamilies1() {
-    log("***** reseting subfamilies *****");
+    debug("***** reseting subfamilies *****");
     // deselect all subfamilies1 selections
     $('#select2_subfamilies1').val(null);
     // empty subfamilies1 options
@@ -152,25 +152,25 @@ function initializeMapFilters() {
   // Should that be optimized for loading speed?
   // (3) build harbours data in hash + execution
   function buildData() {
-    log('***** building data *****');
+    debug('***** building data *****');
     // harbours
     var harbours = []
     $('#select2_harbours').find("option:selected").each(function(i, selected){
       harbours[i] = $(selected).text().toLowerCase();
     });
-    log("harbours selection(s) = " + harbours);
+    debug("harbours selection(s) = " + harbours);
 
     // years
     var years = []
     $('#select2_years').find("option:selected").each(function(i, selected){
       years[i] = $(selected).text();
     });
-    log("years selection(s) = " + years);
+    debug("years selection(s) = " + years);
 
     // flows
     var flows = []
     flows = $('#select2_flows').select2('data').map(fl => fl.id);
-    log("flows selection(s) = " + flows);
+    debug("flows selection(s) = " + flows);
 
     // codes = families + all subfamilies
     // level0: families
@@ -192,11 +192,11 @@ function initializeMapFilters() {
     $('#select2_subfamilies3').find("option:selected").each(function(k, selected){
      sub_three[k] = $(selected).attr("value"); // add to subfamilies1&2 (+overwrite families & parent sub1&2)
     });
-    log("codes selection(s) = " + fam + ";" + sub_one + ";" + sub_two + ";" + sub_three);
+    debug("codes selection(s) = " + fam + ";" + sub_one + ";" + sub_two + ";" + sub_three);
 
     // data in values:
     var values = {harbours, years, flows, fam, sub_one, sub_two, sub_three}; // all
-    // log("values = " + values);
+    // debug("values = " + values);
 
     callAjax(values); // -> (4)
   }
@@ -214,13 +214,12 @@ function initializeMapFilters() {
       sub_two: values.sub_two,
       sub_three: values.sub_three
     }
+    debug("ajax harbours data:", dataAjax);
     $.get({
       url: '/geojson',
       dataType: "script",
       data: dataAjax // all
     });
-    log("ajax harbours data:");
-    log(dataAjax);
   }
 
   // *********************************************************************
