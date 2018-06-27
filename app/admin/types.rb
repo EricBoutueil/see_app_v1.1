@@ -23,7 +23,7 @@ ActiveAdmin.register Type do
     selectable_column
     column :id
     column :code
-    column :flow
+    column(:flow) { |obj| t("activerecord.attributes.type.flows.#{obj.flow}") }
     column :label
     column :unit
     column :description

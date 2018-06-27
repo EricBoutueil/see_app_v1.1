@@ -37,7 +37,7 @@ fr:
         description: Description
         label: Libellé
         flow: Flux
-        flow:
+        flows:
           tot: Total
           imp: Import
           exp: Export
