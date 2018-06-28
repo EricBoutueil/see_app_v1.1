@@ -1,13 +1,13 @@
 class FinnishImportJob < ApplicationJob
   queue_as :import
 
-  def perform(user_id)
+  def perform(user_id, as_sync: false)
     $import_pool.with do
       user = User.find(user_id)
 
       update_outre_mer_harbours
 
-      ImportMailer.done(user).deliver_now
+      ImportMailer.done(user).deliver_now unless as_sync
     end
   end
 

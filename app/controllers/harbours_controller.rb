@@ -41,6 +41,7 @@ class HarboursController < ApplicationController
       }
     end
 
+    @unit = filters.harbours.first&.filtered_unit
     @geojson =
       {
         "type": "FeatureCollection",

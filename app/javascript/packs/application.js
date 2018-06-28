@@ -1,4 +1,6 @@
-import "bootstrap";
-// import '../components/map';
-import '../components/console_log';
 import '../components/map_filters';
+import * as Map from '../components/map';
+
+var DEBUG = window.location.href.indexOf("localhost") >= 0;
+
+window.mapModule = Map;
