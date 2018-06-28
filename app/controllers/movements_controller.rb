@@ -24,6 +24,7 @@ class MovementsController < ApplicationController
 
       begin
         ImportJob.perform_now(current_user.id, rows, as_sync: true)
+        FinnishImportJob.perform_now(current_user.id, as_sync: true)
 
         redirect_to admin_dashboard_path, notice: "Mise à jour effectuée."
       rescue
