@@ -355,7 +355,7 @@ function getCircle(totalVolume) {
 
 // 3.4.1 calc scale for circles scales
 function calcScale(totalVolume) {
-  let scale = (Math.sqrt(totalVolume * Math.pow(33, 2) / totalVolumeMax));
+  let scale = (Math.sqrt(totalVolume * Math.pow(48, 2) / totalVolumeMax));
 
   if (scale < 3) {
     scale = 3;
