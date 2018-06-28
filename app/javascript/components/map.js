@@ -82,7 +82,7 @@ const style = [
 
 let map;
 let unit;
-// let zoomBounds;
+let unitScaleText = "";
 const maxZoom = 10;
 let totalVolumeMax = 0;
 
@@ -243,7 +243,7 @@ function loadInfoWindows() {
 // STEP 3: set data style
 // 3.0 create a circle for each feature
 export function setFeaturesStyle() {
-  computeTotalVolumeMax(); // 3.1
+  // computeTotalVolumeMax(); // 3.1
   // getZoomBounds(); // 3.2
 
   map.data.setStyle(function(feature) {
@@ -266,7 +266,7 @@ export function setFeaturesStyle() {
 
 // 3.0bis do it for manual zoom (from 2.2):
 function setFeaturesStyleZoomed() {
-  computeTotalVolumeMax(); // 3.1
+  // computeTotalVolumeMax(); // 3.1
   // getZoomBounds(); // 3.2 -> not updated when zoomed manually
   map.data.setStyle(function(feature) {
     const totalVolume = feature.getProperty('totvol');
@@ -314,9 +314,7 @@ function displayedVol(totalVolume) {
   // var displayedVol = (Math.round(totalVolume *100 / (maxPowTen())) / 100); // for proportional units
   let rounding;
 
-  const unitScale = unitScaleText();
-
-  if (unitScale == " millions ") {
+  if (unitScaleText == " millions ") {
     rounding = (Math.round(totalVolume * 100 / 1000000) / 100);
     if (rounding < 0.01) {
       return "<0.01";
@@ -325,7 +323,7 @@ function displayedVol(totalVolume) {
     return rounding.toString();
   }
 
-  if (unitScale == " milliers ") {
+  if (unitScaleText == " milliers ") {
     rounding = (Math.round(totalVolume * 100 / 1000) / 100);
     if (rounding < 0.01) {
       return "<0.01";
@@ -371,22 +369,25 @@ function addUnitLegend() {
   const legend = document.getElementById('legend')
   // var maxPowTenToLocaleString = maxPowTen().toLocaleString(undefined);
   // legend.innerText = `Unité : ${maxPowTenToLocaleString} ${unitSelectedFamily}`
-  legend.innerText = `Unité : ${unitScaleText()} ${unitSelectedFamily()}` // 3.5.1&3
+  legend.innerText = `Unité : ${unitScaleText} ${unitSelectedFamily()}` // 3.5.1&3
   // map.controls[google.maps.ControlPosition.LEFT_TOP].push(legend)
 }
 
 // 3.5.1 calc unit from legend
-function unitScaleText() {
+function computeUnitScaleText() {
   const maxPow = maxPowTen();
-  if (maxPow > 1000000) { // 3.5.2
-    return " millions "
+
+  if (maxPow >= 1000000) { // 3.5.2
+    unitScaleText = " millions ";
+    return;
   }
 
   if (maxPow >= 1000) { // 3.5.2
-    return " milliers "
+    unitScaleText = " milliers "
+    return;
   }
 
-  return ""
+  unitScaleText = "";
 }
 
 // 3.5.2 calculate max displayed totalVolume pow of 10
@@ -419,6 +420,9 @@ export function loadGeoJson(geojson) {
 
 
   map.data.addGeoJson(geojson);
+  computeTotalVolumeMax(); // 3.1
+  computeUnitScaleText();
+
   zoom(); // 2.1
 
   loadInfoWindows(); // 2.3
