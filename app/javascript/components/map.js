@@ -81,6 +81,7 @@ const style = [
 ];
 
 let map;
+let clickListener;
 let unit;
 let unitScaleText = "";
 const maxZoom = 10;
@@ -218,8 +219,13 @@ function setZoomListener() {
 
 // 2.3 show an info window when the user click on a circle
 function loadInfoWindows() {
+  if (clickListener) {
+    clickListener.remove();
+  }
+
   const infowindow = new google.maps.InfoWindow();
-  map.data.addListener('click', function(event) {
+
+  clickListener = map.data.addListener('click', function(event) {
     const myHTML =  '<p class="infowindow-title">'+
                   event.feature.getProperty("name").replace(/(^|\s)[a-z\u00E0-\u00FC]/g, l => l.toUpperCase()) +
                   '</p>' +
