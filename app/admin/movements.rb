@@ -1,6 +1,6 @@
 ActiveAdmin.register Movement do
 
-  menu priority: 2, label: proc{ t('ar.model.movements') }
+   menu priority: 2, label: proc{ t('activerecord.model.movements') }
 
   actions :all
 
