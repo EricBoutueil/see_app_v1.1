@@ -18,10 +18,10 @@ class FinnishImportJob < ApplicationJob
     lng = -6.95
 
     [
-      "pointe-à-pitre",
-      "fort-de-france",
+      "pointe à pitre",
+      "fort de france",
       "dégrad des cannes",
-      "port réunion"
+      "réunion"
     ].each do |name|
       Harbour.where("LOWER(name) = ?", name).update(latitude: lat, longitude: lng)
 
