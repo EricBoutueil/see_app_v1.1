@@ -54,8 +54,8 @@ class Importer
       scope.update(
           country: row[:country],
           address: address,
-          latitude: nil,
-          longitude: nil,
+          latitude: row[:latitude],
+          longitude: row[:longitude],
         )
       sleep(0.05)
       return
