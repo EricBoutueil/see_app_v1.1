@@ -259,14 +259,20 @@ export function setFeaturesStyle() {
     // debug('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
     debug('calc scale ' +feature.getProperty('name') +' = '+calcScale(totalVolume));
 
-
-    return {
-      icon: getCircle(totalVolume), // 3.4
-      label: {
-        text: displayedTotalVol,
-        color: "#17375E"
-      }
-    };
+    if (totalVolume == 0) {
+      return {
+        // icon: 'http://maps.google.com/mapfiles/kml/paddle/red-blank.png',
+        icon: 'https://mts.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-b.png&psize=16&font=fonts/Roboto-Regular.ttf&color=ff333333&ax=44&ay=48&scale=1',
+      };
+    } else {
+      return {
+        icon: getCircle(totalVolume), // 3.4
+        label: {
+          text: displayedTotalVol,
+          color: "#17375E"
+        }
+      };
+    }
   });
 }
 
@@ -280,14 +286,21 @@ function setFeaturesStyleZoomed() {
     // debug('tot vol ' + feature.getProperty('name') +' = '+ totalVolume);
     debug('***calc scale ' +feature.getProperty('name') +' = '+calcScale(totalVolume));
 
-    return {
-      icon: getCircle(totalVolume), // 3.4
-      label: {
-        text: displayedTotalVol,
-        color: "#17375E",
-        fontSize: '12px'
-      }
-    };
+    if (totalVolume == 0) {
+      return {
+        // icon: 'http://maps.google.com/mapfiles/kml/paddle/red-blank.png',
+        icon: 'https://mts.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-b.png&psize=16&font=fonts/Roboto-Regular.ttf&color=ff333333&ax=44&ay=48&scale=1',
+      };
+    } else {
+      return {
+        icon: getCircle(totalVolume), // 3.4
+        label: {
+          text: displayedTotalVol,
+          color: "#17375E",
+          fontSize: '12px'
+        }
+      };
+    }
   });
 }
 
