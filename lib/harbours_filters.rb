@@ -20,7 +20,7 @@ class HarboursFilters
         harbour.filtered_unit = compute_unit(harbour.movements)
       end
 
-      all_harbours.select { |h| h.filtered_volume > 0 }
+      # all_harbours.select { |h| h.filtered_volume > 0 }
     end
   end
 
