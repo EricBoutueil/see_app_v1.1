@@ -14,13 +14,20 @@ class HarboursFilters
   def harbours
     @harbours ||= begin
       all_harbours = load_harbours
+      sum_volumes = 0
 
       all_harbours.each do |harbour|
         harbour.filtered_volume = compute_volume(harbour.movements)
         harbour.filtered_unit = compute_unit(harbour.movements)
+        sum_volumes += harbour.filtered_volume
       end
 
-      # all_harbours.select { |h| h.filtered_volume > 0 }
+      if sum_volumes > 0
+        all_harbours.select { |h| h.filtered_volume > 0 }
+      else
+        all_harbours
+      end
+
     end
   end
 
