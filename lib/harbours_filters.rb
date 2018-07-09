@@ -24,6 +24,8 @@ class HarboursFilters
 
       if sum_volumes > 0
         all_harbours.select { |h| h.filtered_volume > 0 }
+      else
+        all_harbours
       end
 
     end
