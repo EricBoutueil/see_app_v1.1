@@ -1,3 +1,4 @@
+import dropdown from 'bootstrap';
 import '../components/map_filters';
 import * as Map from '../components/map';
 
