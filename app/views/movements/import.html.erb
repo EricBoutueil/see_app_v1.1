@@ -9,7 +9,7 @@
       </p>
 
       <%= form_tag import_path, multipart: true, class: "import-file form-inline mt mb" do %>
-        <%= label_tag 'file', 'Mettre à jour la base de données:' %>
+        <%= label_tag 'file', 'Mettre à jour la base de données (CSV séparé par des ";"):' %>
         <%= file_field_tag :file %>
         <%= submit_tag "Importer CSV", class: 'btn btn-primary mt-' %>
       <% end %>

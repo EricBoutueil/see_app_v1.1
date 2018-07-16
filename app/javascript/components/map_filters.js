@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import 'select2';
+import 'select2/dist/js/i18n/fr.js';
 import 'select2/dist/css/select2.css';
 
 import { debug } from "./helpers";
