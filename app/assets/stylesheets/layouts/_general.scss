@@ -22,6 +22,14 @@
   color: $dark-blue !important;
 }
 
+.text-footer{
+  // roboto 10px without underlining -> aligned with google map footer
+  font-family: "Roboto";
+  font-size: 10px;
+  @extend .text-dark-blue;
+  cursor: pointer;
+}
+
 h1 {
   @extend .text-size-title;
   @extend .text-blue;
