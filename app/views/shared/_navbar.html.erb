@@ -17,7 +17,7 @@
     <%#= link_to "ACCUEIL", "http://www.see-up.fr/", class: "navbar-wagon-item navbar-wagon-link" %>
     <%#= link_to "NOTRE OFFRE", "http://www.see-up.fr/#offre", class: "navbar-wagon-item navbar-wagon-link" %>
     <%#= link_to "L’ÉQUIPE", "http://www.see-up.fr/#equipe", class: "navbar-wagon-item navbar-wagon-link" %>
-      <%= link_to "CONTACTEZ-NOUS", "http://www.see-up.fr/contactez-see-up/", class: "navbar-wagon-item navbar-wagon-link" %>
+      <%= link_to "Contactez-nous", "http://www.see-up.fr/contactez-see-up/", class: "navbar-wagon-item navbar-wagon-link" %>
       <%#= link_to "PORT TRAFFIC", "/", class: "navbar-wagon-item navbar-wagon-link" %>
 
     <% if user_signed_in? %>
@@ -42,7 +42,7 @@
 
     <% else %>
       <!-- Login link (when logged out) -->
-      <%= link_to t(".sign_in", default: "Restez informés"), new_user_registration_path, class: "navbar-wagon-item navbar-wagon-link" %>
+      <%#= link_to t(".sign_in", default: "Restez informés"), new_user_registration_path, class: "navbar-wagon-item navbar-wagon-link" %>
     <% end %>
   </div>
 </div>
