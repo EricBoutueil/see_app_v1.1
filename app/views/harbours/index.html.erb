@@ -83,14 +83,17 @@
     <%= link_to "Conditions Générales d'Utilisation", cgu_path, target: :_blank, class: "text-footer" %>
     <span class="text-footer"> - </span>
     <!-- Button trigger modal -->
-    <a data-toggle="modal" data-target="#mentionsLegales" class="text-footer">
+<!--     <a data-toggle="modal" data-target="#mentionsLegales" class="text-footer">
       Mentions Légales
-    </a>
+    </a> -->
+    <%= link_to "Mentions Légales", "#mentionsLegales", "data-toggle" => "modal", class: "text-footer" %>
+
   </div>
 </div>
 
+
 <!-- Modal -->
-<div class="modal fade" id="mentionsLegales" tabindex="-1" role="dialog" aria-labelledby="MentionsLegalesTitle" aria-hidden="true">
+<!-- <div class="modal fade" id="mentionsLegales" tabindex="-1" role="dialog" aria-labelledby="MentionsLegalesTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -124,3 +127,4 @@
     </div>
   </div>
 </div>
+ -->
