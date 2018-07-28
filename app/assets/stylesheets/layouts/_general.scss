@@ -56,3 +56,40 @@ body {
 .import-file{
   width: 100%;
 }
+
+// Cookie Banner
+.cookie-banner {
+  display: none;
+  position: fixed;
+  top: 0;
+  width: 100%;
+
+  &.active {
+    display: block;
+  }
+}
+
+// Cookie overlay background for dialog box
+.cookie-inform-and-ask {
+  // background-color: $semi-transparent-black;
+  background:rgba(255,255,255,0.5);
+  display: none;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+
+  &.active {
+    display: block;
+  }
+
+  // Cookie dialog box
+  .cookie-dialog {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+  }
+}
