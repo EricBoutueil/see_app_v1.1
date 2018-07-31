@@ -10,7 +10,7 @@
     <% end %>
   </div>
 
-  <!-- Right Navigation desktop -->
+  <!-- Right Navigation desktop [WARNING: mobile version below]-->
   <div class="navbar-wagon-right">
 
     <!-- Top menu links -->
@@ -41,7 +41,7 @@
       </div>
 
     <% else %>
-      <!-- Login link (when logged out) -->
+      <!-- Login link (when logged out) [WARNING: mobile version below]-->
       <%#= link_to t(".sign_in", default: "Restez informés"), new_user_registration_path, class: "navbar-wagon-item navbar-wagon-link" %>
     <% end %>
   </div>
@@ -58,11 +58,11 @@
     <div class="dropdown">
       <i class="fa fa-bars dropdown-toggle text-size-body-small" data-toggle="dropdown"></i>
       <ul class="dropdown-menu dropdown-menu-left navbar-wagon-dropdown-menu navbar-wagon-dropdown-menu-left">
+        <!-- <li>
+          <%#= link_to "ACCUEIL", "http://www.see-up.fr/" %>
+        </li> -->
         <li>
-          <%= link_to "ACCUEIL", "http://www.see-up.fr/" %>
-        </li>
-        <li>
-        <%= link_to "CONTACTEZ-NOUS", "http://www.see-up.fr/contactez-see-up/" %>
+        <%= link_to "Contactez-nous", "http://www.see-up.fr/contactez-see-up/" %>
         </li>
         <li>
             <%= link_to "#" do %>
@@ -83,15 +83,15 @@
     <div class="dropdown">
       <i class="fa fa-bars dropdown-toggle text-small" data-toggle="dropdown"></i>
       <ul class="dropdown-menu dropdown-menu-left navbar-wagon-dropdown-menu navbar-wagon-dropdown-menu-left">
-        <!-- <li> -->
+        <!-- <li>
           <%#= link_to "ACCUEIL", "http://www.see-up.fr/" %>
-        <!-- </li> -->
-        <!-- <li> -->
-        <%#= link_to "CONTACTEZ-NOUS", "http://www.see-up.fr/contactez-see-up/" %>
-        <!-- </li> -->
+        </li> -->
         <li>
-            <%= link_to t(".sign_in", default: "Restez informés"), new_user_registration_path %>
+        <%= link_to "Contactez-nous", "http://www.see-up.fr/contactez-see-up/" %>
         </li>
+        <!-- <li>
+            <%#= link_to t(".sign_in", default: "Restez informés"), new_user_registration_path %>
+        </li> -->
       </ul>
     </div>
 
