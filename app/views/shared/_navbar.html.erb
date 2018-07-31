@@ -17,8 +17,9 @@
     <%#= link_to "ACCUEIL", "http://www.see-up.fr/", class: "navbar-wagon-item navbar-wagon-link" %>
     <%#= link_to "NOTRE OFFRE", "http://www.see-up.fr/#offre", class: "navbar-wagon-item navbar-wagon-link" %>
     <%#= link_to "L’ÉQUIPE", "http://www.see-up.fr/#equipe", class: "navbar-wagon-item navbar-wagon-link" %>
-      <%= link_to "Contactez-nous", "http://www.see-up.fr/contactez-see-up/", class: "navbar-wagon-item navbar-wagon-link" %>
-      <%#= link_to "PORT TRAFFIC", "/", class: "navbar-wagon-item navbar-wagon-link" %>
+    <%= link_to "Contactez-nous", "http://www.see-up.fr/contactez-see-up/", class: "navbar-wagon-item navbar-wagon-link" %>
+    <%= link_to "Restez informés", "#newsletter", data: { token: "5f4585baba84070bdbe12ab5191948eb" }, onclick: "mjOpenPopin(event, this)", class: "btn btn-primary navbar-button" %>
+    <%#= link_to "PORT TRAFFIC", "/", class: "navbar-wagon-item navbar-wagon-link" %>
 
     <% if user_signed_in? %>
       <!-- Dropdown menu -->
@@ -65,7 +66,10 @@
         <%= link_to "Contactez-nous", "http://www.see-up.fr/contactez-see-up/" %>
         </li>
         <li>
-            <%= link_to "#" do %>
+          <%= link_to "Restez informé", "#newsletter", data: { token: "d915c7ab5fd86cf837a5bc48f8adbd80" }, onclick: "mjOpenPopin(event, this)", class: "navbar-wagon-item navbar-wagon-link" %>
+        </li>
+        <li>
+            <%= link_to edit_user_registration_path do %>
               <i class="fa fa-user"></i> <%= t(".profile", default: "Profil") %>
             <% end %>
         </li>
@@ -88,6 +92,9 @@
         </li> -->
         <li>
         <%= link_to "Contactez-nous", "http://www.see-up.fr/contactez-see-up/" %>
+        </li>
+        <li>
+          <%= link_to "Restez informé", "#newsletter", data: { token: "d915c7ab5fd86cf837a5bc48f8adbd80" }, onclick: "mjOpenPopin(event, this)", class: "navbar-wagon-item navbar-wagon-link" %>
         </li>
         <!-- <li>
             <%#= link_to t(".sign_in", default: "Restez informés"), new_user_registration_path %>

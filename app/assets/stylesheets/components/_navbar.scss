@@ -52,7 +52,21 @@
   font-weight: bold;
 }
 .navbar-wagon-link:hover {
-  color: black;
+  color: $dark-blue;
+  text-decoration: none;
+}
+
+/* Navbar call to action button*/
+.navbar-button {
+  // cursor: pointer;
+  padding: 10 20px;
+  margin: 20px;
+  border-radius: 5px;
+  @extend .navbar-wagon-link;
+}
+.navbar-button:hover {
+  color: white;
+  background-color: $dark-blue;
   text-decoration: none;
 }
 
