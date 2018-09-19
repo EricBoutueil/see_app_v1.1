@@ -99,8 +99,8 @@ class Importer
     if scope.exists?
       scope.update(
         label: label,
-        unit: row[:unit].downcase,
-        description: row[:description].downcase
+        unit: row[:unit]&.downcase,
+        description: row[:description]&.downcase
       )
 
       return
@@ -110,8 +110,8 @@ class Importer
       code: code,
       flow: flow,
       label: label,
-      unit: row[:unit].downcase,
-      description: row[:description].downcase
+      unit: row[:unit]&.downcase,
+      description: row[:description]&.downcase
     )
   end
 
@@ -121,7 +121,7 @@ class Importer
     if scope.exists?
       scope.update(
         label: label,
-        unit: row[:unit].downcase,
+        unit: row[:unit]&.downcase,
         description: row[:description]&.downcase
       )
 
@@ -133,7 +133,7 @@ class Importer
         code: code,
         flow: flow,
         label: label,
-        unit: row[:unit].downcase,
+        unit: row[:unit]&.downcase,
         description: row[:description]&.downcase
       )
     end
@@ -142,7 +142,7 @@ class Importer
   def update_or_create_movement(name, code, flow, row)
     return if row[:year].nil?
 
-    harbour_id = Harbour.where(name: name).pluck(:id).first
+    harbour_id = Harbcour.where(name: name).pluck(:id).first
     type_id = Type.where(code: code, flow: flow).pluck(:id).first
 
     scope = Movement.where(harbour_id: harbour_id, type_id: type_id, year: row[:year])
