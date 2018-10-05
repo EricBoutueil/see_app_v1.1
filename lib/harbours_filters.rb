@@ -50,11 +50,20 @@ class HarboursFilters
     # imp or an exp volume
     return movements.select(&:"#{flow}?").sum(&:volume) if %w[imp exp].include?(flow)
 
-    # we want the total. Either we have a movemnet for that, either this is the sum of movements
-    movement_tot = movements.detect(&:tot?)
-    return movement_tot.volume if movement_tot.present?
+    if movements.detect(&:tot?).present?
+      vol_movement_with_tot = movements.select(&:"#{flow}?").sum(&:volume) if %w[tot].include?(flow)
+      vol_movement_without_tot = movements.select(&:"#{flow}?").sum(&:volume) if %w[imp exp].include?(flow)
+      vol_all_movements = vol_movement_with_tot.to_i + vol_movement_without_tot.to_i
+    else
+      movements.sum(&:volume)
+    end
 
-    movements.sum(&:volume)
+    # we want the total. Either we have a movemnet for that, either this is the sum of movements
+    # movement_tot = movements.detect(&:tot?)
+    # return movement_tot.volume if movement_tot.present?
+
+    # movements.sum(&:volume)
+
   end
 
   def compute_unit(movements)
