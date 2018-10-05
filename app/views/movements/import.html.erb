@@ -1,6 +1,15 @@
 <div class='container'>
+
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3 mt+">
+      <p class="help-block">
+        IMPORTANT: Pour créer le CSV, utiliser <strong>Google Spreadsheet</strong>:<br />
+      --> Télécharger au format: <strong>Valeurs séparées par des virgules (.csv)</strong>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
       <h2>Import complet</h2>
       <p class="help-block">
         Nécessite d'activer le dyno <strong>worker</strong> (sidekiq)
@@ -9,7 +18,7 @@
       </p>
 
       <%= form_tag import_path, multipart: true, class: "import-file form-inline mt mb" do %>
-        <%= label_tag 'file', 'Mettre à jour la base de données (CSV séparé par des ";"):' %>
+        <%= label_tag 'file', 'Mettre à jour la base de données:' %>
         <%= file_field_tag :file %>
         <%= submit_tag "Importer CSV", class: 'btn btn-primary mt-' %>
       <% end %>
@@ -17,7 +26,7 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-6 col-sm-offset-3 mt+">
+    <div class="col-sm-6 col-sm-offset-3">
       <h2>Import léger (instantané)</h2>
       <p class="help-block">
         Uniquement pour les petits fichiers d'import (quelques centaines de lignes max.)

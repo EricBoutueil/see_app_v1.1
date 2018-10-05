@@ -13,7 +13,7 @@ class Importer
     end
 
     def rows_from_file(file)
-      CSV.read(file, col_sep: ";", headers: true, row_sep: :auto).map(&:to_h)
+      CSV.read(file, col_sep: ",", headers: true, row_sep: :auto).map(&:to_h)
     end
   end
 
@@ -99,8 +99,8 @@ class Importer
     if scope.exists?
       scope.update(
         label: label,
-        unit: row[:unit].downcase,
-        description: row[:description].downcase
+        unit: row[:unit]&.downcase,
+        description: row[:description]&.downcase
       )
 
       return
@@ -110,8 +110,8 @@ class Importer
       code: code,
       flow: flow,
       label: label,
-      unit: row[:unit].downcase,
-      description: row[:description].downcase
+      unit: row[:unit]&.downcase,
+      description: row[:description]&.downcase
     )
   end
 
@@ -121,7 +121,7 @@ class Importer
     if scope.exists?
       scope.update(
         label: label,
-        unit: row[:unit].downcase,
+        unit: row[:unit]&.downcase,
         description: row[:description]&.downcase
       )
 
@@ -133,7 +133,7 @@ class Importer
         code: code,
         flow: flow,
         label: label,
-        unit: row[:unit].downcase,
+        unit: row[:unit]&.downcase,
         description: row[:description]&.downcase
       )
     end
