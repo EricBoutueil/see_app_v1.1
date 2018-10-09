@@ -76,6 +76,21 @@ class HarboursFiltersTest < ActiveSupport::TestCase
     assert_equal 12_500, harbours.first.filtered_volume
   end
 
+  test "filtered volume with multiple subfilters, mixing tot & imp+exp flows" do
+    ajaccio = Harbour.find_by!(name: "ajaccio")
+
+    create(:movement, harbour: ajaccio, volume: 10_000, type: create(:type, code: "b1"))
+    create(:movement, harbour: ajaccio, volume: 1_500, type: create(:type, :imp, code: "b1"))
+    create(:movement, harbour: ajaccio, volume: 1_500, type: create(:type, :exp, code: "b1"))
+    create(:movement, harbour: ajaccio, volume: 100, type: create(:type, :imp, code: "b2"))
+    create(:movement, harbour: ajaccio, volume: 200, type: create(:type, :exp, code: "b2"))
+
+
+    harbours = filters_for({ flow: "tot", year: "2016", fam: "b", sub_one: %w[b1 b2] }).harbours
+    # sum must be b1 tot + b2 imp + b2 exp
+    assert_equal 10_300, harbours.first.filtered_volume
+  end
+
   test "set family unit without filtering sub families" do
     harbours = filters_for({}).harbours
 
